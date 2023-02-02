@@ -1,5 +1,3 @@
-<template lang="pug">
-#home
-  h1.text-center 首頁
+<template>
+  <div class="note">777777777777777777777777777777777777777777777</div>
 </template>
-  

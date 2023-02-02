@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import FrontLayout from '@/layouts/FrontLayout.vue'
+import AdminLayout from '@/layouts/AdminLayout.vue'
 import FrontHomeView from '@/views/front/HomeView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 
@@ -12,7 +13,7 @@ const router = createRouter({
       children: [
         {
           path:'',
-          name: 'homepage',
+          name: 'home',
           component: FrontHomeView,
           meta: {
             title:'Matching TRPG'
@@ -25,6 +26,28 @@ const router = createRouter({
           component: () => import('@/views/front/RegisterView.vue'),
           meta: {
             title: 'Matching TRPG | 註冊'
+          }
+        }
+      ]
+    },
+    {
+      path: '/gm',
+      component: AdminLayout,
+      children: [
+        {
+          path: '',
+          name: 'GM',
+          component: () => import('@/views/gm/HomeView.vue'),
+          meta: {
+            title: 'MarchingTRPG | GM'
+          }
+        }
+        ,{
+          path: '/modulesedit',
+          name: 'modulesedit',
+          component: () => import('@/views/gm/ModulesView.vue'),
+          meta: {
+            title: 'MarchingTRPG | Edit-Modules'
           }
         }
       ]
