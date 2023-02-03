@@ -1,6 +1,6 @@
 <template>
-  <h1> 官網~~~ </h1>
   <div class="bg"></div>
+  <h1> 7777777 </h1>
 </template>
 
 <style>

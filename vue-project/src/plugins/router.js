@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import FrontLayout from '@/layouts/FrontLayout.vue'
 import AdminLayout from '@/layouts/AdminLayout.vue'
-import FrontHomeView from '@/views/front/HomeView.vue'
+// import FrontHomeView  from '@/views/front/HomeView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 
 const router = createRouter({
@@ -14,11 +14,10 @@ const router = createRouter({
         {
           path:'',
           name: 'home',
-          component: FrontHomeView,
+          component: () => import('@/views/front/HomeView.vue'),
           meta: {
             title:'Matching TRPG'
           }
-          
         },
         {
           path: 'register',
@@ -26,6 +25,34 @@ const router = createRouter({
           component: () => import('@/views/front/RegisterView.vue'),
           meta: {
             title: 'Matching TRPG | 註冊'
+          }
+        },{
+          path: 'module',
+          name: 'module',
+          component: () => import('@/views/front/ModulesView.vue'),
+          meta: {
+            title: 'Matching TRPG | 劇本任務'
+          }
+        },{
+          path: 'discussion',
+          name: 'discussion',
+          component: () => import('@/views/front/DiscussionView.vue'),
+          meta: {
+            title: 'Matching TRPG | 探索者心得'
+          }
+        },{
+          path: 'trpg',
+          name: 'trpg',
+          component: () => import('@/views/front/TrpgView.vue'),
+          meta: {
+            title: 'Matching TRPG | TRPG ?'
+          }
+        },{
+          path: 'aboutus',
+          name: 'aboutus',
+          component: () => import('@/views/front/AboutusView.vue'),
+          meta: {
+            title: 'Matching TRPG | 關於邁欽 ?'
           }
         }
       ]
@@ -36,10 +63,10 @@ const router = createRouter({
       children: [
         {
           path: '',
-          name: 'GM',
+          name: 'gm',
           component: () => import('@/views/gm/HomeView.vue'),
           meta: {
-            title: 'MarchingTRPG | GM'
+            title: 'MatchingTRPG | GM'
           }
         }
         ,{
@@ -47,9 +74,24 @@ const router = createRouter({
           name: 'modulesedit',
           component: () => import('@/views/gm/ModulesView.vue'),
           meta: {
-            title: 'MarchingTRPG | Edit-Modules'
+            title: 'MatchingTRPG | 上架模組'
           }
         }
+      ]
+    },
+    {
+      path: '/user',
+      component: FrontLayout,
+      children: [
+        {
+          path: '',
+          name: 'user',
+          component: () => import('@/views/user/HomeView.vue'),
+          meta: {
+            title: 'MatchingTRPG | Player'
+          }
+        }
+        
       ]
     },
     {
@@ -57,7 +99,7 @@ const router = createRouter({
       name: '404',
       component: NotFoundView,
       meta: {
-        title: 'Matching TRPG | 404 Not Found'
+        title: 'Matching TRPG | Not Found'
       }
     },
     {
