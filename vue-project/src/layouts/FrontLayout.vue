@@ -1,5 +1,6 @@
 <template>
-    <n-config-provider :theme-overrides="themeOverrides">
+  
+    <n-config-provider>
       <n-space justify="end">
       <n-button @click="activate('right')" text >
       <!-- DataBarHorizontal20Filled -->
@@ -21,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { NConfigProvider, GlobalThemeOverrides } from 'naive-ui'
+import { NConfigProvider } from 'naive-ui'
 import { defineComponent, h, Component, ref } from 'vue'
 import { NIcon } from 'naive-ui'
 import type { DrawerPlacement } from 'naive-ui'
@@ -34,29 +35,6 @@ import {
 import {
   DataBarHorizontal20Filled
 } from '@vicons/fluent'
-
-const themeOverrides: GlobalThemeOverrides = {
-  common: {
-      primaryColor: '#FF0000'
-    },
-    Button: {
-      textColor: '#FF0000'
-    },
-  BackTop: {
-    iconColorHover: '#FFDA08FF',
-    iconColorPressed: '#1E8260FF',
-    textColor: 'rgba(244, 45, 45, 0.82)',
-    iconColor: 'rgba(222, 33, 33, 0.82)'
-  },
-  Menu: {
-    color: "#2F4F4FFF",
-    groupTextColor: "rgba(252, 252, 252, 0.52)",
-    itemColorHover: "rgba(249, 176, 45, 0.5)",
-    itemTextColorActive: "#63e2b7",
-    itemColorHoverInverted: "#0000"
-  }
-  }
-
 
 function renderIcon (icon: Component) {
   return () => h(NIcon, null, { default: () => h(icon) })
@@ -192,6 +170,7 @@ export default defineComponent({
 .n-menu .n-menu-item-content:not(.n-menu-item-content--disabled):hover::before {
     background-color: #F9B02D55;
 }
+
 
 
 </style>
