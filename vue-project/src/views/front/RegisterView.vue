@@ -1,125 +1,112 @@
 <template>
   <div class="bg_g">
-  <n-form ref="formRef" :model="model" :rules="rules">
-    <n-form-item path="age" label="年龄">
-      <n-input v-model:value="model.age" @keydown.enter.prevent />
-    </n-form-item>
-    <n-form-item path="password" label="密码">
-      <n-input
-        v-model:value="model.password"
-        type="password"
-        @input="handlePasswordInput"
-        @keydown.enter.prevent
-      />
-    </n-form-item>
-    <n-form-item
-      ref="rPasswordFormItemRef"
-      first
-      path="reenteredPassword"
-      label="重复密码"
-    >
-      <n-input
-        v-model:value="model.reenteredPassword"
-        :disabled="!model.password"
-        type="password"
-        @keydown.enter.prevent
-      />
-    </n-form-item>
-    <n-row :gutter="[0, 24]">
-      <n-col :span="24">
-        <div style="display: flex; justify-content: flex-end">
-          <n-button
-            :disabled="model.age === null"
-            round
-            type="primary"
-            @click="handleValidateButtonClick"
-          >
-            验证
-          </n-button>
-        </div>
-      </n-col>
-    </n-row>
-  </n-form>
+    <!-- <h3 style="color:bisque; position: relative; top: 10px; left: 100px;"> 初次見面，探索者！ </h3> -->
 
-  <pre>{{ JSON.stringify(model, null, 2) }}
-</pre>
+    <div class="box">
+      <div class="box_img">
+        <!-- <img src="../../../image/5b030a40b198ffb7fbd039c36c941459.jpg" alt=""> -->
+      </div>          
+      <div class="box_form">
+        <n-form
+          ref="formRef"
+          :model="model"
+          :rules="rules"
+          :size="size"
+          label-placement="top"
+        >
+          <n-grid :cols="24" :x-gap="24">
+            <!-- account -->
+            <n-form-item-gi :span="10" label="登入帳號" path="accountValue">
+              <n-input v-model:value="model.account" placeholder="英數字6碼以上" />
+            </n-form-item-gi>
+            <!-- nickname -->
+            <n-form-item-gi :span="10" label="探索者暱稱" path="nicknameValue">
+              <n-input v-model:value="model.nickname" placeholder="想被怎麼稱呼呢?" />
+            </n-form-item-gi>
+            <!-- password -->
+            <n-form-item-gi :span="10" label="密碼" path="passwordValue">
+              <n-input v-model:value="model.password" placeholder="英數字6碼以上" />
+            </n-form-item-gi>
+            <!-- password_again -->
+            <n-form-item-gi :span="10" label="再次輸入密碼"  path="password_againValue">
+              <n-input v-model:value="model.password_again" placeholder=" " 
+              />
+            </n-form-item-gi>
+            <!-- password -->
+            <n-form-item-gi :span="10" label="E-mail" path="emailValue">
+              <n-input v-model:value="model.email" placeholder="請設定專屬名稱" />
+            </n-form-item-gi>
+            <!-- password_again -->
+            <n-form-item-gi :span="6" label="Discord 帳號" path="dc_accountValue" 
+            style="--n-label-text-color: #3b3ace !important;">
+              <n-input v-model:value="model.dc_account" placeholder="使用者名稱" style="--n-color: #5865F248;  --n-placeholder-color: #3b3ace88; margin-right: -2%;"/>
+            </n-form-item-gi>
+
+            <n-form-item-gi :span="4"  path="dc_accountValue" style="margin-left:-20px">
+            <span style="color:#5865F2"> #   </span>
+              <n-input v-model:value="model.dc_id" placeholder="OOOO" style="--n-color: #5865F248; --n-placeholder-color: #3b3ace88; margin-left: 2%"/>
+            </n-form-item-gi>
+
+            <!-- 註冊紐 -->
+            <n-gi :span="24">
+              <div style="display: flex; justify-content: flex-end">
+                <n-button round type="primary" @click="handleValidateButtonClick" color="#F9B02D">
+                  註                               冊
+                </n-button>
+              </div>
+            </n-gi>
+          </n-grid>
+        </n-form>
+
+      </div>
+</div>
+  <!-- <pre>{{ JSON.stringify(model, null, 2) }}
+  </pre> -->
   </div>
 </template>
 
-<script>
-import { defineComponent, ref } from "vue";
-import {
-  useMessage
-} from "naive-ui";
-
+<script></script>
+import { defineComponent, ref, reactive } from "vue";
+import { useMessage } from "naive-ui";
 
 export default defineComponent({
   setup() {
     const formRef = ref(null);
-    const rPasswordFormItemRef = ref(null);
     const message = useMessage();
-    const modelRef = ref({
-      age: null,
-      password: null,
-      reenteredPassword: null
-    });
-    function validatePasswordStartWith(rule, value) {
-      return !!modelRef.value.password && modelRef.value.password.startsWith(value) && modelRef.value.password.length >= value.length;
-    }
-    function validatePasswordSame(rule, value) {
-      return value === modelRef.value.password;
-    }
-    const rules = {
-      age: [
-        {
-          required: true,
-          validator(rule, value) {
-            if (!value) {
-              return new Error("需要年龄");
-            } else if (!/^\d*$/.test(value)) {
-              return new Error("年龄应该为整数");
-            } else if (Number(value) < 18) {
-              return new Error("年龄应该超过十八岁");
-            }
-            return true;
-          },
-          trigger: ["input", "blur"]
-        }
-      ],
-      password: [
-        {
-          required: true,
-          message: "请输入密码"
-        }
-      ],
-      reenteredPassword: [
-        {
-          required: true,
-          message: "请再次输入密码",
-          trigger: ["input", "blur"]
-        },
-        {
-          validator: validatePasswordStartWith,
-          message: "两次密码输入不一致",
-          trigger: "input"
-        },
-        {
-          validator: validatePasswordSame,
-          message: "两次密码输入不一致",
-          trigger: ["blur", "password-input"]
-        }
-      ]
-    };
     return {
       formRef,
-      rPasswordFormItemRef,
-      model: modelRef,
-      rules,
-      handlePasswordInput() {
-        if (modelRef.value.reenteredPassword) {
-          rPasswordFormItemRef.value?.validate({ trigger: "password-input" });
+      size: ref("medium"),
+      model: ref({
+        account: null,
+        nickname: null,
+        password: null,
+        password_again: null,
+        email: null,
+        dc_account: null,
+        dc_id: null
+      }),
+      generalOptions: ["groode", "veli good", "emazing", "lidiculous"].map(
+        (v) => ({
+          label: v,
+          value: v
+        })
+      ),
+      cascaderOptions: [
+        {
+          label: "groode",
+          value: "groode",
+          children: [
+            {
+              label: "veli good",
+              value: "veli good"
+            }
+          ]
         }
+      ],
+      rules: {
+         
       },
+
       handleValidateButtonClick(e) {
         e.preventDefault();
         formRef.value?.validate((errors) => {
@@ -136,10 +123,52 @@ export default defineComponent({
 });
 </script>
 
-<style>
-  .bg_g {
-    width: 100vw;
-    height: 100vh;
-    background: #2F4F4f;
-  }
+<style lang="scss" scoped>
+
+  .bg_g 
+    {
+      width: 100vw;
+      // height: 100vh;
+      background: #2F4F4f;
+    .box 
+      {
+        border-radius: 20px;
+        width: 65%;
+        height: 60vh;
+        margin: auto;
+        margin-top: 3%;
+        background-color: #f8e9d6;
+        display: flex;
+        box-shadow: 2px 4px 15px 5px rgba(14, 14, 14, 0.3);
+        position: relative;
+
+        &:before{
+          content: "初次見面，探索者！";
+          position: absolute;
+          top: -8%;
+          left: -7%;
+          color: bisque;
+          font-weight: 600;
+          rotate: 340deg;
+        }
+
+        .box_img {
+          width: 15%;
+          height: 100%;
+          overflow: hidden;
+          background-image: url('../../../image/5b030a40b198ffb7fbd039c36c941459.jpg');
+          background-position: 50% 1%;
+          background-repeat: no-repeat;
+          border-radius: 20px 0 0 20px;
+        }
+        .box_form {
+          width: 75%;
+          height: 98%;
+          margin: auto;
+          // margin-right: 3%;
+          padding-top: 2%;
+
+        }
+      }
+    }
 </style>

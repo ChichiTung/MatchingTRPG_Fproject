@@ -1,13 +1,16 @@
 <template>
   
     <n-config-provider>
-      <n-space justify="end">
-      <n-button @click="activate('right')" text >
+      <n-space justify="space-between" style="margin: 3vh 2vw;">
+        <img src="url('../../image/TRPG_LOGO.png" alt="logo" class="logo">
+        <n-button @click="activate('right')" text
+      style="margin-top: 50%; margin-left: -100% ;"
+        >
       <!-- DataBarHorizontal20Filled -->
-        <n-icon size="40">
-          <DataBarHorizontal20Filled />
-        </n-icon>
-      </n-button>
+          <n-icon size="40" color="#F8E9D6">
+            <DataBarHorizontal20Filled />
+          </n-icon>
+        </n-button>
       </n-space>
   <n-drawer v-model:show="active" :width="350" :placement="placement" auto-focus block-scroll 
   style=" background: rgba(47,79,79, 0.9)">
@@ -156,19 +159,16 @@ export default defineComponent({
 </script>
 
 <style>
+body {
+  background-color: #2F4F4F;
+}
 .n-base-icon svg {
     height: 2em;
     width: 2em;
     margin-top: -10px;
     color: #F9B02D}
-.n-menu .n-menu-item-content .n-menu-item-content-header a{
-    font-size: 20px;
-    color: #F8E9D6 !important;
-    text-align: center;
-    margin: auto;
-}
-.n-menu .n-menu-item-content:not(.n-menu-item-content--disabled):hover::before {
-    background-color: #F9B02D55;
+.logo {
+  width: 20%;
 }
 
 
