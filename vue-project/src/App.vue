@@ -38,7 +38,7 @@ const themeOverrides = {
             <router-view></router-view>
           </n-dialog-provider>
         </n-notification-provider>
-       </n-message-provider>
+        </n-message-provider>
       </n-loading-bar-provider>
   </n-config-provider>
   </v-app>
