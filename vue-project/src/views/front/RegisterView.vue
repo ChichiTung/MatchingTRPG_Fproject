@@ -12,20 +12,20 @@
           <n-grid cols="6 s:6 l:12" :x-gap="18" resonsive="screen" >
             <!-- account -->
             <n-form-item-gi :span="3" label="登入帳號" path="account">
-              <n-input v-model:value="model.account" placeholder="英數字6碼以上" @keydown.enter.prevent/>
+              <n-input v-model:value="model.account" maxlength="20"  clearable placeholder="英數字6碼以上" @keydown.enter.prevent />
             </n-form-item-gi>
             <!-- nickname -->
             <n-form-item-gi :span="3" label="探索者暱稱" path="nickname">
-              <n-input v-model:value="model.nickname" placeholder="想被怎麼稱呼呢?" />
+              <n-input v-model:value="model.nickname" maxlength="20"  clearable placeholder="想被怎麼稱呼呢?" />
             </n-form-item-gi>
             <!-- password -->
             <n-form-item-gi :span="3" label="密碼" path="password">
-              <n-input v-model:value="model.password" type="password" placeholder="英數字6碼以上" />
+              <n-input v-model:value="model.password" type="password" placeholder="英數字6碼以上"  clearable/>
             </n-form-item-gi>
             <!-- confirmPassword -->
             <n-form-item-gi :span="3" label="再次輸入密碼"  path="confirmPassword">
               <n-input v-model:value="model.confirmPassword" placeholder=" " type="password"
-              />
+               clearable/>
             </n-form-item-gi>
             
             <!-- discord account -->
@@ -33,20 +33,18 @@
             style="--n-label-text-color: #3b3ace !important;">
               
 
-              <n-input v-model:value="model.dc_account" placeholder="使用者名稱" style="--n-color: #5865F248;  --n-placeholder-color: #3b3ace88; margin-right: -2%;"/>
+              <n-input v-model:value="model.dc_account" placeholder="使用者名稱" style="--n-color: #5865F248;  --n-placeholder-color: #3b3ace88; margin-right: -2%;" clearable/>
             </n-form-item-gi>
 
             <n-form-item-gi :span="1" path="dc_id" style="margin-left:-10px; margin-right:10px">
             <span style="color:#5865F2"> # </span>
-              <n-input v-model:value="model.dc_id" placeholder="OOOO" style="--n-color: #5865F248; --n-placeholder-color: #3b3ace88; margin-left: 2%"/>
+              <n-input v-model:value="model.dc_id" placeholder="OOOO" style="--n-color: #5865F248; --n-placeholder-color: #3b3ace88; margin-left: 2%" clearable/>
 
-              <div class="dc_info" style=" position: relative; margin-top: -70px; margin-left: -40px; --n-color: #2d3bf947; --n-padding: 0 0px;">
-
-                <n-popconfirm  @positive-click="handlePositiveClick" @negative-click="handleNegativeClick"
-                style="font-size: 24px; color: #3b3aceaa; font-weight: 600;"
-                :show-icon="false">
+              <div id="dc_info" style=" position: absolute; margin-top: 50%; margin-left: 50%; --n-color: #2d3bf947; --n-padding: 0 0px;">
+                <n-popconfirm positive-text="ok" :negative-text="null" :show-icon="false" style="font-size: 24px; color: #3b3aceaa; font-weight: 600;"
+                >
                   <template #trigger>
-                    <n-button  text style="font-size: 24px; color: #3b3aceaa;">
+                    <n-button text style="font-size: 24px; color: #3b3aceaa;">
                       <template #icon> <InfoCircle/> </template>
                     </n-button>
                   </template>
@@ -58,14 +56,14 @@
 
             <!-- email -->
             <n-form-item-gi :span="3" label="E-mail" path="email" >
-              <n-input v-model:value="model.email" placeholder=" " />
+              <n-input v-model:value="model.email" placeholder=" "  clearable/>
             </n-form-item-gi>
             
 
             <!-- 註冊紐 -->
             <n-gi :span="15">
-              <div :span="5" style="display: flex; justify-content: flex-end">
-                <n-button round type="primary" @click="ButtonClickR" :loading="loading" color="#F9B02D">
+              <div :span="5" >
+                <n-button round type="primary" @click="ButtonClickR" :loading="loading" color="#F9B02D" style="position: relative; top: 0%; left:85%;">
                   &nbsp;註&nbsp;冊&nbsp;
                 </n-button>
               </div>
@@ -78,7 +76,7 @@
     </div>
     <!-- 連結到 登入頁 -->
     <div id="login">
-      <n-menu :options="menuOptions" @update:value="handleUpdateValue"/>
+      <n-menu :options="menuOptions" />
     </div>
   <!-- <pre>{{ JSON.stringify(model, null, 2) }}
   </pre> -->
@@ -251,17 +249,17 @@ function ButtonClickR(e) {
 </script>
 
 <style lang="scss" scoped>
-
   .bg_g 
     {
+      margin-top: 22vh;
       width: 100vw;
-      // height: 100vh;
+      height: 80vh;
       background: #2F4F4f;
     .box 
       {
         border-radius: 20px;
-        width: 65%;
-        height: 60vh;
+        width: 60%;
+        height: 80%;
         margin: auto;
         margin-top: 3%;
         background-color: #f8e9d6;
@@ -295,6 +293,7 @@ function ButtonClickR(e) {
           // margin-right: 3%;
           padding-top: 4%;
 
+          
         }
       }
 
@@ -303,6 +302,12 @@ function ButtonClickR(e) {
     
 </style>
 <style>
+  #dc_info button {
+  position: fixed;
+  top: 55%;
+  left: -15%;
+
+  }
   #login {
   width: 20vw;
   position: relative;

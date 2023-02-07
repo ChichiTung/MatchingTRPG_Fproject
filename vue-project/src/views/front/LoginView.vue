@@ -22,9 +22,9 @@
             </n-form-item-gi>
 
             <n-gi :span="6">
-              <div :span="6" style="display: flex; justify-content: center; margin-left: -10%;">
-                <n-button round type="primary" @click="ButtonClickR" :loading="loading" color="#F9B02D" size="large">
-                 &nbsp;&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;錄&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <div :span="6">
+                <n-button round type="primary" @click="ButtonClickR" :loading="loading" color="#F9B02D" size="large" style="position: relative; top: 50%; left:30%;">
+                &nbsp;&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;錄&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </n-button>
               </div>
             </n-gi>
@@ -46,10 +46,6 @@
 import { defineComponent, ref, reactive } from "vue"
 import { useMessage, NIcon } from "naive-ui"
 
-/**
-   * js 文件下使用这个做类型提示
-   * @type import('naive-ui').GlobalThemeOverrides
-   */
 
 import validator from 'validator'
 import { api } from '@/plugins/axios'
@@ -210,14 +206,15 @@ function ButtonClickR(e) {
 <style lang="scss" scoped>
   .bg_g 
     {
+      margin-top: 22vh;
       width: 100vw;
-      // height: 100vh;
+      height: 80vh;
       background: #2F4F4f;
     .box 
       {
         border-radius: 20px;
-        width: 65%;
-        height: 60vh;
+        width: 60%;
+        height: 80%;
         margin: auto;
         margin-top: 3%;
         background-color: #f8e9d6;
@@ -241,16 +238,16 @@ function ButtonClickR(e) {
           height: 98%;
           margin: auto;
           margin-right: 0%;
-          padding-top: 7%;
+          padding-top: 10%;
           position: relative;
           
           &:before{
           content: "歡迎回家，探索者 ！";
           position: absolute;
-          top: 3%;
+          top: 5%;
           left: 20%;
           color: rgb(45, 81, 37);
-          font-weight: 1000;
+          font-weight: 800;
           font-size: 20px;
         }
 
@@ -260,7 +257,7 @@ function ButtonClickR(e) {
     }
     
 </style>
-<style scoped>
+<style>
  #login {
   width: 20vw;
   position: relative;

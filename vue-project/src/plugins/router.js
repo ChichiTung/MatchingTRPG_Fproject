@@ -67,7 +67,7 @@ const router = createRouter({
       ]
     },
     {
-      path: '/gm',
+      path: '/gm/',
       component: AdminLayout,
       children: [
         {
@@ -79,7 +79,7 @@ const router = createRouter({
           }
         }
         ,{
-          path: '/modulesedit',
+          path: 'modulesedit',
           name: 'modulesedit',
           component: () => import('@/views/gm/ModulesView.vue'),
           meta: {
@@ -89,7 +89,7 @@ const router = createRouter({
       ]
     },
     {
-      path: '/user',
+      path: '/user/',
       component: FrontLayout,
       children: [
         {
