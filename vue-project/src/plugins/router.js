@@ -1,8 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, START_LOCATION } from 'vue-router'
 import FrontLayout from '@/layouts/FrontLayout.vue'
 import AdminLayout from '@/layouts/AdminLayout.vue'
-// import FrontHomeView  from '@/views/front/HomeView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
+import { useUserStore } from '@/stores/user'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.BASE_URL),
@@ -24,35 +24,44 @@ const router = createRouter({
           name: 'register',
           component: () => import('@/views/front/RegisterView.vue'),
           meta: {
-            title: 'Matching TRPG | 註冊'
+            title: '註冊 | Matching TRPG'
           }
-        },{
+        },
+        {
+          path: 'login',
+          name: 'login',
+          component: () => import('@/views/front/LoginView.vue'),
+          meta: {
+            title: ' 登錄 | Matching TRPG'
+          }
+        },
+        {
           path: 'module',
           name: 'module',
           component: () => import('@/views/front/ModulesView.vue'),
           meta: {
-            title: 'Matching TRPG | 劇本任務'
+            title: '劇本任務 | Matching TRPG'
           }
         },{
           path: 'discussion',
           name: 'discussion',
           component: () => import('@/views/front/DiscussionView.vue'),
           meta: {
-            title: 'Matching TRPG | 探索者心得'
+            title: '探索者心得 | Matching TRPG'
           }
         },{
           path: 'trpg',
           name: 'trpg',
           component: () => import('@/views/front/TrpgView.vue'),
           meta: {
-            title: 'Matching TRPG | TRPG ?'
+            title: 'TRPG ? | Matching TRPG'
           }
         },{
           path: 'aboutus',
           name: 'aboutus',
           component: () => import('@/views/front/AboutusView.vue'),
           meta: {
-            title: 'Matching TRPG | 關於邁欽 ?'
+            title: '關於邁欽 | Matching TRPG'
           }
         }
       ]
@@ -66,7 +75,7 @@ const router = createRouter({
           name: 'gm',
           component: () => import('@/views/gm/HomeView.vue'),
           meta: {
-            title: 'MatchingTRPG | GM'
+            title: 'GM | MatchingTRPG'
           }
         }
         ,{
@@ -74,7 +83,7 @@ const router = createRouter({
           name: 'modulesedit',
           component: () => import('@/views/gm/ModulesView.vue'),
           meta: {
-            title: 'MatchingTRPG | 上架模組'
+            title: '上架模組 | MatchingTRPG'
           }
         }
       ]
@@ -88,7 +97,7 @@ const router = createRouter({
           name: 'user',
           component: () => import('@/views/user/HomeView.vue'),
           meta: {
-            title: 'MatchingTRPG | Player'
+            title: '探索者檔案 | MatchingTRPG'
           }
         }
         
@@ -99,7 +108,7 @@ const router = createRouter({
       name: '404',
       component: NotFoundView,
       meta: {
-        title: 'Matching TRPG | Not Found'
+        title: 'Not Found | Matching TRPG'
       }
     },
     {
@@ -112,6 +121,22 @@ const router = createRouter({
 
 router.afterEach((to, from) => {
   document.title = to.meta.title
+})
+
+router.beforeEach(async (to, from, next) => {
+  const user = useUserStore()
+  if (from === START_LOCATION) {
+    await user.getUser()
+  }
+  if (user.isLogin && (to.path === '/register' || to.path === '/login')) {
+    next('/')
+  } else if (to.meta.login && !user.isLogin) {
+    next('/login')
+  } else if (to.meta.admin && !user.isAdmin) {
+    next('/')
+  } else {
+    next()
+  }
 })
 
 export default router

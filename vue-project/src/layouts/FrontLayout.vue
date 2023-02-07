@@ -1,10 +1,10 @@
 <template>
   
     <n-config-provider>
-      <n-space justify="space-between" style="margin: 3vh 2vw;">
+      <n-space justify="space-between" style="margin: 3vh 2vw; display: flex;">
         <img src="url('../../image/TRPG_LOGO.png" alt="logo" class="logo">
         <n-button @click="activate('right')" text
-      style="margin-top: 50%; margin-left: -100% ;"
+      
         >
       <!-- DataBarHorizontal20Filled -->
           <n-icon size="40" color="#F8E9D6">
@@ -169,6 +169,9 @@ body {
     color: #F9B02D}
 .logo {
   width: 20%;
+}
+.n-menu-item {
+  text-align: center;
 }
 
 

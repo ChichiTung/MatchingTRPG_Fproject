@@ -11,7 +11,6 @@ import { dateZhCN } from 'naive-ui';
 
 const themeOverrides = {
     // background-color: '#2F4F4F',
-    
     common: {
       bodyColor: '#2F4F4F',
       primaryColor: '#F8E9D6',
@@ -49,13 +48,30 @@ const themeOverrides = {
     Menu: {
       color: "#2F4F4FFF",
       itemColorActive: '#FFAC4D44',
-      itemColorHover: 'rgba(255,204,145,0.6)',
+      itemColorHover: '#F9B02D88',
       itemTextColor: '#F8E9D6',
       // itemTextColorActiveHover: ''
       
       itemTextColorActive: "#FFAC4DFF",
       itemTextColorActiveHover: "#FCD837FF"
+    },
+    Popconfirm:{
+      iconSize: '10px',
+    },
+    Message:{
+      iconSize: '10px',
+      iconMargin: '8px 15px 0px 0px',
+      textColorInfo: '#e8808088',
+      colorSuccess:'#e8808077',
+      colorError:'#e8808077',
+      colorWarning:'#e8808077',
+      colorLoading:'#e8808077',
+
+      // iconColorSuccess:'#63e2b7',
+      // iconColorWarning:'#f2c97d',
+      // iconColorError:'#e88080'
     }
+
     // ...
   }
 
@@ -71,18 +87,17 @@ const themeOverrides = {
 </style>
 
 <template>
-  <v-app>
-    <n-config-provider :date-locale="dateZhCN" :theme-overrides="themeOverrides">
+    <n-config-provider :date-locale="dateZhCN" :theme-overrides="themeOverrides" :breakpoints="{ xs: 0, s: 576, m: 768, l: 992, xl: 1200, xxl: 1400 }">
       <n-loading-bar-provider>
       <n-message-provider>
         <n-notification-provider>
           <n-dialog-provider>
-            <router-view></router-view>
+          <router-view/>     
+          <!-- </router-view> -->
           </n-dialog-provider>
         </n-notification-provider>
         </n-message-provider>
       </n-loading-bar-provider>
   </n-config-provider>
-  </v-app>
-  </template>
+</template>
   

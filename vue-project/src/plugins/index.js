@@ -6,13 +6,15 @@
 
 // Plugins
 import { loadFonts } from './webfontloader'
-// import vuetify from './vuetify'
 import router from './router'
-// import pinia from './pinia'
+import pinia from './pinia'
+import { useUserStore } from '@/stores/user'
+import VImageInput from 'vue3-img-input'
+// import '@/styles/main.sass'
 
-export function registerPlugins (app) {
+export async function registerPlugins (app) {
   loadFonts()
+  app.use(pinia)
   app.use(router)
-  // app.use(pinia)
-  // app.use(vuetify)
+  app.component('VImageInput', VImageInput)
 }

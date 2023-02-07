@@ -1,7 +1,5 @@
 import users from '../models/users.js'
-import modules from '../models/modules.js'
 import jwt from 'jsonwebtoken'
-import modules from '../models/modules.js'
 
 export const register = async (req, res) => {
   try {
@@ -91,50 +89,50 @@ export const getUser = (req, res) => {
 }
 
 // 處理˙(缺測試)
-export const editFavorite = async (req, res) => {
-  try {
-    // 找收藏有沒有此商品
-    const idx = req.user.favorite.findIndex(favorite => favorite.m_id.toString() === req.body.m_id)
-    if (idx > -1) {
-      // 如果有，檢查新數量是多少
-      const status = req.user.favorite[idx].status 
+// export const editFavorite = async (req, res) => {
+//   try {
+//     // 找收藏有沒有此商品
+//     const idx = req.user.favorite.findIndex(favorite => favorite.m_id.toString() === req.body.m_id)
+//     if (idx > -1) {
+//       // 如果有，檢查新數量是多少
+//       const status = req.user.favorite[idx].status
 
-      console.log(req.body.status)
+//       console.log(req.body.status)
 
-      if (status <= 0) {
-        // 如果新數量小於 0，從購物車陣列移除
-        req.user.favorite.splice(idx, 1)
-      }
-    } else {
-      // 如果購物車內沒有此商品，檢查商品是否存在
-      const modules = await modules.findById(req.body.m_id)
-      // 如果不存在，回應 404
-      if (!modules || !modules.living) {
-        res.status(404).send({ success: false, message: '找不到' })
-        return
-      }
-      // 如果存在，加入購物車陣列
-      req.user.favorite.push({
-        m_id: req.body.m_id,
-        status: parseInt(1)
-      })
-    }
-    await req.user.save()
-    res.status(200).json({ success: true, message: '', result: req.user.favorite })
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      res.status(400).json({ success: false, message: error.errors[Object.keys(error.errors)[0]].message })
-    } else {
-      res.status(500).json({ success: false, message: '未知錯誤' })
-    }
-  }
-}
+//       if (status <= 0) {
+//         // 如果新數量小於 0，從購物車陣列移除
+//         req.user.favorite.splice(idx, 1)
+//       }
+//     } else {
+//       // 如果購物車內沒有此商品，檢查商品是否存在
+//       const modules = await modules.findById(req.body.m_id)
+//       // 如果不存在，回應 404
+//       if (!modules || !modules.living) {
+//         res.status(404).send({ success: false, message: '找不到' })
+//         return
+//       }
+//       // 如果存在，加入購物車陣列
+//       req.user.favorite.push({
+//         m_id: req.body.m_id,
+//         status: parseInt(1)
+//       })
+//     }
+//     await req.user.save()
+//     res.status(200).json({ success: true, message: '', result: req.user.favorite })
+//   } catch (error) {
+//     if (error.name === 'ValidationError') {
+//       res.status(400).json({ success: false, message: error.errors[Object.keys(error.errors)[0]].message })
+//     } else {
+//       res.status(500).json({ success: false, message: '未知錯誤' })
+//     }
+//   }
+// }
 
-export const getFavorite = async (req, res) => {
-  try {
-    const result = await users.findById(req.user._id, 'favorite').populate('favorite.m_id')
-    res.status(200).json({ success: true, message: '', result: result.favorite })
-  } catch (error) {
-    res.status(500).json({ success: false, message: '未知錯誤' })
-  }
-}
+// export const getFavorite = async (req, res) => {
+//   try {
+//     const result = await users.findById(req.user._id, 'favorite').populate('favorite.m_id')
+//     res.status(200).json({ success: true, message: '', result: result.favorite })
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: '未知錯誤' })
+//   }
+// }

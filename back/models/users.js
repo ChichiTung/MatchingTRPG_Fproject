@@ -54,19 +54,19 @@ const schema = new Schema({
   dc_id: {
     type: Number,
     required: [true, '缺少 DC 使用者名稱 # 後 4 碼數字'],
-    unique: true,
-    validate: {
-      validator: function (dcId) {
-        if (dcId.length === 4) {
-          return true
-        } else {
-          return false
-        }
-      },
-      message: 'DC 使用者名稱 # 後只有 4 位數字'
-    }
+    unique: true
+    // validate: {
+    //   validator: function (dcId) {
+    //     if (dcId.length === 4) {
+    //       return true
+    //     } else {
+    //       return false
+    //     }
+    //   },
+    //   message: 'DC 使用者名稱 # 後只有 4 位數字'
+    // }
   },
-  
+
   tokens: {
     type: [String],
     default: []
@@ -80,9 +80,9 @@ const schema = new Schema({
     type: Number,
     // 0:使用者, 1:管理者
     default: 0
-  },
-  //startDate:
-  //endDate
+  }
+  // startDate:
+  // endDate
 }, { versionKey: false })
 
 // 密碼加鹽

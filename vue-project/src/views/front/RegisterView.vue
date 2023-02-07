@@ -1,6 +1,5 @@
 <template>
   <div class="bg_g">
-    <!-- <h3 style="color:bisque; position: relative; top: 10px; left: 100px;"> 初次見面，探索者！ </h3> -->
 
     <div class="box">
       <div class="box_img">
@@ -10,52 +9,77 @@
         <n-form ref="valid" :model="model" :rules="rules"
           label-placement="top"
         >
-          <n-grid :cols="24" :x-gap="24">
+          <n-grid cols="6 s:6 l:12" :x-gap="18" resonsive="screen" >
             <!-- account -->
-            <n-form-item-gi :span="10" label="登入帳號" path="account">
+            <n-form-item-gi :span="3" label="登入帳號" path="account">
               <n-input v-model:value="model.account" placeholder="英數字6碼以上" @keydown.enter.prevent/>
             </n-form-item-gi>
             <!-- nickname -->
-            <n-form-item-gi :span="10" label="探索者暱稱" path="nickname">
+            <n-form-item-gi :span="3" label="探索者暱稱" path="nickname">
               <n-input v-model:value="model.nickname" placeholder="想被怎麼稱呼呢?" />
             </n-form-item-gi>
             <!-- password -->
-            <n-form-item-gi :span="10" label="密碼" path="password">
+            <n-form-item-gi :span="3" label="密碼" path="password">
               <n-input v-model:value="model.password" type="password" placeholder="英數字6碼以上" />
             </n-form-item-gi>
             <!-- confirmPassword -->
-            <n-form-item-gi :span="10" label="再次輸入密碼"  path="confirmPassword">
+            <n-form-item-gi :span="3" label="再次輸入密碼"  path="confirmPassword">
               <n-input v-model:value="model.confirmPassword" placeholder=" " type="password"
               />
             </n-form-item-gi>
-            <!-- email -->
-            <n-form-item-gi :span="10" label="E-mail" path="email" >
-              <n-input v-model:value="model.email" placeholder=" " />
-            </n-form-item-gi>
+            
             <!-- discord account -->
-            <n-form-item-gi :span="6" label="Discord 帳號" path="dc_account" 
+            <n-form-item-gi :span="2" label="Discord 帳號" path="dc_account" 
             style="--n-label-text-color: #3b3ace !important;">
+              
+
               <n-input v-model:value="model.dc_account" placeholder="使用者名稱" style="--n-color: #5865F248;  --n-placeholder-color: #3b3ace88; margin-right: -2%;"/>
             </n-form-item-gi>
 
-            <n-form-item-gi :span="4" path="dc_id" style="margin-left:-20px">
+            <n-form-item-gi :span="1" path="dc_id" style="margin-left:-10px; margin-right:10px">
             <span style="color:#5865F2"> # </span>
               <n-input v-model:value="model.dc_id" placeholder="OOOO" style="--n-color: #5865F248; --n-placeholder-color: #3b3ace88; margin-left: 2%"/>
+
+              <div class="dc_info" style=" position: relative; margin-top: -70px; margin-left: -40px; --n-color: #2d3bf947; --n-padding: 0 0px;">
+
+                <n-popconfirm  @positive-click="handlePositiveClick" @negative-click="handleNegativeClick"
+                style="font-size: 24px; color: #3b3aceaa; font-weight: 600;"
+                :show-icon="false">
+                  <template #trigger>
+                    <n-button  text style="font-size: 24px; color: #3b3aceaa;">
+                      <template #icon> <InfoCircle/> </template>
+                    </n-button>
+                  </template>
+                  點開 DC 個人資料，ex: 小明#0857
+                </n-popconfirm>
+
+              </div>
             </n-form-item-gi>
 
+            <!-- email -->
+            <n-form-item-gi :span="3" label="E-mail" path="email" >
+              <n-input v-model:value="model.email" placeholder=" " />
+            </n-form-item-gi>
+            
+
             <!-- 註冊紐 -->
-            <n-gi :span="24">
-              <div style="display: flex; justify-content: flex-end">
+            <n-gi :span="15">
+              <div :span="5" style="display: flex; justify-content: flex-end">
                 <n-button round type="primary" @click="ButtonClickR" :loading="loading" color="#F9B02D">
                   &nbsp;註&nbsp;冊&nbsp;
                 </n-button>
               </div>
             </n-gi>
+
           </n-grid>
         </n-form>
 
       </div>
-</div>
+    </div>
+    <!-- 連結到 登入頁 -->
+    <div id="login">
+      <n-menu :options="menuOptions" @update:value="handleUpdateValue"/>
+    </div>
   <!-- <pre>{{ JSON.stringify(model, null, 2) }}
   </pre> -->
   </div>
@@ -63,10 +87,19 @@
 
 <script setup>
 import { defineComponent, ref, reactive } from "vue"
-import { useMessage } from "naive-ui"
+import { useMessage, NIcon } from "naive-ui"
+
+/**
+   * js 文件下使用这个做类型提示
+   * @type import('naive-ui').GlobalThemeOverrides
+   */
+
 import validator from 'validator'
 import { api } from '@/plugins/axios'
 import { useRouter } from 'vue-router'
+import { RouterLink } from 'vue-router'
+import { InfoCircle } from '@vicons/fa'
+
 
 const router = useRouter()
 const message = useMessage()
@@ -128,12 +161,12 @@ const rules = {
     confirmPassword:[{
       required:true,
       validator(rule, value) {
-      if(!value){
-        return new Error('請再輸入一次密碼')
-      }
-      else if ( value !== model.value.password) {
-          return new Error('密碼不一致')
-        }
+        if(!value) {
+          return new Error('請再填一次密碼')
+        } 
+        // else if (value !== model.value.password) {
+        //   return new Error('密碼不一致')
+        // }
       },
       trigger: ['input', 'blur']
     }],
@@ -185,6 +218,21 @@ const register = async () => {
   }
 }
 
+const menuOptions = [
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            name: 'login'
+          }
+        },
+        { default: () => '我已經是探索者...' }
+      ),
+    key: 'go-login',
+  }]
+
 function ButtonClickR(e) {
   console.log(model.value)
   e.preventDefault()
@@ -198,6 +246,7 @@ function ButtonClickR(e) {
     }
   })
 }
+
 
 </script>
 
@@ -244,9 +293,29 @@ function ButtonClickR(e) {
           height: 98%;
           margin: auto;
           // margin-right: 3%;
-          padding-top: 2%;
+          padding-top: 4%;
 
         }
       }
+
+    
     }
+    
+</style>
+<style>
+  #login {
+  width: 20vw;
+  position: relative;
+  left: 70%;
+  }
+  #login .n-menu .n-menu-item-content .n-menu-item-content-header {
+      font-size: 20px;
+      font-weight: 600;
+      position: absolute;
+      right: 15%;
+    }
+  #login .n-menu .n-menu-item-content-header  a {
+      color: #F9B02D !important;
+      text-decoration: underline !important;
+}
 </style>
