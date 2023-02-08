@@ -1,17 +1,16 @@
-<script lang="ts">
+<script lang="ts" setup>
+// 主題
 import { NConfigProvider, GlobalThemeOverrides } from 'naive-ui'
 import { defineComponent, h, Component, ref } from 'vue'
-import { NIcon } from 'naive-ui'
-import type { DrawerPlacement } from 'naive-ui'
-import type { MenuOption } from 'naive-ui'
+import type { MenuOption, DrawerPlacement } from 'naive-ui'
 import { RouterLink } from 'vue-router'
-import {
-  DataBarHorizontal20Filled
-} from '@vicons/fluent'
+import { DataBarHorizontal20Filled } from '@vicons/fluent'
 
-function renderIcon (icon: Component) {
-  return () => h(NIcon, null, { default: () => h(icon) })
-}
+// 獲得用戶狀態
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '@/stores/user'
+
+// 主題
 const themeOverrides: GlobalThemeOverrides = {
     // background-color: '#2F4F4F',
     common: {
@@ -83,7 +82,9 @@ const themeOverrides: GlobalThemeOverrides = {
     // ...
   }
 
-
+  const user = useUserStore()
+  const { isLogin, isAdmin, favorite } = storeToRefs(user)
+  const { logout } = user
 
 const menuOptions: MenuOption[] = [
   {
@@ -144,12 +145,13 @@ const menuOptions: MenuOption[] = [
         RouterLink,
         {
           to: {
-            name:'register'
+            name:'login'
           }
         },
         { default: () => '登入/註冊' }
       ),
-    key: 'go-to-register',
+    key: 'go-to-login',
+    show: user.role !== (0 || 1)
   },
   {
     label: () =>
@@ -162,7 +164,8 @@ const menuOptions: MenuOption[] = [
         },
         { default: () => '探索者檔案' }
       ),
-    key: 'go-to-work',
+    key: 'go-to-user',
+    show: user.role === (1||0)
   },
   {
     label: () =>
@@ -175,39 +178,49 @@ const menuOptions: MenuOption[] = [
         },
         { default: () => 'GM 專區' }
       ),
-    key: 'go-to-work',
+    key: 'go-to-gm',
+    // show: user.role === ( 0 || 1)
   }
 ]
 
-
-
-export default defineComponent({
-  components: {
-    DataBarHorizontal20Filled
-  },
-  setup () {
-    const active = ref(false)
+const active = ref(false)
     const placement = ref<DrawerPlacement>('right')
     const activate = (place: DrawerPlacement) => {
       active.value = true
       placement.value = place
     }
-    return {
-      active,
-      placement,
-      activate,
-      menuOptions,
-      DataBarHorizontal20Filled,
-      themeOverrides
-    }
-  }
-})
+
+
+
+// export default defineComponent({
+//   components: {
+//     DataBarHorizontal20Filled
+//   },
+//   setup () {
+    
+
+    
+    
+
+
+//     return {
+//       active,
+//       placement,
+//       activate,
+//       menuOptions,
+//       DataBarHorizontal20Filled,
+//       themeOverrides,
+//       user,
+//       isLogin,
+//       isAdmin,
+//       favorite,
+//       logout
+//     }
+//   }
+// })
 </script>
 
 <style>
-/* body {
-  background-color: #2F4F4F;
-} */
 #navbar img {
   position: fixed;
   top: 2%;

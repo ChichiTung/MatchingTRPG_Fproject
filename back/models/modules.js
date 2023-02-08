@@ -8,7 +8,7 @@ const schema = new Schema({
     required: [true, '缺少模組名稱']
   },
   gm_id: {
-    type:ObjectId,
+    type: ObjectId,
     ref: 'users',
     required: [true, '缺少GM']
   },

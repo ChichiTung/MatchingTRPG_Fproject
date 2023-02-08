@@ -1,3 +1,3 @@
 <template>
-  <div class="note"></div>
+  <!-- <div class="note"></div> -->
 </template>

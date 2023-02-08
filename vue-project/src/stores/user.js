@@ -8,11 +8,10 @@ import router from '@/plugins/router'
 export const useUserStore = defineStore('user', () => {
   const token = ref('')
   const account = ref('')
-  const nickname = ref('') 
-  const dc_account = ref('')
-  const dc_id = ref('')
+  const nickname = ref('')
+  const dcAccount = ref('')
+  const dcId = ref('')
   const email = ref('')
-  
   const role = ref(0)
   const favorite = ref(0)
 
@@ -34,9 +33,8 @@ export const useUserStore = defineStore('user', () => {
       account.value = data.result.account
       email.value = data.result.email
       nickname.value = data.result.nickname
-      dc_account.value = data.result.dc_account
-      dc_id.value = data.result.dc_id
-
+      dcAccount.value = data.result.dc_account
+      dcId.value = data.result.dc_id
 
       favorite.value = data.result.favorite
       role.value = data.result.role
@@ -86,8 +84,8 @@ export const useUserStore = defineStore('user', () => {
       account.value = data.result.account
       nickname.value = data.result.nickname
       email.value = data.result.email
-      dc_account.value = data.result.dc_account
-      dc_id.value = data.result.dc_id
+      dcAccount.value = data.result.dc_account
+      dcId.value = data.result.dc_id
 
       favorite.value = data.result.favorite
       role.value = data.result.role
@@ -101,8 +99,8 @@ export const useUserStore = defineStore('user', () => {
     account,
     email,
     nickname,
-    dc_account,
-    dc_id,
+    dcAccount,
+    dcId,
     favorite,
     role,
     login,

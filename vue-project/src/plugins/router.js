@@ -6,17 +6,17 @@ import { useUserStore } from '@/stores/user'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.BASE_URL),
-  routes:[
+  routes: [
     {
       path: '/',
       component: FrontLayout,
       children: [
         {
-          path:'',
+          path: '',
           name: 'home',
           component: () => import('@/views/front/HomeView.vue'),
           meta: {
-            title:'Matching TRPG'
+            title: 'Matching TRPG'
           }
         },
         {
@@ -42,21 +42,21 @@ const router = createRouter({
           meta: {
             title: '劇本任務 | Matching TRPG'
           }
-        },{
+        }, {
           path: 'discussion',
           name: 'discussion',
           component: () => import('@/views/front/DiscussionView.vue'),
           meta: {
             title: '探索者心得 | Matching TRPG'
           }
-        },{
+        }, {
           path: 'trpg',
           name: 'trpg',
           component: () => import('@/views/front/TrpgView.vue'),
           meta: {
             title: 'TRPG ? | Matching TRPG'
           }
-        },{
+        }, {
           path: 'aboutus',
           name: 'aboutus',
           component: () => import('@/views/front/AboutusView.vue'),
@@ -77,8 +77,8 @@ const router = createRouter({
           meta: {
             title: 'GM | MatchingTRPG'
           }
-        }
-        ,{
+        },
+        {
           path: 'modulesedit',
           name: 'modulesedit',
           component: () => import('@/views/gm/ModulesView.vue'),
@@ -100,7 +100,7 @@ const router = createRouter({
             title: '探索者檔案 | MatchingTRPG'
           }
         }
-        
+
       ]
     },
     {
@@ -124,6 +124,7 @@ router.afterEach((to, from) => {
 })
 
 router.beforeEach(async (to, from, next) => {
+  console.log('beforeEach')
   const user = useUserStore()
   if (from === START_LOCATION) {
     await user.getUser()

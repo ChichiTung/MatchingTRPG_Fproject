@@ -4,16 +4,14 @@
 
     <div class="box">
       <div class="box_img">
-      </div>          
+      </div>
       <div class="box_form">
 
-        <n-form ref="valid" :model="model" :rules="rules"
-          label-placement="top"
-        >
+        <n-form ref="valid" :model="model" :rules="rules" label-placement="top">
           <n-grid cols="6 s:6 l:12" :y-gap="18">
             <!-- account -->
             <n-form-item-gi :span="5" label="登入帳號" path="account">
-              <n-input v-model:value="model.account" placeholder="英數字6碼以上" @keydown.enter.prevent/>
+              <n-input v-model:value="model.account" placeholder="英數字6碼以上" @keydown.enter.prevent />
             </n-form-item-gi>
 
             <!-- password -->
@@ -23,8 +21,8 @@
 
             <n-gi :span="6">
               <div :span="6">
-                <n-button round type="primary" @click="ButtonClickR" :loading="loading" color="#F9B02D" size="large" style="position: relative; top: 50%; left:30%;">
-                &nbsp;&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;錄&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <n-button round type="primary" :loading="loading" color="#F9B02D" size="large" style="position: relative; top: 50%; left:30%;" @click="ButtonClickR">
+                  &nbsp;&nbsp;&nbsp;&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;錄&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </n-button>
               </div>
             </n-gi>
@@ -35,7 +33,7 @@
     </div>
     <!-- 連結到 登入頁 -->
     <div id="login">
-      <n-menu :options="menuOptions" @update:value="handleUpdateValue" />
+      <n-menu :options="menuOptions" />
     </div>
   <!-- <pre>{{ JSON.stringify(model, null, 2) }}
   </pre> -->
@@ -43,133 +41,71 @@
 </template>
 
 <script setup>
-import { defineComponent, ref, reactive } from "vue"
-import { useMessage, NIcon } from "naive-ui"
-
-
+import { ref, reactive } from 'vue'
+import { useUserStore } from '@/stores/user'
+import { useRouter, RouterLink } from 'vue-router'
+import { useMessage } from 'naive-ui'
 import validator from 'validator'
-import { api } from '@/plugins/axios'
-import { useRouter } from 'vue-router'
-import { RouterLink } from 'vue-router'
-import { InfoCircle } from '@vicons/fa'
 
-
-const router = useRouter()
-const message = useMessage()
+const user = useUserStore()
 const valid = ref(null)
 const loading = ref(false)
+const message = useMessage()
 
 const model = reactive({
   account: '',
-  nickname:'',
-  password:'',
-  confirmPassword:'',
-  email:'',
-  dc_account:'',
-  dc_id:''
+  password: ''
 })
 
 const rules = {
   account: [
     {
       required: true,
-      validator(rule, value) {
-        if(!value) {
+      validator (rule, value) {
+        if (!value) {
           return new Error('帳號欄位必填')
         } else if (value.length < 5 || value.length > 21) {
           return new Error('帳號長度須為 6 ~ 20 字')
-        } else if(!validator.isAlphanumeric(value)) {
-          return new Error ('格式不正確')
+        } else if (!validator.isAlphanumeric(value)) {
+          return new Error('格式不正確')
         }
       },
       trigger: ['input', 'blur']
     }
   ],
-  nickname: [
-    {
-      required: true,
-      validator(rule, value) {
-        if(!value) {
-          return new Error('探索者暱稱欄位必填')
-        } else if ( value.length > 21) {
-          return new Error('暱稱長度過長')
-        }
-      },
-      trigger: ['input', 'blur']
-    },
-  ],
-    password:[{
-      required: true,
-      validator(rule, value) {
-        if(!value) {
-          return new Error('密碼欄位必填')
-        } else if (value.length < 5 || value.length > 21) {
-          return new Error('密碼長度須為 6 ~ 20 字')
-        } else if(!validator.isAlphanumeric(value)) {
-          return new Error ('格式不正確')
-        }
-      },
-      trigger: ['input', 'blur']
-    }],
-    confirmPassword:[{
-      required:true,
-      validator(rule, value) {
-      if(!value){
-        return new Error('請再輸入一次密碼')
+  password: [{
+    required: true,
+    validator (rule, value) {
+      if (!value) {
+        return new Error('密碼欄位必填')
+      } else if (value.length < 5 || value.length > 21) {
+        return new Error('密碼長度須為 6 ~ 20 字')
+      } else if (!validator.isAlphanumeric(value)) {
+        return new Error('格式不正確')
       }
-      else if ( value !== model.value.password) {
-          return new Error('密碼不一致')
-        }
-      },
-      trigger: ['input', 'blur']
-    }],
-    email:[{
-      required: true,
-      validator(rule, value) {
-        if(!value){
-          return new Error('email 欄位為必填')
-        }
-        else if(!validator.isEmail(value)) {
-          return new Error ('信箱格式不正確')
-        }
-      },
-      trigger: ['input', 'blur']
-    }],
-    dc_account:[{
-      required:true,
-      validator(rule, value) {
-        if(!value) {
-          return new Error ('此欄位必填')
-        }
-      },
-      trigger: ['input', 'blur']
-    }],
-    dc_id:[{
-      required:true,
-      validator(rule, value) {
-        if(!value) {
-          return new Error ('此欄位必填')
-        } else if (!validator.isNumeric(value) || value.length !== 4) {
-          return new Error ('是 4 位數字')
-        }
-      },
-      trigger: ['input', 'blur']
-    }],
+    },
+    trigger: ['input', 'blur']
+  }]
 
 }
-
-const register = async () => {
-  // 如果 valid(form.value) 是 null 的時候 return
-  if (!model.value === null) return
+const login = async () => {
   loading.value = true
-  try {
-    await api.post('/users', model)
-    router.push('/')
-  } catch (error) {
-    console.log(error?.response?.data?.message)
-    loading.value = false
-  }
+  await user.login(model)
+  loading.value = false
 }
+
+// const login= async () => {
+//   // 如果 valid(form.value) 是 null 的時候 return
+//   if (!model.value === null) return
+//   loading.value = true
+//   try {
+//     await api.post('/users', model)
+//     router.push('/')
+//   } catch (error) {
+//     console.log(error?.response?.data?.message)
+//     loading.value = false
+//   }
+// }
 
 const menuOptions = [
   {
@@ -183,16 +119,16 @@ const menuOptions = [
         },
         { default: () => '我還不是探索者 !!' }
       ),
-    key: 'go-register',
+    key: 'go-register'
   }]
 
-function ButtonClickR(e) {
+function ButtonClickR (e) {
   console.log(model.value)
   e.preventDefault()
   valid.value?.validate(errors => {
     if (!errors) {
       message.success('登錄成功')
-      register()
+      login()
     } else {
       console.log(errors)
       message.error('登錄失敗')
@@ -200,17 +136,16 @@ function ButtonClickR(e) {
   })
 }
 
-
 </script>
 
 <style lang="scss" scoped>
-  .bg_g 
+  .bg_g
     {
       margin-top: 22vh;
       width: 100vw;
       height: 80vh;
       background: #2F4F4f;
-    .box 
+    .box
       {
         border-radius: 20px;
         width: 60%;
@@ -221,8 +156,6 @@ function ButtonClickR(e) {
         display: flex;
         box-shadow: 2px 4px 15px 5px rgba(14, 14, 14, 0.3);
         position: relative;
-
-        
 
         .box_img {
           width: 40%;
@@ -240,7 +173,7 @@ function ButtonClickR(e) {
           margin-right: 0%;
           padding-top: 10%;
           position: relative;
-          
+
           &:before{
           content: "歡迎回家，探索者 ！";
           position: absolute;
@@ -251,11 +184,10 @@ function ButtonClickR(e) {
           font-size: 20px;
         }
 
-
         }
       }
     }
-    
+
 </style>
 <style>
  #login {

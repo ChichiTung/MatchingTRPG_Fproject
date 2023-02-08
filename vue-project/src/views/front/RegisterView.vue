@@ -3,49 +3,44 @@
 
     <div class="box">
       <div class="box_img">
-        <!-- <img src="../../../image/5b030a40b198ffb7fbd039c36c941459.jpg" alt=""> -->
-      </div>          
+      </div>
       <div class="box_form">
-        <n-form ref="valid" :model="model" :rules="rules"
+        <n-form
+          ref="valid" :model="model" :rules="rules"
           label-placement="top"
         >
-          <n-grid cols="6 s:6 l:12" :x-gap="18" resonsive="screen" >
+          <n-grid cols="6 s:6 l:12" :x-gap="18" resonsive="screen">
             <!-- account -->
             <n-form-item-gi :span="3" label="登入帳號" path="account">
-              <n-input v-model:value="model.account" maxlength="20"  clearable placeholder="英數字6碼以上" @keydown.enter.prevent />
+              <n-input v-model:value="model.account" maxlength="20" clearable placeholder="英數字6碼以上" @keydown.enter.prevent />
             </n-form-item-gi>
             <!-- nickname -->
             <n-form-item-gi :span="3" label="探索者暱稱" path="nickname">
-              <n-input v-model:value="model.nickname" maxlength="20"  clearable placeholder="想被怎麼稱呼呢?" />
+              <n-input v-model:value="model.nickname" maxlength="20" clearable placeholder="想被怎麼稱呼呢?" />
             </n-form-item-gi>
             <!-- password -->
             <n-form-item-gi :span="3" label="密碼" path="password">
-              <n-input v-model:value="model.password" type="password" placeholder="英數字6碼以上"  clearable/>
+              <n-input v-model:value="model.password" type="password" placeholder="英數字6碼以上" clearable />
             </n-form-item-gi>
             <!-- confirmPassword -->
-            <n-form-item-gi :span="3" label="再次輸入密碼"  path="confirmPassword">
-              <n-input v-model:value="model.confirmPassword" placeholder=" " type="password"
-               clearable/>
+            <n-form-item-gi :span="3" label="再次輸入密碼" path="confirmPassword">
+              <n-input v-model:value="model.confirmPassword" placeholder=" " type="password" clearable />
             </n-form-item-gi>
-            
             <!-- discord account -->
-            <n-form-item-gi :span="2" label="Discord 帳號" path="dc_account" 
-            style="--n-label-text-color: #3b3ace !important;">
-              
+            <n-form-item-gi :span="2" label="Discord 帳號" path="dc_account" style="--n-label-text-color: #3b3ace !important;">
 
-              <n-input v-model:value="model.dc_account" placeholder="使用者名稱" style="--n-color: #5865F248;  --n-placeholder-color: #3b3ace88; margin-right: -2%;" clearable/>
+              <n-input v-model:value="model.dc_account" placeholder="使用者名稱" style="--n-color: #5865F248;  --n-placeholder-color: #3b3ace88; margin-right: -2%;" clearable />
             </n-form-item-gi>
 
             <n-form-item-gi :span="1" path="dc_id" style="margin-left:-10px; margin-right:10px">
-            <span style="color:#5865F2"> # </span>
-              <n-input v-model:value="model.dc_id" placeholder="OOOO" style="--n-color: #5865F248; --n-placeholder-color: #3b3ace88; margin-left: 2%" clearable/>
+              <span style="color:#5865F2"> # </span>
+              <n-input v-model:value="model.dc_id" placeholder="OOOO" style="--n-color: #5865F248; --n-placeholder-color: #3b3ace88; margin-left: 2%" clearable />
 
               <div id="dc_info" style=" position: absolute; margin-top: 50%; margin-left: 50%; --n-color: #2d3bf947; --n-padding: 0 0px;">
-                <n-popconfirm positive-text="ok" :negative-text="null" :show-icon="false" style="font-size: 24px; color: #3b3aceaa; font-weight: 600;"
-                >
+                <n-popconfirm positive-text="ok" :negative-text="null" :show-icon="false" style="font-size: 24px; color: #3b3aceaa; font-weight: 600;">
                   <template #trigger>
                     <n-button text style="font-size: 24px; color: #3b3aceaa;">
-                      <template #icon> <InfoCircle/> </template>
+                      <template #icon> <InfoCircle /> </template>
                     </n-button>
                   </template>
                   點開 DC 個人資料，ex: 小明#0857
@@ -55,15 +50,14 @@
             </n-form-item-gi>
 
             <!-- email -->
-            <n-form-item-gi :span="3" label="E-mail" path="email" >
-              <n-input v-model:value="model.email" placeholder=" "  clearable/>
+            <n-form-item-gi :span="3" label="E-mail" path="email">
+              <n-input v-model:value="model.email" placeholder=" " clearable />
             </n-form-item-gi>
-            
 
             <!-- 註冊紐 -->
             <n-gi :span="15">
-              <div :span="5" >
-                <n-button round type="primary" @click="ButtonClickR" :loading="loading" color="#F9B02D" style="position: relative; top: 0%; left:85%;">
+              <div :span="5">
+                <n-button round type="primary" :loading="loading" color="#F9B02D" style="position: relative; top: 0%; left:85%;" @click="ButtonClickR">
                   &nbsp;註&nbsp;冊&nbsp;
                 </n-button>
               </div>
@@ -84,8 +78,8 @@
 </template>
 
 <script setup>
-import { defineComponent, ref, reactive } from "vue"
-import { useMessage, NIcon } from "naive-ui"
+import { defineComponent, ref, reactive } from 'vue'
+import { useMessage, NIcon } from 'naive-ui'
 
 /**
    * js 文件下使用这个做类型提示
@@ -94,10 +88,9 @@ import { useMessage, NIcon } from "naive-ui"
 
 import validator from 'validator'
 import { api } from '@/plugins/axios'
-import { useRouter } from 'vue-router'
-import { RouterLink } from 'vue-router'
-import { InfoCircle } from '@vicons/fa'
+import { useRouter, RouterLink } from 'vue-router'
 
+import { InfoCircle } from '@vicons/fa'
 
 const router = useRouter()
 const message = useMessage()
@@ -106,25 +99,25 @@ const loading = ref(false)
 
 const model = reactive({
   account: '',
-  nickname:'',
-  password:'',
-  confirmPassword:'',
-  email:'',
-  dc_account:'',
-  dc_id:''
+  nickname: '',
+  password: '',
+  confirmPassword: '',
+  email: '',
+  dc_account: '',
+  dc_id: ''
 })
 
 const rules = {
   account: [
     {
       required: true,
-      validator(rule, value) {
-        if(!value) {
+      validator (rule, value) {
+        if (!value) {
           return new Error('帳號欄位必填')
         } else if (value.length < 5 || value.length > 21) {
           return new Error('帳號長度須為 6 ~ 20 字')
-        } else if(!validator.isAlphanumeric(value)) {
-          return new Error ('格式不正確')
+        } else if (!validator.isAlphanumeric(value)) {
+          return new Error('格式不正確')
         }
       },
       trigger: ['input', 'blur']
@@ -133,73 +126,72 @@ const rules = {
   nickname: [
     {
       required: true,
-      validator(rule, value) {
-        if(!value) {
+      validator (rule, value) {
+        if (!value) {
           return new Error('探索者暱稱欄位必填')
-        } else if ( value.length > 21) {
+        } else if (value.length > 21) {
           return new Error('暱稱長度過長')
         }
       },
       trigger: ['input', 'blur']
-    },
+    }
   ],
-    password:[{
-      required: true,
-      validator(rule, value) {
-        if(!value) {
-          return new Error('密碼欄位必填')
-        } else if (value.length < 5 || value.length > 21) {
-          return new Error('密碼長度須為 6 ~ 20 字')
-        } else if(!validator.isAlphanumeric(value)) {
-          return new Error ('格式不正確')
-        }
-      },
-      trigger: ['input', 'blur']
-    }],
-    confirmPassword:[{
-      required:true,
-      validator(rule, value) {
-        if(!value) {
-          return new Error('請再填一次密碼')
-        } 
-        // else if (value !== model.value.password) {
-        //   return new Error('密碼不一致')
-        // }
-      },
-      trigger: ['input', 'blur']
-    }],
-    email:[{
-      required: true,
-      validator(rule, value) {
-        if(!value){
-          return new Error('email 欄位為必填')
-        }
-        else if(!validator.isEmail(value)) {
-          return new Error ('信箱格式不正確')
-        }
-      },
-      trigger: ['input', 'blur']
-    }],
-    dc_account:[{
-      required:true,
-      validator(rule, value) {
-        if(!value) {
-          return new Error ('此欄位必填')
-        }
-      },
-      trigger: ['input', 'blur']
-    }],
-    dc_id:[{
-      required:true,
-      validator(rule, value) {
-        if(!value) {
-          return new Error ('此欄位必填')
-        } else if (!validator.isNumeric(value) || value.length !== 4) {
-          return new Error ('是 4 位數字')
-        }
-      },
-      trigger: ['input', 'blur']
-    }],
+  password: [{
+    required: true,
+    validator (rule, value) {
+      if (!value) {
+        return new Error('密碼欄位必填')
+      } else if (value.length < 5 || value.length > 21) {
+        return new Error('密碼長度須為 6 ~ 20 字')
+      } else if (!validator.isAlphanumeric(value)) {
+        return new Error('格式不正確')
+      }
+    },
+    trigger: ['input', 'blur']
+  }],
+  confirmPassword: [{
+    required: true,
+    validator (rule, value) {
+      if (!value) {
+        return new Error('請再填一次密碼')
+      }
+      // else if (value !== model.value.password) {
+      //   return new Error('密碼不一致')
+      // }
+    },
+    trigger: ['input', 'blur']
+  }],
+  email: [{
+    required: true,
+    validator (rule, value) {
+      if (!value) {
+        return new Error('email 欄位為必填')
+      } else if (!validator.isEmail(value)) {
+        return new Error('信箱格式不正確')
+      }
+    },
+    trigger: ['input', 'blur']
+  }],
+  dc_account: [{
+    required: true,
+    validator (rule, value) {
+      if (!value) {
+        return new Error('此欄位必填')
+      }
+    },
+    trigger: ['input', 'blur']
+  }],
+  dc_id: [{
+    required: true,
+    validator (rule, value) {
+      if (!value) {
+        return new Error('此欄位必填')
+      } else if (!validator.isNumeric(value) || value.length !== 4) {
+        return new Error('是 4 位數字')
+      }
+    },
+    trigger: ['input', 'blur']
+  }]
 
 }
 
@@ -228,10 +220,10 @@ const menuOptions = [
         },
         { default: () => '我已經是探索者...' }
       ),
-    key: 'go-login',
+    key: 'go-login'
   }]
 
-function ButtonClickR(e) {
+function ButtonClickR (e) {
   console.log(model.value)
   e.preventDefault()
   valid.value?.validate(errors => {
@@ -245,17 +237,16 @@ function ButtonClickR(e) {
   })
 }
 
-
 </script>
 
 <style lang="scss" scoped>
-  .bg_g 
+  .bg_g
     {
       margin-top: 22vh;
       width: 100vw;
       height: 80vh;
       background: #2F4F4f;
-    .box 
+    .box
       {
         border-radius: 20px;
         width: 60%;
@@ -293,14 +284,11 @@ function ButtonClickR(e) {
           // margin-right: 3%;
           padding-top: 4%;
 
-          
         }
       }
-
-    
     }
-    
 </style>
+
 <style>
   #dc_info button {
   position: fixed;
