@@ -5,6 +5,7 @@ import { defineComponent, h, Component, ref } from 'vue'
 import type { MenuOption, DrawerPlacement } from 'naive-ui'
 import { RouterLink } from 'vue-router'
 import { DataBarHorizontal20Filled } from '@vicons/fluent'
+import { LogOutOutline } from '@vicons/ionicons5'
 
 // 獲得用戶狀態
 import { storeToRefs } from 'pinia'
@@ -60,6 +61,9 @@ const themeOverrides: GlobalThemeOverrides = {
     },
     Popconfirm:{
       iconSize: '10px',
+    },
+    Tooltip:{
+      color: 'rgba(243, 221, 169, 1)',
     },
     Message:{
       iconSize: '10px',
@@ -151,7 +155,7 @@ const menuOptions: MenuOption[] = [
         { default: () => '登入/註冊' }
       ),
     key: 'go-to-login',
-    show: user.role !== (0 || 1)
+    show: !isLogin.value
   },
   {
     label: () =>
@@ -165,7 +169,7 @@ const menuOptions: MenuOption[] = [
         { default: () => '探索者檔案' }
       ),
     key: 'go-to-user',
-    show: user.role === (1||0)
+    show: isLogin.value
   },
   {
     label: () =>
@@ -179,7 +183,7 @@ const menuOptions: MenuOption[] = [
         { default: () => 'GM 專區' }
       ),
     key: 'go-to-gm',
-    // show: user.role === ( 0 || 1)
+    show: isLogin.value && isAdmin.value
   }
 ]
 
@@ -190,34 +194,6 @@ const active = ref(false)
       placement.value = place
     }
 
-
-
-// export default defineComponent({
-//   components: {
-//     DataBarHorizontal20Filled
-//   },
-//   setup () {
-    
-
-    
-    
-
-
-//     return {
-//       active,
-//       placement,
-//       activate,
-//       menuOptions,
-//       DataBarHorizontal20Filled,
-//       themeOverrides,
-//       user,
-//       isLogin,
-//       isAdmin,
-//       favorite,
-//       logout
-//     }
-//   }
-// })
 </script>
 
 <style>
@@ -242,26 +218,44 @@ const active = ref(false)
 </style>
 
 <template>
-<div class="container" style="background-color: #2F4F4F ; position: fixed;">
-  <n-config-provider :theme-overrides="themeOverrides" :breakpoints="{ xs: 0, s: 576, m: 768, l: 992, xl: 1200, xxl: 1400 }">
-      <div id="navbar" >
-        <img src="url('../../image/TRPG_LOGO.png" alt="logo" class="logo">
-        <n-button @click="activate('right')" text>
+  <div class="container" style="background-color: #2F4F4F ; position: fixed;">
+    <n-config-provider :theme-overrides="themeOverrides" :breakpoints="{ xs: 0, s: 576, m: 768, l: 992, xl: 1200, xxl: 1400 }">
+        <div id="navbar" >
+          <img src="url('../../image/TRPG_LOGO.png" alt="logo" class="logo">
+
+          <!-- 登出 -->
+           <n-tooltip placement="left-start" trigger="hover" :show-arrow="false" style="background-color: #F8E9D6; color: #2F4F4F;">
+            <template #trigger>
+            <n-button @click="logout" text style="margin-right: 5%;">
+              <n-icon size="40" color="#F8E9D6">
+                <LogOutOutline />
+              </n-icon>
+            </n-button>
+            </template>
+              登出
+          </n-tooltip>
+
+          <n-button @click="activate('right')" text>
       <!-- DataBarHorizontal20Filled -->
           <n-icon size="40" color="#F8E9D6">
             <DataBarHorizontal20Filled />
           </n-icon>
-        </n-button>
-  <n-drawer v-model:show="active" :width="350" :placement="placement" auto-focus block-scroll 
-  style=" background: rgba(47,79,79, 0.9)">
-    <n-drawer-content closable>
-      <n-menu :options="menuOptions"/>
-    </n-drawer-content>
-  </n-drawer>
+          </n-button>
 
-  <!-- !!!!!!! -->
-  <router-view></router-view>
-      </div>
-    </n-config-provider>
+          <n-drawer v-model:show="active" :width="350" :placement="placement" auto-focus block-scroll 
+        style=" background: rgba(47,79,79, 0.9)">
+          <n-drawer-content closable>
+            <n-menu :options="menuOptions">
+              <n-button quaternary round>
+                Default
+              </n-button>
+            </n-menu>
+          </n-drawer-content>
+          </n-drawer>
+
+          <!-- !!!!!!! -->
+          <router-view></router-view>
+        </div>
+      </n-config-provider>
   </div>
 </template>

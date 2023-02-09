@@ -32,6 +32,7 @@ export default (req, res, next) => {
         message = '檔案格式錯誤'
       }
       res.status(400).json({ success: false, message })
+      console.log(error)
     } else if (error) {
       res.status(500).json({ success: false, message: '未知錯誤' })
     } else {

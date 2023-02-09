@@ -34,18 +34,19 @@
 
             <n-form-item-gi :span="1" path="dc_id" style="margin-left:-10px; margin-right:10px">
               <span style="color:#5865F2"> # </span>
-              <n-input v-model:value="model.dc_id" placeholder="OOOO" style="--n-color: #5865F248; --n-placeholder-color: #3b3ace88; margin-left: 2%" clearable />
+              <n-input v-model:value="model.dc_id" placeholder="OOOO" style="--n-color: #5865F248; --n-placeholder-color: #3b3ace88; margin-left: 5%; width: 20vw;" clearable />
 
-              <div id="dc_info" style=" position: absolute; margin-top: 50%; margin-left: 50%; --n-color: #2d3bf947; --n-padding: 0 0px;">
-                <n-popconfirm positive-text="ok" :negative-text="null" :show-icon="false" style="font-size: 24px; color: #3b3aceaa; font-weight: 600;">
+              <div id="dc_info" style=" position: relative; margin-top: 50%; margin-left: 50%; --n-color: #2d3bf947; --n-padding: 0 0px;">
+                <n-tooltip placement="top-start" trigger="hover" style="font-size: 15px; font-weight: 600; left: -45vw; background: #3b3ace99;">
+                <!-- <n-popconfirm positive-text="ok" :negative-text="null" :show-icon="false" style="font-size: 24px; color: #3b3aceaa; font-weight: 600;"> -->
                   <template #trigger>
-                    <n-button text style="font-size: 24px; color: #3b3aceaa;">
+                    <n-button text style="font-size: 12px; color: #3b3aceaa;">
                       <template #icon> <InfoCircle /> </template>
-                    </n-button>
-                  </template>
-                  點開 DC 個人資料，ex: 小明#0857
-                </n-popconfirm>
-
+                        </n-button>
+                      </template>
+                          點開 DC 個人資料，ex: 小明#0857
+                <!-- </n-popconfirm> -->
+                </n-tooltip>
               </div>
             </n-form-item-gi>
 
