@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory, START_LOCATION } from 'vue-router'
 import FrontLayout from '@/layouts/FrontLayout.vue'
+import GMLayout from '@/layouts/GMLayout.vue'
 import AdminLayout from '@/layouts/AdminLayout.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import { useUserStore } from '@/stores/user'
@@ -68,11 +69,11 @@ const router = createRouter({
     },
     {
       path: '/gm/',
-      component: AdminLayout,
+      component: GMLayout,
       children: [
         {
           path: '',
-          name: 'gm',
+          name: 'gm-home',
           component: () => import('@/views/gm/HomeView.vue'),
           meta: {
             title: 'GM | MatchingTRPG'
@@ -89,15 +90,38 @@ const router = createRouter({
       ]
     },
     {
+      path: '/admin/',
+      component: AdminLayout,
+      children: [
+        {
+          path: '',
+          name: 'admin-home',
+          component: () => import('@/views/admin/HomeView.vue'),
+          meta: {
+            title: 'Admin | MatchingTRPG'
+          }
+        }
+      ]
+
+    },
+    {
       path: '/user/',
       component: FrontLayout,
       children: [
         {
           path: '',
-          name: 'user',
+          name: 'user-home',
           component: () => import('@/views/user/HomeView.vue'),
           meta: {
             title: '探索者檔案 | MatchingTRPG'
+          }
+        },
+        {
+          path: 'orders',
+          name: 'orders',
+          component: () => import('@/views/user/OrdersView.vue'),
+          meta: {
+            title: '預約列表 | MatchingTRPG'
           }
         }
 
@@ -123,12 +147,26 @@ router.afterEach((to, from) => {
   document.title = to.meta.title
 })
 
+// router.beforeEach(async (to, from, next) => {
+//   // console.log('beforeEach')
+//   const user = useUserStore()
+//   if (from === START_LOCATION) {
+//     await user.getUser()
+//   }
+
+//   if (user.isLogin && (to.path === '/register' || to.path === '/login')) {
+//     next('/')
+//   } else if (to.meta.login && !user.isLogin) {
+//     next('/login')
+//   } else if (to.meta.admin && !user.isAdmin) {
+//     next('/')
+//   } else {
+//     next()
+//   }
+// })
+
 router.beforeEach(async (to, from, next) => {
-  console.log('beforeEach')
   const user = useUserStore()
-  if (from === START_LOCATION) {
-    await user.getUser()
-  }
   if (user.isLogin && (to.path === '/register' || to.path === '/login')) {
     next('/')
   } else if (to.meta.login && !user.isLogin) {

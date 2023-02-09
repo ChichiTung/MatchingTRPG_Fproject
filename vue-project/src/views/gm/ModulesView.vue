@@ -290,7 +290,7 @@ export default defineComponent({
     background: #F8E9D6;
 
     #modulesedit_title {
-      width: 20vw;
+      width: 30vw;
       position: relative;
       top: -1%;
       left: 45%;
@@ -299,7 +299,7 @@ export default defineComponent({
       transform: translateX(-50%);
       text-align: center;
       letter-spacing: 0.5em;
-
+      // background: #000;
       z-index: 100;
     }
     #form {

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useUserStore } from '@/stores/user'
 
+// -here
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API
 })
@@ -9,7 +10,7 @@ export const apiAuth = axios.create({
   baseURL: import.meta.env.VITE_API
 })
 
-// 攔截器：先把請求攔截下來，補上下面加的東西 ('Bearer ' + useRoute.token)，再丟出去： axios ----> interceptors.request ---> 送出請求 -----> interceptors.response ----> 呼叫的地方
+// 呼叫 axios ---> interceptors.request ---> 送出請求 ---> interceptors.response ---> 呼叫的地方
 apiAuth.interceptors.request.use(config => {
   const user = useUserStore()
   config.headers.authorization = 'Bearer ' + user.token
@@ -23,7 +24,6 @@ apiAuth.interceptors.response.use(res => {
   // 如果失敗的請求有回應
   if (error.response) {
     // 如果失敗的請求回應是 401，可能是 JWT 驗證失敗
-    // 登入失敗都是 401
     if (error.response.status === 401) {
       // 確認請求的網址不是延長登入、登入、登出
       if (!['/users/extend', '/users/login', '/users/logout'].includes(error.config.url)) {
