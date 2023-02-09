@@ -147,26 +147,13 @@ router.afterEach((to, from) => {
   document.title = to.meta.title
 })
 
-// router.beforeEach(async (to, from, next) => {
-//   // console.log('beforeEach')
-//   const user = useUserStore()
-//   if (from === START_LOCATION) {
-//     await user.getUser()
-//   }
-
-//   if (user.isLogin && (to.path === '/register' || to.path === '/login')) {
-//     next('/')
-//   } else if (to.meta.login && !user.isLogin) {
-//     next('/login')
-//   } else if (to.meta.admin && !user.isAdmin) {
-//     next('/')
-//   } else {
-//     next()
-//   }
-// })
-
 router.beforeEach(async (to, from, next) => {
+  // console.log('beforeEach')
   const user = useUserStore()
+  if (from === START_LOCATION) {
+    await user.getUser()
+  }
+
   if (user.isLogin && (to.path === '/register' || to.path === '/login')) {
     next('/')
   } else if (to.meta.login && !user.isLogin) {
@@ -177,5 +164,18 @@ router.beforeEach(async (to, from, next) => {
     next()
   }
 })
+
+// router.beforeEach(async (to, from, next) => {
+//   const user = useUserStore()
+//   if (user.isLogin && (to.path === '/register' || to.path === '/login')) {
+//     next('/')
+//   } else if (to.meta.login && !user.isLogin) {
+//     next('/login')
+//   } else if (to.meta.admin && !user.isAdmin) {
+//     next('/')
+//   } else {
+//     next()
+//   }
+// })
 
 export default router

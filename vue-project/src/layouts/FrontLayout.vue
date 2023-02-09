@@ -186,7 +186,8 @@ const menuOptions: MenuOption[] = [
          { default: () => '預約列表' }
       ),
       }
-    ]
+    ],
+    show: isLogin.value
   },
   {
     label: () =>

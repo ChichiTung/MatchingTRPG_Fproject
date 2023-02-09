@@ -1,17 +1,17 @@
 import { Schema, model, ObjectId } from 'mongoose'
-import validator from 'validator'
-import bcrypt from 'bcrypt'
+// import validator from 'validator'
+// import bcrypt from 'bcrypt'
 
 const schema = new Schema({
   name: {
     type: String,
     required: [true, '缺少模組名稱']
   },
-  gm_id: {
-    type: ObjectId,
-    ref: 'users',
-    required: [true, '缺少GM']
-  },
+  // gm_id: {
+  //   type: ObjectId,
+  //   ref: 'users',
+  //   required: [true, '缺少GM']
+  // },
 
   // TRY-TRY-SEE
   // 未公開： default 先給必填欄位空值 !!
@@ -36,46 +36,46 @@ const schema = new Schema({
     required: [true, '缺少預估人數'],
     enum: {
       values: [1, 2, 3, 4, 5],
-      message: '分類錯誤'
+      message: '人數分類錯誤'
     }
   },
-  pc: {
-    type: String,
-    required: [true, '缺少角卡要求'],
-    enum: {
-      // 限舊卡(參閱注意事項)
-      values: ['限新卡', '限舊卡', '新舊卡不限'],
-      message: '分類錯誤'
-    }
-  },
-  beginner: {
-    type: Boolean,
-    default: 0
-  },
+  // pc: {
+  //   type: String,
+  //   required: [true, '缺少角卡要求'],
+  //   enum: {
+  //     // 限舊卡(參閱注意事項)
+  //     values: ['限新卡', '限舊卡', '新舊卡不限'],
+  //     message: '分類錯誤'
+  //   }
+  // },
+  // beginner: {
+  //   type: Boolean,
+  //   default: 0
+  // },
   difficullty: {
     type: Number,
     required: [true, '缺少難易度說明'],
     default: 0.5
   },
-  lost: {
-    type: String,
-    required: [true, '缺少 Lost 率說明'],
-    enum: {
-      values: ['低', '中', '高'],
-      message: 'Lost 率錯誤'
-    }
-  },
+  // lost: {
+  //   type: String,
+  //   required: [true, '缺少 Lost 率說明'],
+  //   enum: {
+  //     values: ['低', '中', '高'],
+  //     message: 'Lost 率錯誤'
+  //   }
+  // },
 
   // 劇本類型
-  secretHO: Boolean,
-  pvp: Boolean,
-  specialBG: Boolean,
+  // secretHO: Boolean,
+  // pvp: Boolean,
+  // specialBG: Boolean,
 
   // 自訂義 # 標籤
-  hashtag: {
-    type: [String],
-    default: ['19世紀末', '復活本']
-  },
+  // hashtag: {
+  //   type: [String],
+  //   default: ['19世紀末', '復活本']
+  // },
 
   info: {
     type: String,
@@ -96,26 +96,27 @@ const schema = new Schema({
   discordLink: {
     type: String,
     default: ''
-  },
-  date: {
-    type: Date,
-    default: Date.now
-  },
+  }
+
+  // date: {
+  //   type: Date,
+  //   default: Date.now
+  // }
 
   // 給 GM 的備團 checklist 功能： 已完成的部分打勾
 
   // 劇本翻譯
-  translate: Boolean,
+  // translate: Boolean,
   // 劇本整理
-  script: Boolean,
+  // script: Boolean,
   // npc 角卡
-  npc: Boolean,
+  // npc: Boolean,
   // BGM
-  BGN: Boolean,
+  // BGN: Boolean,
   // 圖片
-  bg: Boolean,
+  // bg: Boolean,
   // 可可亞房間
-  ccfolia: Boolean
+  // ccfolia: Boolean
 
 })
 
