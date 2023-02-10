@@ -7,9 +7,9 @@
           <n-menu v-model:value="activeKey" mode="horizontal" :options="menuOptions" />
         </div>
         <!-- avatar -->
-        <n-avatar round :size="48" src="avatar"    />
+        <!-- <n-avatar round :size="48" src="avatar"    /> -->
       </div>
-      <n-divider style="margin-top:50px"></n-divider>
+      <n-divider></n-divider>
       <router-view/>
     </div>
     </n-config-provider>
@@ -196,7 +196,7 @@ const menuOptions: MenuOption[] = [
   #navbar_admin {
     display: flex;
     position: relative;
-    padding-bottom: 3%;
+    // padding-bottom: 1%;
 
     img {
       width: 12vw;
