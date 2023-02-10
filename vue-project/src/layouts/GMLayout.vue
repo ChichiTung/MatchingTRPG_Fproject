@@ -121,24 +121,24 @@ const menuOptions: MenuOption[] = [
       h(
         RouterLink,
         {
-         to: {
+        to: {
             name:'modulesedit'
           }
         },
-         { default: () => '上架模組' }
+        { default: () => '上架模組' }
       ),
     key: 'hear-the-wind-sing',
       },
       {
         label: () =>
       h(
-        'a',
+        RouterLink,
         {
-          href: 'https://baike.baidu.com/item/%E4%B8%94%E5%90%AC%E9%A3%8E%E5%90%9F',
-          target: '_blank',
-          rel: 'noopenner noreferrer'
+         to: {
+            name:'modules'
+          }
         },
-        '模組庫'
+         { default: () => '模組庫' }
       ),
     key: 'hear-the-wind-sing',
       }

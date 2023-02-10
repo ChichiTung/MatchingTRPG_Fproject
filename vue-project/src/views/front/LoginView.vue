@@ -11,12 +11,12 @@
           <n-grid cols="6 s:6 l:12" :y-gap="18">
             <!-- account -->
             <n-form-item-gi :span="5" label="登入帳號" path="account">
-              <n-input v-model:value="model.account" placeholder="英數字6碼以上" @keydown.enter.prevent />
+              <n-input v-model:value="model.account" placeholder="英數字6碼以上" clearable />
             </n-form-item-gi>
 
             <!-- password -->
             <n-form-item-gi :span="5" label="密碼" path="password">
-              <n-input v-model:value="model.password" type="password" placeholder="英數字6碼以上" />
+              <n-input v-model:value="model.password" type="password" placeholder="英數字6碼以上" clearable />
             </n-form-item-gi>
 
             <n-gi :span="6">
@@ -43,14 +43,14 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { useUserStore } from '@/stores/user'
-import { useRouter, RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { useMessage } from 'naive-ui'
 import validator from 'validator'
 
 const user = useUserStore()
+
 const valid = ref(null)
 const loading = ref(false)
-const message = useMessage()
 
 const model = reactive({
   account: '',
@@ -127,11 +127,11 @@ function ButtonClickR (e) {
   e.preventDefault()
   valid.value?.validate(errors => {
     if (!errors) {
-      message.success('登錄成功')
+      // message.success('登錄成功')
       login()
     } else {
       console.log(errors)
-      message.error('登錄失敗')
+      // message.error('登錄失敗')
     }
   })
 }

@@ -19,7 +19,7 @@ const schema = new Schema({
     type: Boolean,
     required: [true, '缺少狀態'],
     // 0 未公開, 1 公開
-    default: 0
+    default: false
   },
   image: {
     type: String,
@@ -72,10 +72,10 @@ const schema = new Schema({
   // specialBG: Boolean,
 
   // 自訂義 # 標籤
-  // hashtag: {
-  //   type: [String],
-  //   default: ['19世紀末', '復活本']
-  // },
+  hashtag: {
+    type: [String],
+    default: ['19世紀末', '復活本']
+  },
 
   info: {
     type: String,
