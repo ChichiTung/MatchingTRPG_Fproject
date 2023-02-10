@@ -82,9 +82,16 @@ const router = createRouter({
         {
           path: 'modulesedit',
           name: 'modulesedit',
+          component: () => import('@/views/gm/ModulesEditView.vue'),
+          meta: {
+            title: '模組上架 | MatchingTRPG'
+          }
+        }, {
+          path: 'modules',
+          name: 'modules',
           component: () => import('@/views/gm/ModulesView.vue'),
           meta: {
-            title: '上架模組 | MatchingTRPG'
+            title: '模組庫 | MatchingTRPG'
           }
         }
       ]

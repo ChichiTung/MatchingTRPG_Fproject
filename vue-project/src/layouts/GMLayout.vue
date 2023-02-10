@@ -65,9 +65,13 @@ const themeOverrides_admin: GlobalThemeOverrides = {
       itemTextColorActive: "#FFAC4DFF",
       itemTextColorActiveHover: "#FCD837FF"
     },
+    Upload:{
+      draggerColor: '#FFAC4D44'
+
+    },
 
       Form:{
-      labelTextColor: '#2F4F40BB',
+      labelTextColor: '#2F4F4088',
       labelFontWeight: '800',
       labelFontSizeTopMedium: '1vw',
       },
@@ -88,7 +92,7 @@ const themeOverrides_admin: GlobalThemeOverrides = {
         buttonWidthLarge:'30px',
         buttonWidthPressedLarge:'30px',
         railHeightLarge:'30px',
-        railWidthLarge:'60px'
+        railWidthLarge:'20px'
       },
       Divider: {
         color: '#F9B02D88',
@@ -122,23 +126,25 @@ const menuOptions: MenuOption[] = [
         RouterLink,
         {
          to: {
-            name:'modulesedit'
+            name:'modulesedit',
+            target: '_blank'
           }
         },
-         { default: () => '上架模組' }
+         { default: () => '模組上架' }
       ),
-    key: 'hear-the-wind-sing',
+    // key: 'hear-the-wind-sing',
       },
       {
         label: () =>
       h(
-        'a',
+        RouterLink,
         {
-          href: 'https://baike.baidu.com/item/%E4%B8%94%E5%90%AC%E9%A3%8E%E5%90%9F',
-          target: '_blank',
-          rel: 'noopenner noreferrer'
+         to: {
+            name:'modules',
+            target: '_blank'
+          }
         },
-        '模組庫'
+         { default: () => '模組庫' }
       ),
     key: 'hear-the-wind-sing',
       }
@@ -191,7 +197,7 @@ const menuOptions: MenuOption[] = [
 
 <style lang="scss">
 .bg_admin {
-  
+  width: 100vw;
 
   #navbar_admin {
     display: flex;

@@ -43,6 +43,7 @@ export const useUserStore = defineStore('user', () => {
         title: '成功',
         text: '登入成功'
       })
+      router.go(0)
       router.push('/')
     } catch (error) {
       console.log(error)
@@ -63,12 +64,13 @@ export const useUserStore = defineStore('user', () => {
       role.value = 0
       favorite.value = 0
 
-      // router.push('/')
-      Swal.fire({
-        icon: 'success',
-        title: '成功',
-        text: '登出成功'
-      })
+      router.go(0)
+      router.push('/')
+      // Swal.fire({
+      //   icon: 'success',
+      //   title: '成功',
+      //   text: '登出成功'
+      // })
     } catch (error) {
       Swal.fire({
         icon: 'error',
