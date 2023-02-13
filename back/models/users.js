@@ -81,8 +81,11 @@ const schema = new Schema({
     // 0:使用者, 1:管理者
     default: 0
   }
-  // startDate:
-  // endDate
+  // freeTime: {
+  //   type: [Date],
+  //   default: []
+  // }
+
 }, { versionKey: false })
 
 // 密碼加鹽

@@ -3,28 +3,31 @@ import { apiAuth } from '@/plugins/axios'
 import { defineComponent, ref, reactive } from 'vue'
 import { useMessage } from 'naive-ui'
 import { ImageAdd24Regular } from '@vicons/fluent'
+import Swal from 'sweetalert2'
 
-const formRef = ref(null)
+// const formRef = ref(null)
 const message = useMessage()
 
 const size = ref('medium')
 
 const modules = reactive([])
+
 const form = reactive({
   // _id 有東西代表正在編輯，空的代表新增中
   _id: '',
 
   name: '',
+  // gm: '',
   living: false,
   image: undefined,
   minTime: 0,
   pl: 1,
   difficullty: 0.5,
+  hashtag: '',
   info: '',
   notice: '',
   ccfoliaLink: '',
-  discordLonk: '',
-  hashtag: '',
+  discordLink: '',
 
   // 給 form 用的
   valid: false,
@@ -115,18 +118,6 @@ const rules = {
   }
 }
 
-function handleValidateButtonClick (e) {
-  e.preventDefault()
-  formRef.value?.validate((errors) => {
-    if (!errors) {
-      message.success('验证成功')
-    } else {
-      console.log(errors)
-      message.error('验证失败')
-    }
-  })
-}
-
 </script>
 
 <template>
@@ -143,14 +134,14 @@ function handleValidateButtonClick (e) {
 
           <!--  公開/隱藏 -->
           <n-form-item-gi span="xs:6 m:6 l:6" path="switchValue">
-            <n-switch v-model:value="model.switchValue" size="large" style="position: absolute; right: 0;">
+            <!-- <n-switch v-model:value="model.switchValue" size="large" style="position: absolute; right: 0;">
               <template #checked>
                 公開
               </template>
               <template #unchecked>
                 隱藏
               </template>
-            </n-switch>
+            </n-switch> -->
           </n-form-item-gi>
 
           <!-- 劇本名字 -->
