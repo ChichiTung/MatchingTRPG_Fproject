@@ -7,9 +7,9 @@
           <n-menu v-model:value="activeKey" mode="horizontal" :options="menuOptions" />
         </div>
         <!-- avatar -->
-        <n-avatar round :size="48" src="avatar"    />
+        <!-- <n-avatar round :size="48" src="avatar"    /> -->
       </div>
-      <n-divider style="margin-top:50px"></n-divider>
+      <n-divider></n-divider>
       <router-view/>
     </div>
     </n-config-provider>
@@ -65,9 +65,13 @@ const themeOverrides_admin: GlobalThemeOverrides = {
       itemTextColorActive: "#FFAC4DFF",
       itemTextColorActiveHover: "#FCD837FF"
     },
+    Upload:{
+      draggerColor: '#FFAC4D44'
+
+    },
 
       Form:{
-      labelTextColor: '#2F4F40BB',
+      labelTextColor: '#2F4F4088',
       labelFontWeight: '800',
       labelFontSizeTopMedium: '1vw',
       },
@@ -88,7 +92,7 @@ const themeOverrides_admin: GlobalThemeOverrides = {
         buttonWidthLarge:'30px',
         buttonWidthPressedLarge:'30px',
         railHeightLarge:'30px',
-        railWidthLarge:'60px'
+        railWidthLarge:'20px'
       },
       Divider: {
         color: '#F9B02D88',
@@ -121,13 +125,22 @@ const menuOptions: MenuOption[] = [
       h(
         RouterLink,
         {
+<<<<<<< HEAD
         to: {
             name:'modulesedit'
           }
         },
         { default: () => '上架模組' }
+=======
+         to: {
+            name:'modulesedit',
+            target: '_blank'
+          }
+        },
+         { default: () => '模組上架' }
+>>>>>>> master
       ),
-    key: 'hear-the-wind-sing',
+    // key: 'hear-the-wind-sing',
       },
       {
         label: () =>
@@ -135,7 +148,12 @@ const menuOptions: MenuOption[] = [
         RouterLink,
         {
          to: {
+<<<<<<< HEAD
             name:'modules'
+=======
+            name:'modules',
+            target: '_blank'
+>>>>>>> master
           }
         },
          { default: () => '模組庫' }
@@ -191,12 +209,12 @@ const menuOptions: MenuOption[] = [
 
 <style lang="scss">
 .bg_admin {
-  
+  width: 100vw;
 
   #navbar_admin {
     display: flex;
     position: relative;
-    padding-bottom: 3%;
+    // padding-bottom: 1%;
 
     img {
       width: 12vw;

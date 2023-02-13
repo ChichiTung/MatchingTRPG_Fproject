@@ -13,6 +13,10 @@ import { createApp } from 'vue'
 // Plugins
 import { registerPlugins } from '@/plugins'
 
+// bootstrap
+// import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap'
+
 (async () => {
   const app = createApp(App)
 
