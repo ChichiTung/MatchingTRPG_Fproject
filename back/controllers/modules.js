@@ -19,6 +19,7 @@ export const createModule = async (req, res) => {
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     if (error.name === 'ValidationError') {
+      console.log(error)
       res.status(400).json({ success: false, messaage: error.errors[Object.keys(error.errors)[0]].message })
     } else {
       res.status(500).json({ success: false, message: '未知錯誤' })
@@ -84,6 +85,7 @@ export const editModule = async (req, res) => {
     }
   } catch (error) {
     if (error.name === 'ValidationError') {
+      console.log(error)
       res.status(400).json({ success: false, message: error.errors[Object.keys(error.errors)[0]].message })
     } else if (error.name === 'CastError') {
       res.status(404).json({ success: false, message: '找不到' })
