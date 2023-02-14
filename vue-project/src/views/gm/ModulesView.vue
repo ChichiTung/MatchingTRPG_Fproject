@@ -5,45 +5,56 @@
 =======
   <div id="ModulesView">
     <div class="h1" textcenter>
-      <n-divider dashed>
+      <n-divider dashed style="font-size: 3vw; color: rgb(240,162,23);">
         模組庫
       </n-divider>
     </div>
     <!-- <n-grid cols="12" responsive="screen"> -->
     <!-- 新增商品按鈕 -->
-    <n-button color="#2F4F40" @click="showModal(-1)">
+    <n-button color="#5d8585" rounded style="position: absolute; top: 18%; right:10%; padding: 1.5%;" @click="showModal(-1)">
+      <template #icon>
+        <BookAdd24Regular style="font-size: 24px;" />
+      </template>
       新增模組
     </n-button>
 
-    <n-table id="moduleTable" :single-line="false">
+    <n-table id="moduleTable" :single-line="false" striped style="margin-top: 5%;">
       <thead>
         <tr>
-          <th>圖片</th>
-          <th>名稱</th>
-          <th>管理</th>
+          <th style="text-align: center;">圖片</th>
+          <th style="text-align: center;">名稱</th>
+          <th style="text-align: center;">公開狀態</th>
+          <th style="text-align: center;">管理</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(module, ) in modules" :key="module._id">
-          <td> <img :src="product.image" :aspect-ratio="1" :width="200"></td>
-          <td>{{ product.name }}</td>
+        <tr v-for="(module, idx) in modules" :key="module._id" style="text-align: center;">
+          <td> <img :src="module.image" :width="200"></td>
+          <td>{{ module.name }}</td>
+
+          <td> {{ module.living }}</td>
           <td>
-            <n-button color="#8a9" variant="text" @click="showModal(idx)" />
+            <n-button strong secondary circle type="error" @click="showModal(idx)">
+              <template #icon>
+                <n-icon><Edit /></n-icon>
+              </template>
+            </n-button>
           </td>
         </tr>
       </tbody>
     </n-table>
 
-    <n-modal v-model:show="form.showModal">
+    <!-- :trap-focus="false" 要加上去 要不然 input 打不了字 QAQQQQ -->
+    <n-modal v-model:show="form.showModal" :trap-focus="false" :mask-closable="false">
 
       <!-- rules 要再修 -->
       <n-form
         :model="form"
-
+        :rules="rules"
         :size="size"
         label-placement="top"
         style="background-color: #F8E9DD; border-radius: 15px; padding: 2%;"
-        @submit.prevent="submit"
+        @submit.prevent="submitClick"
       >
         <n-grid cols="6 l:12" item-responsive responsive="screen" x-gap="30">
 
@@ -52,8 +63,8 @@
               title-placement="left"
               style="--n-color: #5d8585; --n-text-color: #5d8585; margin: -8vh 0 -10vh 0;"
             >
-              <h2 v-if="form._id.length >0" style="text-align: center;  width: 100%;">編 輯 商 品</h2>
-              <h2 v-else style="text-align: center;width: 100%; font-size: 2vw;">新 增 商 品</h2>
+              <h2 v-if="form._id.length >0" style="text-align: center;  width: 100%;">編 輯 模 組</h2>
+              <h2 v-else style="text-align: center;width: 100%; font-size: 2vw;">新 增 模 組</h2>
             </n-divider>
           </n-form-item-gi>
 
@@ -72,14 +83,14 @@
 
           <!-- 劇本名字 -->
           <n-form-item-gi span="xs:9 m:6 l:6" label="模組名稱" path="name">
-            <n-input v-model:value="form.name" placeholder=" " type="text" />
+            <n-input v-model:value="form.name" placeholder="" type="text" />
           </n-form-item-gi>
 
           <!-- 劇本圖片 -->
           <n-form-item-gi span="xs:9 m:6 l:6" label="模組圖片" path="image">
             <!-- <n-input v-model:value="model.image" placeholder=" " /> -->
             <n-upload
-              action="https://www.mocky.io/v2/5e4bafc63100007100d8b70f"
+              v-model:value="form.image"
               :default-file-list="form.image"
               list-type="image-card"
             >
@@ -88,31 +99,50 @@
 
           <!-- 預估時長 -->
           <n-form-item-gi span="xs:6 m:3 l:3" label="預估時長" path="minTime">
-            <n-select
+            <!-- <n-select
               v-model:value="form.minTime"
               placeholder="預估時長"
-            />
+            /> -->
+            <n-input-number v-model:value="form.minTime" :default-value="1" clearable>
+              <template #suffix>
+                <div style="margin-left:-50px; padding-right: 60px;">
+                  小時
+                </div>
+              </template>
+            </n-input-number>
           </n-form-item-gi>
 
           <!-- 建議人數 -->
           <n-form-item-gi span="xs:6 m:3 l:3" label="PL 人數" path="pl">
-            <n-select
+            <!-- <n-select
               v-model="form.pl"
               placeholder="建議人數"
-            />
+            /> -->
+            <n-input-number v-model:value="form.pl" placeholder="建議人數" clearable>
+              <template #suffix>
+                <div style="margin-left:-50px; padding-right: 60px;">
+                  人
+                </div>
+              </template>
+            </n-input-number>
           </n-form-item-gi>
 
           <!-- 新舊卡 -->
           <n-form-item-gi span="xs:6 m:3 l:3" label="難度" path="pc">
-            <n-rate v-model="form.difficullty" color="#4fb233" />
+            <n-rate v-model:value="form.difficullty" default-value="0.5" allow-half color="#4fb233" />
 
+          </n-form-item-gi>
+
+          <!-- hashtag -->
+          <n-form-item-gi span="xs:6 m:3 l:3" label="特色" path="hashtag">
+            <n-dynamic-tags v-model:value="form.hashtag" />
           </n-form-item-gi>
 
           <!-- 劇本說明 -->
           <n-form-item-gi span="xs:9 m:6 l:6" label="模組說明" path="info">
             <n-input
-              v-model="form.info"
-              placeholder="模組說明地說~"
+              v-model:value="form.info"
+              placeholder="建議這邊只放最簡單的模組介紹就好~"
               type="textarea"
               :autosize="{
                 minRows: 3,
@@ -124,8 +154,8 @@
           <!-- 額外補充(注意事項) -->
           <n-form-item-gi span="xs:9 m:6 l:6" label="額外補充(注意事項)" path="notice">
             <n-input
-              v-model="form.notice"
-              placeholder="角卡說明之類的喔~"
+              v-model:value="form.notice"
+              placeholder="有關 HO情報、公開情報、紙娃娃素材...等，是放在這區喔 :))"
               type="textarea"
               :autosize="{
                 minRows: 3,
@@ -136,12 +166,12 @@
 
           <!-- ccfolia -->
           <n-form-item-gi span="xs:9 m:6 l:6" label="可可亞連結" path="ccfoliaLink">
-            <n-input v-model="form.ccfoliaLink" placeholder=" " style="background-color: #F5BBA9;" />
+            <n-input v-model:value="form.ccfoliaLink" placeholder=" " style="background-color: #F5BBA9;" />
           </n-form-item-gi>
 
           <!-- discord -->
           <n-form-item-gi span="xs:9 m:6 l:6" label="Discord 連結" path="discordLink">
-            <n-input v-model="form.discordLink" placeholder=" " style="background-color: #9D9FDD;" />
+            <n-input v-model:value="form.discordLink" placeholder=" " style="background-color: #9D9FDD;" />
           </n-form-item-gi>
 
           <!-- dateTime -->
@@ -168,7 +198,8 @@
             <div style="display: flex; justify-content: flex">
               <n-button
                 :disabled="form.loading"
-                round type="primary" size="large" style="width: 12vw; height: 3vw; font-size: 1.5vw; "
+                round type="primary" size="large" style="width: 12vw; height: 3vw; font-size: 1.5vw;"
+                attr-type="submit"
               >
                 存 &nbsp;&nbsp; 檔
               </n-button>
@@ -187,16 +218,19 @@
 
 <script setup>
 import { apiAuth } from '@/plugins/axios'
-import { h, defineComponent, ref, reactive } from 'vue'
-// import { useDialog } from 'naive-ui'
+import { ref, reactive } from 'vue'
 import Swal from 'sweetalert2'
+// import validator from 'validator'
+import { useMessage } from 'naive-ui'
+import { Edit } from '@vicons/carbon'
+import { BookAdd24Regular } from '@vicons/fluent'
 
 // const formRef = ref(null)
 // const message = useMessage()
-
 const size = ref('medium')
-
 const modules = reactive([])
+// const valid = ref(null)
+// const loading = ref(false)
 
 const form = reactive({
   // _id 有東西代表正在編輯，空的代表新增中
@@ -206,51 +240,73 @@ const form = reactive({
   // gm: '',
   living: false,
   image: undefined,
-  minTime: 0,
+  minTime: 0.5,
   pl: 1,
   difficullty: 0.5,
-  hashtag: '',
+  hashtag: ['教师', '程序员', '可可愛愛'],
   info: '',
   notice: '',
   ccfoliaLink: '',
   discordLink: '',
 
   // 給 form 用的
-  valid: false,
+  // valid: false,
   // 目前有沒有送出東西
   loading: false,
-  showModal: false
+  showModal: false,
+
+  idx: -1
 })
 
-const rules = {}
+const rules = {
+  name: [
+    {
+      required: true,
+      validator (rule, value) {
+        if (!value) {
+          return new Error('模組名稱必填')
+        }
+      },
+      trigger: ['input', 'blur']
+    }
+  ],
+
+  hashtag: {
+    trigger: ['change'],
+    validator (rule, value) {
+      if (value.length >= 5) { return new Error('不得超过四个标签') }
+      return true
+    }
+  }
+}
 
 const showModal = (idx) => {
   if (idx === -1) {
     form._id = ''
 
     form.name = ''
-    form.gm = ''
+    // form.gm = ''
     form.living = false
     form.image = undefined
     form.minTime = 0
     form.pl = 1
     form.difficullty = 0.5
-    form.hashtag = ''
+    form.hashtag = []
     form.info = ''
     form.notice = ''
     form.ccfoliaLink = ''
     form.discordLink = ''
 
     // 給 form 用的
-    form.valid = false
+    // form.valid = false
     // 目前有沒有送出東西
     form.loading = false
-    form.idx = idx
+    form.idx = -1
   } else {
     form._id = modules[idx]._id
 
     form.name = modules[idx].name
-    form.gm = modules[idx].gm
+    // form.gm = modules[idx].gm
     form.living = modules[idx].living
     form.image = undefined
     form.minTime = modules[idx].minTime
@@ -263,7 +319,7 @@ const showModal = (idx) => {
     form.discordLink = modules[idx].discordLink
 
     // 給 form 用的
-    form.valid = false
+    // form.valid = false
     // 目前有沒有送出東西
     form.loading = false
     form.idx = idx
@@ -272,14 +328,14 @@ const showModal = (idx) => {
 }
 
 const submit = async () => {
-  if (!form.valid) return
+  // if (!form.valid) return
 
   form.loading = true
 
   // fd.append(key, value)
   const fd = new FormData()
   fd.append('name', form.name)
-  fd.append('gm', form.gm)
+  // fd.append('gm', form.gm)
   fd.append('living', form.living)
   fd.append('image', form.image)
   fd.append('minTime', form.minTime)
@@ -292,6 +348,7 @@ const submit = async () => {
   try {
     if (form._id.length === 0) {
       const { data } = await apiAuth.post('/modules', fd)
+      // console.log(data)
       modules.push(data.result)
       Swal.fire({
         icon: 'success',
@@ -331,6 +388,21 @@ const submit = async () => {
     })
   }
 })()
+
+function submitClick (e) {
+  console.log(form)
+  // e.preventDefault()
+  submit()
+  // valid.value?.validate(errors => {
+  //   if (!errors) {
+  //     message.success('模組新增成功')
+  //     submit()
+  //   } else {
+  //     console.log(errors)
+  //     message.error('模組新增失敗')
+  //   }
+  // })
+}
 </script>
 
 <style lang="scss">

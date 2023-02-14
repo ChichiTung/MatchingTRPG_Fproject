@@ -96,7 +96,17 @@ const themeOverrides_admin: GlobalThemeOverrides = {
       },
       Divider: {
         color: '#F9B02D88',
+      },
+      Table:{
+        thColor: '#385d4a',
+        thFontWeight: '800',
+        thTextColor: '#EEE',
+
+        tdColor: '#F9B02D22',
+        tdColorStriped: '#F9B04455',
+        tdTextColor:'#2F4F40',
       }
+      
     }
 
 const menuOptions: MenuOption[] = [

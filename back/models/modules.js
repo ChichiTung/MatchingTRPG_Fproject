@@ -1,5 +1,5 @@
 import { Schema, model, ObjectId } from 'mongoose'
-// import validator from 'validator'
+import validator from 'validator'
 // import bcrypt from 'bcrypt'
 
 const schema = new Schema({
@@ -7,37 +7,38 @@ const schema = new Schema({
     type: String,
     required: [true, '缺少模組名稱']
   },
-  // gm_id: {
-  //   type: ObjectId,
-  //   ref: 'users',
-  //   required: [true, '缺少GM']
-  // },
+
+  gm: {
+    type: ObjectId,
+    ref: 'users'
+    // required: [true, '缺少GM']
+  },
 
   // TRY-TRY-SEE
   // 未公開： default 先給必填欄位空值 !!
   living: {
     type: Boolean,
-    required: [true, '缺少狀態'],
+    // required: [true, '缺少狀態'],
     // 0 未公開, 1 公開
     default: false
   },
   image: {
     type: String,
-    required: [true, '缺少圖片'],
+    // required: [true, '缺少圖片'],
     default: ''
   },
   minTime: {
     type: Number,
-    required: [true, '缺少最小預估時長'],
+    // required: [true, '缺少最小預估時長'],
     min: [0, '預估時長不得小於 0']
   },
   pl: {
-    type: Number,
-    required: [true, '缺少預估人數'],
-    enum: {
-      values: [1, 2, 3, 4, 5],
-      message: '人數分類錯誤'
-    }
+    type: Number
+    // required: [true, '缺少預估人數'],
+    // enum: {
+    //   values: [1, 2, 3, 4, 5],
+    //   message: '人數分類錯誤'
+    // }
   },
   // pc: {
   //   type: String,
@@ -53,9 +54,9 @@ const schema = new Schema({
   //   default: 0
   // },
   difficullty: {
-    type: Number,
-    required: [true, '缺少難易度說明'],
-    default: 0.5
+    type: Number
+    // required: [true, '缺少難易度說明'],
+    // default: 0.5
   },
   // lost: {
   //   type: String,
@@ -74,12 +75,16 @@ const schema = new Schema({
   // 自訂義 # 標籤
   hashtag: {
     type: [String],
+<<<<<<< HEAD
     default: ['19世紀末', '復活本']
+=======
+    default: []
+>>>>>>> master
   },
 
   info: {
     type: String,
-    required: [true, '缺少模組說明'],
+    // required: [true, '缺少模組說明'],
     default: '建議這邊只放最簡單的模組介紹就好~'
   },
 
@@ -90,7 +95,7 @@ const schema = new Schema({
 
   ccfoliaLink: {
     type: String,
-    required: [true, '缺少可可亞連結'],
+    // required: [true, '缺少可可亞連結'],
     default: ''
   },
   discordLink: {
