@@ -1,8 +1,48 @@
 <template>
-  <div class="bg"></div>
-  <h1> 劇本模組 </h1>
+  <div id="front_module_bg">
+    <h1 style="text-align: center;"> 劇本模組 </h1>
+    <n-grid x-gap="12" cols="12">
+      <n-gi
+        v-for="module in modules"
+        :key="module._id" span="12"
+      >
+        <ModuleCard v-bind="module" />
+
+      </n-gi>
+
+    </n-grid>
+
+  </div>
 </template>
 
+<script setup>
+import { reactive } from 'vue'
+import { api } from '@/plugins/axios'
+import Swal from 'sweetalert2'
+import ModuleCard from '@/components/ModuleCard.vue'
+
+const modules = reactive([]);
+
+(async () => {
+  try {
+    const { data } = await api.get('/modules')
+    modules.push(...data.result)
+  } catch (error) {
+    Swal.fire({
+      icon: 'error',
+      title: '失敗',
+      text: error?.response?.data?.message || '發生錯誤'
+    })
+  }
+})()
+
+</script>
+
 <style>
-  
+#front_module_bg {
+  width: 100vw;
+  height: 100vh;
+  background: #2F4F40;
+}
+
 </style>

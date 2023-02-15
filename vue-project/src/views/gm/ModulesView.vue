@@ -1,8 +1,4 @@
 <template>
-<<<<<<< HEAD
-
-</template>
-=======
   <div id="ModulesView">
     <div class="h1" textcenter>
       <n-divider dashed style="font-size: 3vw; color: rgb(240,162,23);">
@@ -29,10 +25,13 @@
       </thead>
       <tbody>
         <tr v-for="(module, idx) in modules" :key="module._id" style="text-align: center;">
-          <td> <img :src="module.image" :width="200"></td>
+          <td> <n-image :src="module.image" :width="200" /></td>
           <td>{{ module.name }}</td>
 
-          <td> {{ module.living }}</td>
+          <td>
+            <!-- {{ module.living }} -->
+            <n-switch v-model:value="module.living" />
+          </td>
           <td>
             <n-button strong secondary circle type="error" @click="showModal(idx)">
               <template #icon>
@@ -85,16 +84,16 @@
           <n-form-item-gi span="xs:9 m:6 l:6" label="模組名稱" path="name">
             <n-input v-model:value="form.name" placeholder="" type="text" />
           </n-form-item-gi>
-
           <!-- 劇本圖片 -->
           <n-form-item-gi span="xs:9 m:6 l:6" label="模組圖片" path="image">
             <!-- <n-input v-model:value="model.image" placeholder=" " /> -->
             <n-upload
               v-model:value="form.image"
-              :default-file-list="form.image"
               list-type="image-card"
-            >
-            </n-upload>
+              accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff,.svg,.webp"
+              :default-file-list="originalBanners"
+              @change="handleChange"
+            />
           </n-form-item-gi>
 
           <!-- 預估時長 -->
@@ -127,15 +126,19 @@
             </n-input-number>
           </n-form-item-gi>
 
-          <!-- 新舊卡 -->
-          <n-form-item-gi span="xs:6 m:3 l:3" label="難度" path="pc">
-            <n-rate v-model:value="form.difficullty" default-value="0.5" allow-half color="#4fb233" />
-
+          <!-- 特色 -->
+          <n-form-item-gi span="xs:6 m:3 l:3" label="特色" path="hashtag">
+            <div class="tags-wrapper" style="background: #DDA49244; border-radius: 8px; padding: 4%;margin-top: -1px;">
+              <n-dynamic-tags
+                v-model:value="form.hashtag" type="primary" round input-style="warning"
+              />
+            </div>
           </n-form-item-gi>
 
-          <!-- hashtag -->
-          <n-form-item-gi span="xs:6 m:3 l:3" label="特色" path="hashtag">
-            <n-dynamic-tags v-model:value="form.hashtag" />
+          <!-- 難度 -->
+          <n-form-item-gi span="xs:6 m:3 l:3" label="難度" path="pc">
+            <n-rate v-model:value="form.difficullty" :default-value="0.5" allow-half color="#4fb233" />
+
           </n-form-item-gi>
 
           <!-- 劇本說明 -->
@@ -221,29 +224,46 @@ import { apiAuth } from '@/plugins/axios'
 import { ref, reactive } from 'vue'
 import Swal from 'sweetalert2'
 // import validator from 'validator'
-import { useMessage } from 'naive-ui'
+// import { useMessage } from 'naive-ui'
 import { Edit } from '@vicons/carbon'
 import { BookAdd24Regular } from '@vicons/fluent'
 
 // const formRef = ref(null)
 // const message = useMessage()
 const size = ref('medium')
+
+// const showModalImageRef = ref(false)
+// const previewImageUrlRef = ref('')
+// function handleChange (file) {
+//   const { url } = file
+//   previewImageUrlRef.value = url
+//   showModalImageRef.value = true
+// }
+const originalBanners = ref([])
+const handleChange = (options) => {
+  let i = []
+  let j = []
+  i = options.fileList.map(image => image.url).filter(url => url !== null)
+  j = options.fileList.map(image => image.file).filter(url => url !== null)
+  form.value.image = [...i, ...j]
+}
+
 const modules = reactive([])
 // const valid = ref(null)
 // const loading = ref(false)
 
-const form = reactive({
+const form = ref({
   // _id 有東西代表正在編輯，空的代表新增中
   _id: '',
 
   name: '',
   // gm: '',
   living: false,
-  image: undefined,
+  image: [],
   minTime: 0.5,
   pl: 1,
   difficullty: 0.5,
-  hashtag: ['教师', '程序员', '可可愛愛'],
+  hashtag: ['19世紀', '復活本'],
   info: '',
   notice: '',
   ccfoliaLink: '',
@@ -272,9 +292,10 @@ const rules = {
   ],
 
   hashtag: {
+    type: 'array',
     trigger: ['change'],
     validator (rule, value) {
-      if (value.length >= 5) { return new Error('不得超过四个标签') }
+      if (value.length >= 4) { return new Error('標籤不能超過 3 個') }
       return true
     }
   }
@@ -282,71 +303,81 @@ const rules = {
 
 const showModal = (idx) => {
   if (idx === -1) {
-    form._id = ''
+    form.value._id = ''
 
-    form.name = ''
+    form.value.name = ''
     // form.gm = ''
-    form.living = false
-    form.image = undefined
-    form.minTime = 0
-    form.pl = 1
-    form.difficullty = 0.5
-    form.hashtag = []
-    form.info = ''
-    form.notice = ''
-    form.ccfoliaLink = ''
-    form.discordLink = ''
+    form.value.living = false
+    form.value.image = undefined
+    form.value.minTime = 0
+    form.value.pl = 1
+    form.value.difficullty = 0.5
+    form.value.hashtag = []
+    form.value.info = ''
+    form.value.notice = ''
+    form.value.ccfoliaLink = ''
+    form.value.discordLink = ''
 
     // 給 form 用的
     // form.valid = false
     // 目前有沒有送出東西
-    form.loading = false
-    form.idx = -1
+    form.value.loading = false
+    form.value.idx = -1
   } else {
-    form._id = modules[idx]._id
+    form.value._id = modules[idx]._id
 
-    form.name = modules[idx].name
+    form.value.name = modules[idx].name
     // form.gm = modules[idx].gm
-    form.living = modules[idx].living
-    form.image = undefined
-    form.minTime = modules[idx].minTime
-    form.pl = modules[idx].pl
-    form.difficullty = modules[idx].difficullty
-    form.hashtag = modules[idx].hashtag
-    form.info = modules[idx].info
-    form.notice = modules[idx].notice
-    form.ccfoliaLink = modules[idx].ccfoliaLink
-    form.discordLink = modules[idx].discordLink
+    form.value.living = modules[idx].living
+    form.value.image = undefined
+    form.value.minTime = modules[idx].minTime
+    form.value.pl = modules[idx].pl
+    form.value.difficullty = modules[idx].difficullty
+    form.value.hashtag = modules[idx].hashtag
+    form.value.info = modules[idx].info
+    form.value.notice = modules[idx].notice
+    form.value.ccfoliaLink = modules[idx].ccfoliaLink
+    form.value.discordLink = modules[idx].discordLink
 
     // 給 form 用的
     // form.valid = false
     // 目前有沒有送出東西
-    form.loading = false
-    form.idx = idx
+    form.value.loading = false
+    form.value.idx = idx
   }
-  form.showModal = true
+  form.value.showModal = true
 }
 
 const submit = async () => {
   // if (!form.valid) return
 
-  form.loading = true
+  form.value.loading = true
 
   // fd.append(key, value)
   const fd = new FormData()
-  fd.append('name', form.name)
+  fd.append('name', form.value.name)
   // fd.append('gm', form.gm)
-  fd.append('living', form.living)
-  fd.append('image', form.image)
-  fd.append('minTime', form.minTime)
-  fd.append('hashtag', form.hashtag)
-  fd.append('info', form.info)
-  fd.append('notice', form.notice)
-  fd.append('ccfoliaLink', form.ccfoliaLink)
-  fd.append('discordLink', form.discordLink)
+  fd.append('living', form.value.living)
+
+  for (const i of form.value.image) {
+    fd.append('image', i)
+  }
+  // fd.append('image', form.value.image)
+
+  fd.append('minTime', form.value.minTime)
+
+  for (const i of form.value.hashtag) {
+    fd.append('hashtag', i)
+  }
+
+  fd.append('info', form.value.info)
+
+  fd.append('notice', form.value.notice)
+  fd.append('ccfoliaLink', form.value.ccfoliaLink)
+  fd.append('discordLink', form.value.discordLink)
 
   try {
-    if (form._id.length === 0) {
+    if (form.value._id.length === 0) {
       const { data } = await apiAuth.post('/modules', fd)
       // console.log(data)
       modules.push(data.result)
@@ -356,15 +387,15 @@ const submit = async () => {
         text: '模組新增成功'
       })
     } else {
-      const { data } = await apiAuth.patch('/modules/' + form._id, fd)
-      modules[form.idx] = data.result
+      const { data } = await apiAuth.patch('/modules/' + form.value._id, fd)
+      modules[form.value.idx] = data.result
       Swal.fire({
         icon: 'success',
         title: '成功',
         text: '編輯成功'
       })
     }
-    form.showModal = false
+    form.value.showModal = false
   } catch (error) {
     Swal.fire({
       icon: 'error',
@@ -373,13 +404,23 @@ const submit = async () => {
     })
   }
 
-  form.loading = false
+  form.value.loading = false
 };
 
 (async () => {
   try {
     const { data } = await apiAuth.get('/modules/all')
     modules.push(...data.result)
+
+    originalBanners.value.push(...data.result[0].image.map((image, idx) => {
+      return {
+        id: idx.toString(),
+        name: idx.toString(),
+        status: 'finished',
+        url: image
+      }
+    }))
+    form.value.banners = originalBanners.value
   } catch (error) {
     Swal.fire({
       icon: 'error',
@@ -416,4 +457,3 @@ function submitClick (e) {
   }
 }
 </style>
->>>>>>> master

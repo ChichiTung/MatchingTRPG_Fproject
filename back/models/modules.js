@@ -1,5 +1,5 @@
 import { Schema, model, ObjectId } from 'mongoose'
-import validator from 'validator'
+// import validator from 'validator'
 // import bcrypt from 'bcrypt'
 
 const schema = new Schema({
@@ -20,7 +20,7 @@ const schema = new Schema({
     type: Boolean,
     // required: [true, '缺少狀態'],
     // 0 未公開, 1 公開
-    default: false
+    default: 0
   },
   image: {
     type: String,
@@ -33,7 +33,9 @@ const schema = new Schema({
     min: [0, '預估時長不得小於 0']
   },
   pl: {
-    type: Number
+    type: Number,
+    min: [1, '預估人數不得小於 1']
+
     // required: [true, '缺少預估人數'],
     // enum: {
     //   values: [1, 2, 3, 4, 5],
@@ -54,9 +56,9 @@ const schema = new Schema({
   //   default: 0
   // },
   difficullty: {
-    type: Number
+    type: Number,
     // required: [true, '缺少難易度說明'],
-    // default: 0.5
+    default: 0.5
   },
   // lost: {
   //   type: String,
@@ -75,11 +77,7 @@ const schema = new Schema({
   // 自訂義 # 標籤
   hashtag: {
     type: [String],
-<<<<<<< HEAD
     default: ['19世紀末', '復活本']
-=======
-    default: []
->>>>>>> master
   },
 
   info: {

@@ -105,6 +105,9 @@ const themeOverrides_admin: GlobalThemeOverrides = {
         tdColor: '#F9B02D22',
         tdColorStriped: '#F9B04455',
         tdTextColor:'#2F4F40',
+      },
+      Button :{
+        color: '#222',
       }
       
     }
@@ -135,20 +138,12 @@ const menuOptions: MenuOption[] = [
       h(
         RouterLink,
         {
-<<<<<<< HEAD
-        to: {
-            name:'modulesedit'
-          }
-        },
-        { default: () => '上架模組' }
-=======
          to: {
-            name:'modulesedit',
+            name:'modules',
             target: '_blank'
           }
         },
          { default: () => '模組上架' }
->>>>>>> master
       ),
     // key: 'hear-the-wind-sing',
       },
@@ -158,12 +153,8 @@ const menuOptions: MenuOption[] = [
         RouterLink,
         {
          to: {
-<<<<<<< HEAD
-            name:'modules'
-=======
             name:'modules',
             target: '_blank'
->>>>>>> master
           }
         },
          { default: () => '模組庫' }
