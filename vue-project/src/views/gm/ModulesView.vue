@@ -252,7 +252,7 @@ const modules = reactive([])
 // const valid = ref(null)
 // const loading = ref(false)
 
-const form = ref({
+const form = reactive({
   // _id 有東西代表正在編輯，空的代表新增中
   _id: '',
 

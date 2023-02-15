@@ -33,15 +33,23 @@ const router = createRouter({
           name: 'login',
           component: () => import('@/views/front/LoginView.vue'),
           meta: {
-            title: ' 登錄 | Matching TRPG'
+            title: ' 登入 | Matching TRPG'
+          }
+        },
+        {
+          path: 'modules/:id',
+          name: 'modules-id',
+          component: () => import('@/views/front/ModuleView.vue'),
+          meta: {
+            title: '模組| Matching TRPG'
           }
         },
         {
           path: 'module',
           name: 'module',
-          component: () => import('@/views/front/ModulesView.vue'),
+          component: () => import('@/views/front/AllModulesView.vue'),
           meta: {
-            title: '劇本任務 | Matching TRPG'
+            title: '模組任務 | Matching TRPG'
           }
         }, {
           path: 'discussion',
@@ -171,18 +179,5 @@ router.beforeEach(async (to, from, next) => {
     next()
   }
 })
-
-// router.beforeEach(async (to, from, next) => {
-//   const user = useUserStore()
-//   if (user.isLogin && (to.path === '/register' || to.path === '/login')) {
-//     next('/')
-//   } else if (to.meta.login && !user.isLogin) {
-//     next('/login')
-//   } else if (to.meta.admin && !user.isAdmin) {
-//     next('/')
-//   } else {
-//     next()
-//   }
-// })
 
 export default router

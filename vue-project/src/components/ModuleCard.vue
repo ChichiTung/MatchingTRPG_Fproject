@@ -1,20 +1,20 @@
 <template>
   <n-card title="模組--">
     <template #cover>
-      <n-image :src="image" cover height="200px" />
+      <img :src="image" cover height="200px">
     </template>
     <template #header-extra>
+      <n-image :src="image" width="100" object-fit="cover" />
       <router-link :to="'/modules/' + _id">
         {{ name }}
       </router-link>
     </template>
-    <n-image :src="image" cover height="200px" />
-    {{ image }}
+    <!-- {{ image }} -->
     {{ hashtag }}
-    p.pre {{ info }}
-    <template #action>
-      <n-button type="primary" text @click="editFavorite({_id})"> 加入我的最愛 </n-button>
-    </template>
+    <!-- p.pre {{ info }} -->
+    <!-- <template #action> -->
+    <n-button type="primary" text @click="editFavorite({_id})"> 加入我的最愛 </n-button>
+    <!-- </template> -->
 
     卡片内容
   </n-card>
