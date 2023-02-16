@@ -1,5 +1,17 @@
 import { Schema, model, ObjectId } from 'mongoose'
 
+const orderSchema = new Schema({
+  m_id: {
+    type: ObjectId,
+    ref: 'products',
+    required: [true, '缺少商品']
+  },
+  gm_id: {
+    type: ObjectId,
+    ref: 'users',
+    required: [true, '缺少 GM']
+  }
+})
 
 const schema = new Schema({
   pl_id: {
@@ -7,12 +19,12 @@ const schema = new Schema({
     ref: 'users',
     required: [true, '缺少PL']
   },
-  module_id: {
-    type: ObjectId,
-    ref: 'modules',
-    required: [true, '報名的模組不見了..bug']
+  module: {
+    type: [orderSchema],
+    default: []
   },
-  lackPl: {
+
+  lack_Pl: {
     type: Number,
     required: [true, '缺少多少PL，沒有記錄喔']
   },

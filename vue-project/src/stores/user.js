@@ -8,8 +8,10 @@ export const useUserStore = defineStore('user', () => {
   const token = ref('')
   const account = ref('')
   const nickname = ref('')
+  /* eslint-disable */
   const dc_account = ref('')
   const dc_id = ref('')
+  /* eslint-enable */
   const email = ref('')
   const role = ref(0)
   const favorite = ref(0)
@@ -32,9 +34,10 @@ export const useUserStore = defineStore('user', () => {
       account.value = data.result.account
       email.value = data.result.email
       nickname.value = data.result.nickname
+      /* eslint-disable */
       dc_account.value = data.result.dc_account
       dc_id.value = data.result.dc_id
-
+      /* eslint-enable */
       favorite.value = data.result.favorite
       role.value = data.result.role
 
@@ -87,8 +90,10 @@ export const useUserStore = defineStore('user', () => {
       account.value = data.result.account
       nickname.value = data.result.nickname
       email.value = data.result.email
+      /* eslint-disable */
       dc_account.value = data.result.dc_account
       dc_id.value = data.result.dc_id
+      /* eslint-enable */
 
       favorite.value = data.result.favorite
       role.value = data.result.role
@@ -97,13 +102,41 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  const editFavorite = async ({ _id, status }) => {
+    if (token.value === 0) {
+      Swal.fire({
+        title: '失敗',
+        text: '請先登入'
+      })
+      router.push('/login')
+      return
+    }
+    try {
+      const { data } = await apiAuth.post('/users/favorite', { m_id: _id, status: parseInt(status) })
+      favorite.value = data.result
+      Swal.fire({
+        title: '成功',
+        text: '成功加入收藏'
+      })
+    } catch (error) {
+      console.log(error?.response?.data?.message)
+      Swal.fire({
+        title: '失敗',
+        text: error?.response?.data?.message || '發生錯誤'
+
+      })
+    }
+  }
+
   return {
     token,
     account,
     email,
     nickname,
+    /* eslint-disable */
     dc_account,
     dc_id,
+    /* eslint-enable */
     favorite,
     role,
     login,
@@ -111,7 +144,8 @@ export const useUserStore = defineStore('user', () => {
     getUser,
     isLogin,
     isAdmin,
-    avatar
+    avatar,
+    editFavorite
   }
 }, {
   persist: {

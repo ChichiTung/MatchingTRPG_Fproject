@@ -19,7 +19,7 @@
   .bg_1 {
     background-image: url('../../../../image/tavern_5.jpg');
     margin-top: -5vw;
-    width: 100vw;
+    width: 105vw;
     height: 111vh;
     // max-height: 150vh;
     flex-shrink: 0;

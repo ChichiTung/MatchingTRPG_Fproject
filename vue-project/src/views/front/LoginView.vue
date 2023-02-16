@@ -43,7 +43,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { useUserStore } from '@/stores/user'
-import { useRouter, RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { useMessage } from 'naive-ui'
 import validator from 'validator'
 

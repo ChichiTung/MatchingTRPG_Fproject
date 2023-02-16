@@ -90,11 +90,12 @@ export const getUser = (req, res) => {
   }
 }
 
-// 處理˙(缺測試)
+// 加最愛(缺測試)
 export const editFavorite = async (req, res) => {
   try {
     // 找收藏有沒有此商品
     const idx = req.user.favorite.findIndex(favorite => favorite.m_id.toString() === req.body.m_id)
+
     if (idx > -1) {
       // 如果有，檢查新數量是多少
       const status = req.user.favorite[idx].status
@@ -104,9 +105,11 @@ export const editFavorite = async (req, res) => {
       if (status <= 0) {
         // 如果新數量小於 0，從購物車陣列移除
         req.user.favorite.splice(idx, 1)
+      } else {
+        req.user.favorite[idx].status = status
       }
     } else {
-      // 如果購物車內沒有此商品，檢查商品是否存在
+      // 如果我的最愛內沒有此商品，檢查商品是否存在
       const module = await modules.findById(req.body.m_id)
       // 如果不存在，回應 404
       if (!module || !module.living) {

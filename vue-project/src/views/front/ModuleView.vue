@@ -1,13 +1,14 @@
 <template>
   <div id="moduleView_bg">
-    <n-grid cols="12">
-      <n-gi span="12">
-        <h1 style="text-align: center;">
-          {{ module.name }}
-        </h1>
-      </n-gi>
+    <n-image
+      :src="module.image" object-fit="scale-down" style=" margin-left: -5vw;margin-top: 10vh; width: 100%; height: 100%;"
+    />
+    <h1 style="text-align: left; font-size: 3vw; color: #F9B02D;">
+      {{ module.name }}
+    </h1>
+    <!-- <p> ${{ product.price }}</p>
+     <p>{{ product.description }}</p> -->
 
-    </n-grid>
   </div>
 </template>
 <script setup>
@@ -43,7 +44,7 @@ const module = reactive({
   image: '',
   minTime: 0.5,
   pl: 1,
-  difficullty: 0.5,
+  difficulty: 0.5,
   hashtag: [],
   info: '',
   notice: '',
@@ -82,7 +83,8 @@ const module = reactive({
 <style>
 #moduleView_bg{
   width: 100vw;
-  height: 100vh;
+  height: 110vh;
+  margin-top: 10vh;
   background: #2F4F40;
 }
 </style>

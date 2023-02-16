@@ -13,9 +13,8 @@ import { useUserStore } from '@/stores/user'
 
 // 主題
 const themeOverrides: GlobalThemeOverrides = {
-    // background-color: '#2F4F4F',
     common: {
-      bodyColor: '#2F4F4F',
+      bodyColor: '#2F4F40',
       primaryColor: '#F8E9D6',
       primaryColorHover: '#F9B02D',
       primaryColorPressed:'#2F4F40',
@@ -28,6 +27,18 @@ const themeOverrides: GlobalThemeOverrides = {
       // border-radius (輸入框)
       borderRadius: '15px'
     },
+    Card:{
+      boxShadow: ' 2% 2% 0 0 rgb(50,50,50),0.8'
+    },
+    Table:{
+        thColor: '#385d4a',
+        thFontWeight: '800',
+        thTextColor: '#EEE',
+
+        tdColor: '#F9B02D22',
+        tdColorStriped: '#F9B04455',
+        tdTextColor:'#2F4F40',
+      },
     Input :{
       color: '#E49E6F55',
       textColor: '#709148',
@@ -180,6 +191,18 @@ const menuOptions: MenuOption[] = [
         RouterLink,
         {
          to: {
+            name:'favorite'
+          }
+        },
+         { default: () => '收藏庫' }
+      ),
+      },
+      {
+        label: () =>
+      h(
+        RouterLink,
+        {
+         to: {
             name:'orders'
           }
         },
@@ -215,17 +238,17 @@ const active = ref(false)
 </script>
 
 <style>
-#navbar img {
+#navbar .logo {
   position: fixed;
   top: 2%;
   z-index: 100;
 }
-#navbar button {
+/* #navbar button {
   position: fixed;
   top: 6%;
   right: 3%;
   z-index: 100;
-}
+} */
 
 .logo {
   width: 20%;
@@ -236,15 +259,15 @@ const active = ref(false)
 </style>
 
 <template>
-  <div class="container" style="background-color: #2F4F4F ; position: fixed;">
+  <div class="container" style="background-color: #2f4f40 ; position: fixed;">
     <n-config-provider :theme-overrides="themeOverrides" :breakpoints="{ xs: 0, s: 576, m: 768, l: 992, xl: 1200, xxl: 1400 }">
         <div id="navbar" >
           <img src="url('../../image/TRPG_LOGO.png" alt="logo" class="logo">
 
           <!-- 登出 -->
-           <n-tooltip placement="left-start" trigger="hover" :show-arrow="false" style="background-color: #F8E9D6; color: #2F4F4F;" v-if="isLogin">
+           <n-tooltip placement="left-start" trigger="hover" :show-arrow="false" style="background-color: #F8E9D6; color: #2f4f40;" v-if="isLogin">
             <template #trigger>
-            <n-button @click="logout" text style="margin-right: 5%;">
+            <n-button @click="logout" text style="margin-right: 5%; position: fixed; top: 6%; right: 3%; z-index: 100;">
               <n-icon size="40" color="#F8E9D6">
                 <LogOutOutline />
               </n-icon>
@@ -254,7 +277,10 @@ const active = ref(false)
           </n-tooltip>
           <!-- 77777777777777777777777777777777 -->
 
-          <n-button @click="activate('right')" text>
+          <n-button @click="activate('right')" text style="position: fixed;
+  top: 6%;
+  right: 3%;
+  z-index: 100;">
       <!-- DataBarHorizontal20Filled -->
           <n-icon size="40" color="#F8E9D6">
             <DataBarHorizontal20Filled />
@@ -262,7 +288,10 @@ const active = ref(false)
           </n-button>
 
           <n-drawer v-model:show="active" :width="350" :placement="placement" auto-focus block-scroll 
-        style=" background: rgba(47,79,79, 0.9)">
+        style=" background: rgba(47,79,79, 0.9) ;position: fixed;
+  top: 6%;
+  right: 3%;
+  z-index: 100;" >
           <n-drawer-content closable>
             <n-menu :options="menuOptions" accordian>
               <n-button quaternary round>

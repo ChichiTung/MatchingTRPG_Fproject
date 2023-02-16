@@ -1,10 +1,11 @@
 <template>
   <div id="front_module_bg">
-    <h1 style="text-align: center;"> 劇本模組 </h1>
-    <n-grid x-gap="12" cols="12">
+    <h1 style="text-align: center; font-size: 3vw; color: bisque;"> 模 組 任 務 </h1>
+    <n-divider />
+    <n-grid x-gap="12" cols="12" style="margin: 4vh 5vw;">
       <n-gi
         v-for="module in modules"
-        :key="module._id" span="12"
+        :key="module._id" span="3"
       >
         <ModuleCard v-bind="module" />
 
@@ -41,7 +42,8 @@ const modules = reactive([]);
 <style>
 #front_module_bg {
   width: 100vw;
-  height: 100vh;
+  height: 200vh;
+  margin-top: 2vh;
   background: #2F4F40;
 }
 

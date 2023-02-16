@@ -90,7 +90,7 @@ const router = createRouter({
         {
           path: 'modulesedit',
           name: 'modulesedit',
-          component: () => import('@/views/gm/ModulesEditView.vue'),
+          component: () => import('@/views/gm/TEST.vue'),
           meta: {
             title: '模組上架 | MatchingTRPG'
           }
@@ -129,6 +129,14 @@ const router = createRouter({
           component: () => import('@/views/user/HomeView.vue'),
           meta: {
             title: '探索者檔案 | MatchingTRPG'
+          }
+        },
+        {
+          path: 'favorite',
+          name: 'favorite',
+          component: () => import('@/views/front/FavoriteView.vue'),
+          meta: {
+            title: '收藏庫 | MatchingTRPG'
           }
         },
         {

@@ -18,14 +18,13 @@ const schema = new Schema({
   // 未公開： default 先給必填欄位空值 !!
   living: {
     type: Boolean,
-    // required: [true, '缺少狀態'],
     // 0 未公開, 1 公開
     default: 0
   },
   image: {
-    type: String,
+    type: [String],
     // required: [true, '缺少圖片'],
-    default: ''
+    default: []
   },
   minTime: {
     type: Number,
@@ -55,7 +54,7 @@ const schema = new Schema({
   //   type: Boolean,
   //   default: 0
   // },
-  difficullty: {
+  difficulty: {
     type: Number,
     // required: [true, '缺少難易度說明'],
     default: 0.5
@@ -77,7 +76,7 @@ const schema = new Schema({
   // 自訂義 # 標籤
   hashtag: {
     type: [String],
-    default: ['19世紀末', '復活本']
+    default: []
   },
 
   info: {

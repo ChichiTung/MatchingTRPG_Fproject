@@ -12,7 +12,7 @@
           <n-grid cols="6 s:6 l:12" :x-gap="18" resonsive="screen">
             <!-- account -->
             <n-form-item-gi :span="3" label="登入帳號" path="account">
-              <n-input v-model:value="model.account" maxlength="20" clearable placeholder="英數字6碼以上" @keydown.enter.prevent />
+              <n-input v-model:value="model.account" maxlength="20" clearable placeholder="英數字6碼以上" />
             </n-form-item-gi>
             <!-- nickname -->
             <n-form-item-gi :span="3" label="探索者暱稱" path="nickname">

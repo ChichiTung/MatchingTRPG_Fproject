@@ -25,14 +25,16 @@
       </thead>
       <tbody>
         <tr v-for="(module, idx) in modules" :key="module._id" style="text-align: center;">
-          <td> <n-image :src="module.image" :width="200" /></td>
-          <td>{{ module.name }}</td>
 
-          <td>
+          <td style="width: 35%;"> <n-image :src="module.image[0]" :width="200" /></td>
+
+          <td style="width: 40%;font-size: 25px;">{{ module.name }}</td>
+
+          <td style="width: 15%">
             <!-- {{ module.living }} -->
             <n-switch v-model:value="module.living" />
           </td>
-          <td>
+          <td style="width: 10%">
             <n-button strong secondary circle type="error" @click="showModal(idx)">
               <template #icon>
                 <n-icon><Edit /></n-icon>
@@ -86,22 +88,20 @@
           </n-form-item-gi>
           <!-- 劇本圖片 -->
           <n-form-item-gi span="xs:9 m:6 l:6" label="模組圖片" path="image">
-            <!-- <n-input v-model:value="model.image" placeholder=" " /> -->
             <n-upload
               v-model:value="form.image"
               list-type="image-card"
+              multiple
               accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff,.svg,.webp"
-              :default-file-list="originalBanners"
+              :default-file-list="originalImg"
               @change="handleChange"
-            />
+            >
+              新增圖片
+            </n-upload>
           </n-form-item-gi>
 
           <!-- 預估時長 -->
-          <n-form-item-gi span="xs:6 m:3 l:3" label="預估時長" path="minTime">
-            <!-- <n-select
-              v-model:value="form.minTime"
-              placeholder="預估時長"
-            /> -->
+          <n-form-item-gi span="xs:6 m:3 l:3" label="預估時長 (以最短時間計算)" path="minTime">
             <n-input-number v-model:value="form.minTime" :default-value="1" clearable>
               <template #suffix>
                 <div style="margin-left:-50px; padding-right: 60px;">
@@ -113,11 +113,7 @@
 
           <!-- 建議人數 -->
           <n-form-item-gi span="xs:6 m:3 l:3" label="PL 人數" path="pl">
-            <!-- <n-select
-              v-model="form.pl"
-              placeholder="建議人數"
-            /> -->
-            <n-input-number v-model:value="form.pl" placeholder="建議人數" clearable>
+            <n-input-number v-model:value="form.pl" :default-value="1" clearable>
               <template #suffix>
                 <div style="margin-left:-50px; padding-right: 60px;">
                   人
@@ -136,9 +132,8 @@
           </n-form-item-gi>
 
           <!-- 難度 -->
-          <n-form-item-gi span="xs:6 m:3 l:3" label="難度" path="pc">
-            <n-rate v-model:value="form.difficullty" :default-value="0.5" allow-half color="#4fb233" />
-
+          <n-form-item-gi span="xs:6 m:3 l:3" label="難度" path="difficulty">
+            <n-rate v-model:value="form.difficulty" :default-value="0.5" allow-half color="#4fb233" />
           </n-form-item-gi>
 
           <!-- 劇本說明 -->
@@ -149,7 +144,7 @@
               type="textarea"
               :autosize="{
                 minRows: 3,
-                maxRows: 5
+                maxRows: 10
               }"
             />
           </n-form-item-gi>
@@ -162,7 +157,7 @@
               type="textarea"
               :autosize="{
                 minRows: 3,
-                maxRows: 5
+                maxRows: 10
               }"
             />
           </n-form-item-gi>
@@ -202,7 +197,7 @@
               <n-button
                 :disabled="form.loading"
                 round type="primary" size="large" style="width: 12vw; height: 3vw; font-size: 1.5vw;"
-                attr-type="submit"
+                attr-type="submit" @keydown.enter.prevent
               >
                 存 &nbsp;&nbsp; 檔
               </n-button>
@@ -224,28 +219,24 @@ import { apiAuth } from '@/plugins/axios'
 import { ref, reactive } from 'vue'
 import Swal from 'sweetalert2'
 // import validator from 'validator'
-// import { useMessage } from 'naive-ui'
+import { useMessage } from 'naive-ui'
 import { Edit } from '@vicons/carbon'
 import { BookAdd24Regular } from '@vicons/fluent'
 
 // const formRef = ref(null)
-// const message = useMessage()
+const message = useMessage()
 const size = ref('medium')
 
-// const showModalImageRef = ref(false)
-// const previewImageUrlRef = ref('')
-// function handleChange (file) {
-//   const { url } = file
-//   previewImageUrlRef.value = url
-//   showModalImageRef.value = true
-// }
-const originalBanners = ref([])
-const handleChange = (options) => {
+const originalImg = ref([])
+
+const handleChange = options => {
+  console.log(options.fileList)
+
   let i = []
   let j = []
   i = options.fileList.map(image => image.url).filter(url => url !== null)
   j = options.fileList.map(image => image.file).filter(url => url !== null)
-  form.value.image = [...i, ...j]
+  form.image = [...i, ...j]
 }
 
 const modules = reactive([])
@@ -255,14 +246,13 @@ const modules = reactive([])
 const form = reactive({
   // _id 有東西代表正在編輯，空的代表新增中
   _id: '',
-
   name: '',
   // gm: '',
   living: false,
   image: [],
   minTime: 0.5,
   pl: 1,
-  difficullty: 0.5,
+  difficulty: 0.5,
   hashtag: ['19世紀', '復活本'],
   info: '',
   notice: '',
@@ -274,7 +264,6 @@ const form = reactive({
   // 目前有沒有送出東西
   loading: false,
   showModal: false,
-
   idx: -1
 })
 
@@ -303,81 +292,95 @@ const rules = {
 
 const showModal = (idx) => {
   if (idx === -1) {
-    form.value._id = ''
-
-    form.value.name = ''
-    // form.gm = ''
-    form.value.living = false
-    form.value.image = undefined
-    form.value.minTime = 0
-    form.value.pl = 1
-    form.value.difficullty = 0.5
-    form.value.hashtag = []
-    form.value.info = ''
-    form.value.notice = ''
-    form.value.ccfoliaLink = ''
-    form.value.discordLink = ''
+    form._id = ''
+    form.name = ''
+    // f = ''
+    form.living = false
+    // 先給他一個空陣列
+    form.image = []
+    form.minTime = 0.5
+    form.pl = 1
+    form.difficulty = 0.5
+    form.hashtag = []
+    form.info = ''
+    form.notice = ''
+    form.ccfoliaLink = ''
+    form.discordLink = ''
 
     // 給 form 用的
     // form.valid = false
     // 目前有沒有送出東西
-    form.value.loading = false
-    form.value.idx = -1
+    form.loading = false
+    form.idx = -1
+
+    // 多圖上傳時，要先預設空值
+    originalImg.value.length = 0
   } else {
-    form.value._id = modules[idx]._id
+    originalImg.value.length = 0
 
-    form.value.name = modules[idx].name
+    form._id = modules[idx]._id
+    form.name = modules[idx].name
     // form.gm = modules[idx].gm
-    form.value.living = modules[idx].living
-    form.value.image = undefined
-    form.value.minTime = modules[idx].minTime
-    form.value.pl = modules[idx].pl
-    form.value.difficullty = modules[idx].difficullty
-    form.value.hashtag = modules[idx].hashtag
-    form.value.info = modules[idx].info
-    form.value.notice = modules[idx].notice
-    form.value.ccfoliaLink = modules[idx].ccfoliaLink
-    form.value.discordLink = modules[idx].discordLink
+    form.living = modules[idx].living
+    form.image = modules[idx].image
+    form.minTime = modules[idx].minTime
+    form.pl = modules[idx].pl
+    form.difficulty = modules[idx].difficulty
+    form.hashtag = modules[idx].hashtag
+    form.info = modules[idx].info
+    form.notice = modules[idx].notice
+    form.ccfoliaLink = modules[idx].ccfoliaLink
+    form.discordLink = modules[idx].discordLink
+
+    originalImg.value.push(
+      ...form.image.map((image, idx) => {
+        return {
+          id: idx.toString(),
+          name: idx.toString(),
+          status: 'finished',
+          url: image
+        }
+      })
+    )
 
     // 給 form 用的
     // form.valid = false
     // 目前有沒有送出東西
-    form.value.loading = false
-    form.value.idx = idx
+    form.loading = false
+    form.idx = idx
   }
-  form.value.showModal = true
+  form.showModal = true
 }
 
 const submit = async () => {
   // if (!form.valid) return
 
-  form.value.loading = true
+  form.loading = true
 
   // fd.append(key, value)
   const fd = new FormData()
-  fd.append('name', form.value.name)
+  fd.append('name', form.name)
   // fd.append('gm', form.gm)
-  fd.append('living', form.value.living)
-
-  for (const i of form.value.image) {
-    fd.append('image', i)
+  fd.append('living', form.living)
+  // image
+  if (form.image.length >= 1) {
+    form.image.forEach(item => {
+      fd.append('image', item)
+    })
   }
-  // fd.append('image', form.value.image)
-
-  fd.append('minTime', form.value.minTime)
-
-  for (const i of form.value.hashtag) {
+  fd.append('minTime', form.minTime)
+  fd.append('pl', form.pl)
+  fd.append('difficulty', form.difficulty)
+  for (const i of form.hashtag) {
     fd.append('hashtag', i)
   }
-
-  fd.append('info', form.value.info)
-
-  fd.append('notice', form.value.notice)
-  fd.append('ccfoliaLink', form.value.ccfoliaLink)
-  fd.append('discordLink', form.value.discordLink)
+  fd.append('info', form.info)
+  fd.append('notice', form.notice)
+  fd.append('ccfoliaLink', form.ccfoliaLink)
+  fd.append('discordLink', form.discordLink)
 
   try {
-    if (form.value._id.length === 0) {
+    if (form._id.length === 0) {
       const { data } = await apiAuth.post('/modules', fd)
       // console.log(data)
       modules.push(data.result)
@@ -387,15 +390,15 @@ const submit = async () => {
         text: '模組新增成功'
       })
     } else {
-      const { data } = await apiAuth.patch('/modules/' + form.value._id, fd)
-      modules[form.value.idx] = data.result
+      const { data } = await apiAuth.patch('/modules/' + form._id, fd)
+      modules[form.idx] = data.result
       Swal.fire({
         icon: 'success',
         title: '成功',
         text: '編輯成功'
       })
     }
-    form.value.showModal = false
+    form.showModal = false
   } catch (error) {
     Swal.fire({
       icon: 'error',
@@ -404,29 +407,15 @@ const submit = async () => {
     })
   }
 
-  form.value.loading = false
+  form.loading = false
 };
 
 (async () => {
   try {
     const { data } = await apiAuth.get('/modules/all')
     modules.push(...data.result)
-
-    originalBanners.value.push(...data.result[0].image.map((image, idx) => {
-      return {
-        id: idx.toString(),
-        name: idx.toString(),
-        status: 'finished',
-        url: image
-      }
-    }))
-    form.value.banners = originalBanners.value
   } catch (error) {
-    Swal.fire({
-      icon: 'error',
-      title: '失敗',
-      text: error?.response?.data?.message || '發生錯誤'
-    })
+    message.error(error?.response?.data?.message || '發生錯誤')
   }
 })()
 
