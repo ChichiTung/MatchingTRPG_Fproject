@@ -5,16 +5,16 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .container-fluid {
   // 橫向滾動
-  display: flex;
-    overflow-x: hidden;
+  // display: flex;
+    // overflow-x: hidden;
     max-height: 500vh;
     width: 150vw;
     margin-left: -30px;
 
-  // overflow-y: hidden;
+    // overflow-y: scroll;
 
   .bg_1 {
     background-image: url('../../../../image/tavern_5.jpg');

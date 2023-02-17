@@ -31,12 +31,12 @@ const themeOverrides: GlobalThemeOverrides = {
       boxShadow: ' 2% 2% 0 0 rgb(50,50,50),0.8'
     },
     Table:{
-        thColor: '#385d4a',
+        thColor: '#F9B02D',
         thFontWeight: '800',
-        thTextColor: '#EEE',
+        thTextColor: '#2F4F40',
 
-        tdColor: '#F9B02D22',
-        tdColorStriped: '#F9B04455',
+        tdColor: '#F8E9D6DD',
+        tdColorStriped: '#F9B04488',
         tdTextColor:'#2F4F40',
       },
     Input :{
@@ -111,7 +111,7 @@ const menuOptions: MenuOption[] = [
             name: 'module'
           }
         },
-        { default: () => '劇本任務' }
+        { default: () => '模組任務' }
       ),
     key: 'go-back-home',
   },

@@ -2,17 +2,17 @@
   <div id="front_module_bg">
     <h1 style="text-align: center; font-size: 3vw; color: bisque;"> 模 組 任 務 </h1>
     <n-divider />
-    <n-grid x-gap="12" cols="12" style="margin: 4vh 5vw;">
-      <n-gi
+    <div class="front_module_content">
+      <div
         v-for="module in modules"
-        :key="module._id" span="3"
+        :key="module._id"
+        class="col"
       >
-        <ModuleCard v-bind="module" />
+        <ModuleCard v-bind="module" class="module_card" />
 
-      </n-gi>
+      </div>
 
-    </n-grid>
-
+    </div>
   </div>
 </template>
 
@@ -39,12 +39,24 @@ const modules = reactive([]);
 
 </script>
 
-<style>
+<style lang="scss">
 #front_module_bg {
   width: 100vw;
   height: 200vh;
   margin-top: 2vh;
   background: #2F4F40;
+
+ .front_module_content {
+  width: 80vw;
+  height: 200vh;
+  margin: auto;
+  display: flex;
+
+  .col {
+    width: 20%;
+    margin-left: 5%;
+  }
+  }
 }
 
 </style>

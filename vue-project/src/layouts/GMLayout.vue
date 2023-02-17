@@ -98,7 +98,7 @@ const themeOverrides_admin: GlobalThemeOverrides = {
         color: '#F9B02D88',
       },
       Table:{
-        thColor: '#385d4a',
+        thColor: '#F9B02D',
         thFontWeight: '800',
         thTextColor: '#EEE',
 
@@ -211,6 +211,7 @@ const menuOptions: MenuOption[] = [
 <style lang="scss">
 .bg_admin {
   width: 100vw;
+  // overflow-x: hidden !important;
 
   #navbar_admin {
     display: flex;

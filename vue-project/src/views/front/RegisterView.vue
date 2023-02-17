@@ -272,7 +272,7 @@ function ButtonClickR (e) {
         .box_img {
           width: 15%;
           height: 100%;
-          overflow: hidden;
+          // overflow: hidden;
           background-image: url('../../../image/5b030a40b198ffb7fbd039c36c941459.jpg');
           background-position: 50% 1%;
           background-repeat: no-repeat;
