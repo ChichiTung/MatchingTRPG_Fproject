@@ -30,97 +30,6 @@
           <span style="position: absolute; top: 15%;right:20%;">報名</span>
         </div>
 
-        <n-modal v-model:show="showModal" :trap-focus="false" :mask-closable="false">
-          <!-- rules 要再修 -->
-          <n-form
-            :model="form"
-            label-placement="top"
-            style="background-color: #F8E9DD; border-radius: 15px; padding: 2%;"
-            @submit.prevent="onApplyBtnClick"
-          >
-            <n-grid cols="6 l:12" item-responsive responsive="screen" x-gap="30">
-
-              <n-form-item-gi span="12">
-                <n-divider
-                  title-placement="left"
-                  style="--n-color: #5d8585; --n-text-color: #5d8585; margin: -8vh 0 -10vh 0;"
-                >
-                  <h2 v-if="form._id.length <= 0" style="text-align: center;  width: 100%;"> {{ module.name }} &nbsp; 報名中</h2>
-                </n-divider>
-              </n-form-item-gi>
-
-              <!-- 劇本名字 -->
-              <n-form-item-gi span="xs:9 m:6 l:6" label="模組名稱" path="m_name">
-                <n-input v-model:value="module.name" :default-value="module.name" type="text" />
-              </n-form-item-gi>
-
-              <!-- 建議人數 -->
-              <n-form-item-gi span="xs:6 m:3 l:3" label="PL 人數" path="pl">
-                <n-input-number v-model:value="form.pl" :disabled="disabled" :default-value="module.pl" clearable>
-                  <template #suffix>
-                    <div style="margin-left:-50px; padding-right: 60px;">
-                      人
-                    </div>
-                  </template>
-                </n-input-number>
-              </n-form-item-gi>
-
-              <!-- 玩家資料 -->
-              <n-form-item-gi span="xs:9 m:6 l:6" label="PL 暱稱" path="pl_nickname">
-                <n-input v-model:value="user.nickname" placeholder="req.user.nickname" type="text" />
-              </n-form-item-gi>
-
-              <!-- 玩家資料-DC -->
-              <n-form-item-gi span="xs:9 m:6 l:6" label="PL DC帳號" path="pl_dc_account">
-                <n-input v-model:value="user.dc_account" placeholder="req.user.dc_account" type="text" />
-              </n-form-item-gi>
-
-              <!-- 玩家資料-DC -->
-              <n-form-item-gi span="xs:9 m:6 l:6" label="PL資料 DC_id" path="pl_dc_id">
-                <n-input v-model:value="user.dc_id" placeholder="req.user.dc_id" type="text" />
-              </n-form-item-gi>
-
-              <!-- dateTime -->
-              <!-- <n-form-item-gi span="xs:6 m:3 l:3" label="date" path="datetimeValue">
-                <n-date-picker v-model:value="order.date" type="datetime" />
-              </n-form-item-gi> -->
-
-              <!-- 取消 -->
-              <n-gi span="2">
-                <div style="display: flex; justify-content: flex">
-                  <n-button
-                    type="error" ghost
-                    :disabled="form.loading"
-                    round size="large" style="width: 12vw; height: 3vw; font-size: 1.5vw;"
-                    @click="showModal = false"
-                  >
-                    <!-- @click="order.showModal = false" -->
-                    取 &nbsp;&nbsp; 消
-                  </n-button>
-
-                </div>
-              </n-gi>
-
-              <!-- 送出紐 -->
-              <n-gi span="2">
-                <div style="display: flex; justify-content: flex">
-                  <n-button
-                    :disabled="form.loading"
-                    round type="warning" size="large" style="width: 12vw; height: 3vw; font-size: 1.5vw;"
-                    @keydown.enter.prevent
-                    @click="onApplyBtnClick"
-                  >
-                    送 &nbsp;&nbsp; 出
-                  </n-button>
-
-                </div>
-              </n-gi>
-
-            </n-grid>
-          </n-form>
-
-        </n-modal>
-
       </div>
 
     </div>
@@ -134,14 +43,104 @@
           模組簡介
         </n-text>
       </n-h1>
-      <!-- <p>{{ module.info }}</p> -->
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas pariatur sint quisquam unde eveniet ut illum neque alias aliquam porro expedita aperiam facere, ex id eum nesciunt ipsa eius optio consequuntur. Nemo labore eaque atque debitis, aut ut corporis, delectus impedit praesentium id dicta sed aperiam minus qui a ab necessitatibus, molestiae at consequatur recusandae consequuntur maxime! Cumque perspiciatis a ad obcaecati velit commodi quibusdam recusandae, atque quis nulla, earum nostrum nesciunt, cupiditate excepturi sequi praesentium tempore at minus aliquam aliquid. Tempora fugit numquam iste ex dolore hic officiis unde quis temporibus, reprehenderit soluta aliquam id dolorum omnis laborum expedita facere sint repellendus, saepe ipsum aliquid cupiditate corporis veritatis repellat! Id rem saepe sint mollitia assumenda deserunt delectus alias, recusandae exercitationem velit, ipsam nostrum maxime sed voluptatem explicabo laudantium maiores voluptate! Ut natus suscipit earum placeat neque! Impedit, iure autem! Ab at vitae id asperiores illo dolorum ex ipsa sunt?
+      <p>{{ module.info }}</p>
+    </div>
 
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, numquam? Distinctio nisi iusto eos, tempora sit optio dolorem quasi animi? Doloremque commodi beatae voluptates, accusantium perferendis deleniti veritatis consequuntur qui, dolorum quos porro, libero facere. Nobis, exercitationem. Sed odio, eligendi eius nulla quidem voluptatem earum, magni beatae eaque autem laboriosam dicta ab molestias facere facilis obcaecati illo nemo architecto necessitatibus. Nobis culpa deleniti possimus quod repudiandae alias illum perspiciatis ex nostrum. Tempore consectetur sunt minus sequi perspiciatis alias asperiores accusamus repellat nisi maiores repellendus neque consequatur veniam saepe dicta, optio cumque cupiditate iusto debitis cum nam beatae. Perferendis quo tenetur in blanditiis, rerum dolorum libero accusantium, repellendus labore atque veritatis dicta asperiores omnis sint totam nemo? Neque dolore, incidunt architecto doloribus quibusdam nulla enim illo cum culpa sapiente nobis quia ut sit maiores odio repellat sed exercitationem, impedit accusamus distinctio ea vero blanditiis earum dolores. Praesentium neque nobis voluptas sed ad deserunt sunt temporibus fuga, magni cum culpa. Placeat sunt distinctio nostrum maiores quaerat ad deleniti commodi officiis tempore mollitia vero asperiores fugiat recusandae itaque adipisci quam animi id maxime, aut tempora numquam facilis perspiciatis! Nihil quisquam a aut illum facilis eaque ad, esse quia, voluptates consequuntur doloremque amet eos? Recusandae aut minus, tempora enim eos quas quasi accusantium vitae eligendi debitis dolorem tempore expedita itaque temporibus placeat exercitationem, commodi nesciunt ducimus praesentium doloribus qui repellendus ea ex. Quasi illo fugit iste harum, debitis dolor? Quas pariatur esse tenetur iure fugit animi repellat illum quod nihil, aliquam aperiam at quisquam, ipsum porro? Praesentium qui obcaecati eaque doloribus voluptas asperiores quaerat dolorum dolore? Velit possimus obcaecati pariatur molestiae iste asperiores veritatis unde. Aliquam et, ex in unde temporibus architecto nihil asperiores modi, dolore vero vitae molestias. Pariatur veniam et soluta non eos inventore suscipit doloribus sed tempore eum consequuntur quae quisquam eaque ipsam, delectus repellat tempora aperiam quia quasi aut numquam tenetur enim. Laborum, maxime! Necessitatibus neque quas ad omnis accusamus fugit, fuga eum voluptatibus, porro suscipit tenetur natus placeat cum minima dicta? Aspernatur sequi corporis obcaecati eveniet necessitatibus accusantium et earum nobis molestiae veritatis aliquam voluptate, beatae ratione praesentium saepe consequatur sed iste perferendis iusto? At veritatis, dolorum aliquid possimus fugit nemo ullam, necessitatibus eligendi ad dolore ratione facere quo minima soluta rem, ipsam ab unde blanditiis corrupti fuga quasi incidunt nihil sed? Error in nisi repellendus numquam soluta similique dolores incidunt magnam consectetur voluptatibus eius odio esse deserunt, quis sequi, laudantium officiis animi labore adipisci. Delectus nesciunt reiciendis odit minima. Soluta vel placeat exercitationem ab enim vitae tempore iusto facere pariatur amet atque, ipsam fugiat veniam aliquam provident? Labore amet tenetur dolorem sint modi sunt illum optio a recusandae harum adipisci reiciendis nostrum, consectetur, possimus perferendis doloribus nesciunt at? Perspiciatis quisquam amet recusandae natus perferendis maiores necessitatibus pariatur rem esse possimus neque excepturi fugiat itaque id quod tempore cupiditate enim, atque delectus. Doloremque velit rerum perspiciatis laudantium at minima. At repellendus repudiandae error officia cumque, animi dignissimos pariatur numquam commodi mollitia quibusdam delectus quas architecto. Dolorem unde quam ullam!
-      </p>
+    <div id="pl_orders">
+
     </div>
   </div>
+
+  <n-modal v-model:show="showModal" :trap-focus="false" :mask-closable="false">
+    <!-- rules 要再修 -->
+    <n-form
+      :model="form"
+      label-placement="top"
+      style="background-color: #F8E9DD; border-radius: 15px; padding: 2%;"
+      @submit.prevent="onApplyBtnClick"
+    >
+      <n-grid cols="6 l:12" item-responsive responsive="screen" x-gap="30">
+
+        <n-form-item-gi span="12">
+          <n-divider
+            title-placement="left"
+            style="--n-color: #5d8585; --n-text-color: #5d8585; margin: -8vh 0 -10vh 0;"
+          >
+            <h2 v-if="form._id.length <= 0" style="text-align: center;  width: 100%;"> {{ module.name }} &nbsp; 報名中</h2>
+          </n-divider>
+        </n-form-item-gi>
+
+        <!-- 劇本名字 -->
+        <n-form-item-gi span="xs:9 m:6 l:6" label="模組名稱" path="m_name">
+          <n-input v-model:value="module.name" :default-value="module.name" type="text" />
+        </n-form-item-gi>
+
+        <!-- 建議人數 -->
+        <n-form-item-gi span="xs:6 m:3 l:3" label="想要的 HO" path="pl">
+          <n-input-number v-model:value="form.pl" :disabled="disabled" :default-value="1" clearable>
+            <template #prefix>
+              <div style="margin-right:-50px; padding-right: 60px; color: #2F4F4088">
+                HO ：
+              </div>
+            </template>
+          </n-input-number>
+        </n-form-item-gi>
+
+        <!-- 玩家資料 -->
+        <n-form-item-gi span="xs:9 m:6 l:6" label="PL 暱稱" path="pl_nickname">
+          <n-input v-model:value="user.nickname" placeholder="req.user.nickname" type="text" />
+        </n-form-item-gi>
+
+        <!-- 玩家資料-DC -->
+        <n-form-item-gi span="xs:9 m:6 l:6" label="PL DC帳號" path="pl_dc_account">
+          <n-input v-model:value="user.dc_account" placeholder="req.user.dc_account" type="text" />
+        </n-form-item-gi>
+
+        <!-- 玩家資料-DC -->
+        <n-form-item-gi span="xs:9 m:6 l:6" label="PL資料 DC_id" path="pl_dc_id">
+          <n-input v-model:value="user.dc_id" placeholder="req.user.dc_id" type="text" />
+        </n-form-item-gi>
+
+        <!-- dateTime -->
+        <!-- <n-form-item-gi span="xs:6 m:3 l:3" label="date" path="datetimeValue">
+                <n-date-picker v-model:value="order.date" type="datetime" />
+              </n-form-item-gi> -->
+
+        <!-- 取消 -->
+        <n-gi span="2">
+          <div style="display: flex; justify-content: flex">
+            <n-button
+              type="error" ghost
+              :disabled="form.loading"
+              round size="large" style="width: 12vw; height: 3vw; font-size: 1.5vw;"
+              @click="showModal = false"
+            >
+              <!-- @click="order.showModal = false" -->
+              取 &nbsp;&nbsp; 消
+            </n-button>
+
+          </div>
+        </n-gi>
+
+        <!-- 送出紐 -->
+        <n-gi span="2">
+          <div style="display: flex; justify-content: flex">
+            <n-button
+              :disabled="form.loading"
+              round type="warning" size="large" style="width: 12vw; height: 3vw; font-size: 1.5vw;"
+              @keydown.enter.prevent
+              @click="onApplyBtnClick"
+            >
+              送 &nbsp;&nbsp; 出
+            </n-button>
+
+          </div>
+        </n-gi>
+
+      </n-grid>
+    </n-form>
+
+  </n-modal>
 </template>
 <script setup>
 import { apiAuth, api } from '@/plugins/axios'
@@ -159,20 +158,6 @@ const message = useMessage()
 
 const user = useUserStore()
 
-// const { editFavorite } = user
-
-// const valid = ref(false)
-// const quantity = ref(0)
-
-// const rules = {
-//   required (value) {
-//     return !!value || '欄位必填'
-//   },
-//   number (value) {
-//     returnm_id value > 0 || '數量錯誤'
-//   }
-// }
-
 const orders = reactive([])
 
 const form = reactive({
@@ -189,7 +174,7 @@ const form = reactive({
   pl_dc_id: 0,
 
   // schema
-  pl: 0,
+  ho: 0,
   // date: '',
 
   loading: false,
@@ -213,6 +198,8 @@ const module = reactive({
   discordLink: ''
 })
 
+const
+
 const showModal = ref(false)
 
 const onApplyBtnClick = async () => {
@@ -223,7 +210,7 @@ const onApplyBtnClick = async () => {
     m_id: module._id,
     m_name: module.name,
     gm: module.gm,
-    pl: form.pl
+    ho: form.ho
   }
 
   try {
@@ -232,9 +219,9 @@ const onApplyBtnClick = async () => {
 
       message.success('訂單新增成功')
 
+      showModal.value = false
       console.log(data2.result)
       orders.push(data2.result)
-      form.showModal = false
     }
   } catch (error) {
     // message.error('訂單新增失敗QWQQQQQ')
@@ -260,8 +247,10 @@ const onApplyBtnClick = async () => {
     module.ccfoliaLink = data.result.ccfoliaLink
     module.discordLink = data.result.discordLink
     document.title = module.name + ' | Matching TRPG'
-
     console.log(data.result)
+
+
+    const { data_order } = await api.get('/order') 
   } catch (error) {
     console.log('模組取得失敗')
     router.go(-1)
@@ -309,7 +298,7 @@ body{
     transform:translateX(-50%);
 
     .gm {
-      font-size: 25px;
+      font-size: 15px;
     }
   }
   .info_bar {
@@ -363,7 +352,7 @@ body{
         font-size: 1rem;
         font-weight: 800;
         text-shadow: 0em 0em 0.2em #29353188;
-        margin-top: 1.5rem;
+        margin-top: 0.3rem;
 
       }
       .column_text {
@@ -456,17 +445,17 @@ body{
 
 }
 #head_img {
-  width: 40vw;
-  height: 40vw;
+  width: 30vw;
+  height: 30vw;
   display: flex;
   position: absolute;
-  top: 10%;
+  top: 20%;
   right: 10%;
 
   &::before {
       content: '';
-      width: 40vw;
-      height: 40vw;
+      width: 30vw;
+      height: 30vw;
       background: #F8E9D6;
       clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0 50%);
     //  transform: rotate(120deg);
@@ -504,9 +493,13 @@ body{
   width: 90%;
   margin: auto;
   margin-top: 10%;
-  // background: #000;
+  background: #000;
   p {
     width: 50%;
+    color: #F8E9D6;
+    font-weight: 600;
+    font-size: 20px;
+
   }
  }
 
