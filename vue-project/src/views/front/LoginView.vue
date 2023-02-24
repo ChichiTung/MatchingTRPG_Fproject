@@ -208,8 +208,9 @@ function ButtonClickR (e) {
 </style>
 <style>
  #register {
-  width: 20vw;
+  width: 80%;
   position: absolute;
+  left: -10%;
 
   }
   #register .n-menu-item {

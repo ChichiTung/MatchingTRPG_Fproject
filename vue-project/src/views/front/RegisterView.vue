@@ -320,8 +320,8 @@ function ButtonClickR (e) {
         &::after{
           content: '';
           position: absolute;
-          top: 1px;
-          left: 9px;
+          top: 6%;
+          left: 9%;
           width: 0;
           height: 0;
           transform: rotate(-19deg);
@@ -369,10 +369,10 @@ function ButtonClickR (e) {
 
   }
   #login {
-  width: 30%;
+  width: 50%;
   position: relative;
   text-align: center;
-  left: 32%;
+  left: 20%;
   }
   #login .n-menu .n-menu-item-content .n-menu-item-content-header {
       font-size: 20px;

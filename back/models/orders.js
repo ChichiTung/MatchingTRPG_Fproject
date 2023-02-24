@@ -82,7 +82,7 @@ const schema = new Schema({
     // required: [true, '缺少 GM']
   },
 
-  pl: {
+  ho: {
     type: Number,
     ref: 'modules',
     default: 1

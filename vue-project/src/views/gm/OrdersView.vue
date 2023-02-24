@@ -54,17 +54,14 @@ const orders = reactive([]);
 
 (async () => {
   try {
-    const { data } = await apiAuth.get('/orders/all')
+    const { data } = await apiAuth.get('/orders/gm')
 
-    orders.push(...data.result.map(order => {
-      // order.totalPrice = order.products.reduce((total, current) => total + current.p_id.price * current.quantity, 0)
-      return order
-    }))
+    orders.push(...data.result)
   } catch (error) {
     Swal.fire({
       icon: 'error',
       title: '失敗',
-      text: '取得訂單失敗'
+      text: '取得預約失敗'
     })
   }
 })()

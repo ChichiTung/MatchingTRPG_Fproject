@@ -7,8 +7,7 @@
     <template #trigger>
       <n-card
         title=""
-        :bordered="true" :hoverable="true" style="background-color:#2F4F40; height: 40vh;
-    box-shadow: 18px 18px 0px 5px  #F9B02DCC; border-color: bisque;font-weight: 800;"
+        :bordered="true" :hoverable="true"
       >
         <!-- 主圖 -->
         <template #cover>
@@ -18,10 +17,10 @@
         <!-- 模組名 -->
         <router-link
           :to="'/modules/' + _id"
-          style="width: 90%; height: 20%; text-decoration: none; font-weight: 800; color: #F9B02DEE;
-      font-size:1.5rem; position: absolute; top: 63%; left: 5%;text-overflow: ellipsis; white-space: nowrap; overflow:hidden;"
+          style="text-decoration: none; font-weight: 800; color: #2F4F40;
+     "
         >
-          ▋  {{ name }}
+          <p class="module_title" style="height: 30%;"> ▋{{ name }}</p>
         </router-link>
         <!-- 加收藏 -->
         <n-button
@@ -33,19 +32,17 @@
           </template>
         </n-button>
         <!-- 模組介紹 -->
-        <p style="text-overflow: ellipsis; overflow:hidden; width: 90%;height: 12%; position: absolute; top: 72%; left: 5%; font-size: small;" class="card_info">
-          {{ info }}
-        </p>
-        <!-- hashtag -->
-        <div class="tag_row" style="text-decoration: none; font-weight: 800; color: #F9B02DEE; font-size: 1.5vw; position: absolute; top: 85%; left: 5%;">
 
-          <n-tag v-if="hashtag.length > 0" :bordered="false" :color="{ color: '#FF9797', textColor: '#555', borderColor: '#555' }" round style="margin-left: 6px; font-weight: 800; font-size: 10px;">
+        <!-- hashtag -->
+        <div class="tag_row" style="text-decoration: none; font-weight: 800; color: #F9B02DEE; position: absolute; top: 85%; left: 5%;">
+
+          <n-tag v-if="hashtag.length > 0" :bordered="false" :color="{ color: '#FF9797', textColor: '#555', borderColor: '#555' }" round size="small" style="margin-top: 0px; font-weight: 800; font-size: 8px;">
             #{{ hashtag[0] }}
           </n-tag>
-          <n-tag v-if="hashtag.length > 1" :bordered="false" :color="{ color: '#FFD1A4', textColor: '#555', borderColor: '#555' }" round style="margin-left: 6px; font-weight: 800; font-size: 10px;">
+          <n-tag v-if="hashtag.length > 1" :bordered="false" :color="{ color: '#FFD1A4', textColor: '#555', borderColor: '#555' }" round size="small" style="margin-left: 6px; font-weight: 800; font-size: 8px;">
             #{{ hashtag[1] }}
           </n-tag>
-          <n-tag v-if="hashtag.length > 2" :bordered="false" :color="{ color: '#c3c5e1', textColor: '#555', borderColor: '#555' }" round style="margin-left: 6px; font-weight: 800; font-size: 10px;">
+          <n-tag v-if="hashtag.length > 2" :bordered="false" :color="{ color: '#c3c5e1', textColor: '#555', borderColor: '#555' }" round size="small" style="margin-left: 6px; font-weight: 800; font-size: 8px;">
             #{{ hashtag[2] }}
           </n-tag>
 
@@ -59,21 +56,21 @@
 
     <div class="hover_row" style="display: flex; justify-content: space-around;">
       <!-- PL 人數 -->
-      <p style="font-size: 20px; font-weight: 800;">
-        <n-icon :component="PeopleAltRound" size="25" :depth="1" /> {{ pl }} 人
+      <p style="font-size: 12px; font-weight: 800;">
+        <n-icon :component="PeopleAltRound" size="20" :depth="1" /> {{ pl }} 人
       </p>
-      <p style="font-size: 20px; font-weight: 800;">
-        <n-icon :component="AccessTimeFilledRound" size="25" :depth="1" /> {{ minTime }} 小時
+      <p style="font-size: 12px; font-weight: 800;">
+        <n-icon :component="AccessTimeFilledRound" size="20" :depth="1" /> {{ minTime }} 小時
       <!-- <PeopleAltRound /> {{ difficulty }} -->
       </p>
     </div>
 
     <div class="hover_row" style="display: flex; justify-content: space-around;">
       <p
-        style="font-size: 15px; font-weight: 600;
-      text-overflow: ellipsis; overflow:hidden; height: 100px"
+        style="font-size: 12px; font-weight: 600;
+      text-overflow: ellipsis; overflow:hidden; height: 100px ;width:80%; color: white; text-shadow: 0 0 0.1rem #000;"
       >
-        {{ notice }}
+        {{ info }}
       </p>
     </div>
 
@@ -103,8 +100,8 @@
 
     <div class="hover_row" style="display: flex; justify-content: space-around;">
       <!-- 難度-->
-      <p style="font-size: 20px; font-weight: 800;position: absolute; top: 70%;">
-        難度：  &nbsp; <n-rate allow-half :value="difficulty" readonly color="#2F4F40" />
+      <p style="font-size: 15px; font-weight: 800;position: absolute; top: 70%;">
+        難度：  &nbsp; <n-rate size="small" allow-half :value="difficulty" readonly color="#2F4F40" />
       </p>
     </div>
 

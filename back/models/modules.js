@@ -32,9 +32,9 @@ const schema = new Schema({
     // required: [true, '缺少最小預估時長'],
     min: [0, '預估時長不得小於 0']
   },
-  pl: {
+  ho: {
     type: Number,
-    min: [1, '預估人數不得小於 1']
+    min: [1, 'HO不得小於 1']
 
     // required: [true, '缺少預估人數'],
     // enum: {
