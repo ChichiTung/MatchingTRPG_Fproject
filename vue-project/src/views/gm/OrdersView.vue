@@ -1,7 +1,7 @@
 <template>
-  <div id="orders_bg">
+  <div id="gm_orders_bg">
     <h1> 預約列表 </h1>
-    <n-divider />
+    <!-- <n-divider /> -->
 
     <n-table id="ordersTable" :single-line="false" striped style="margin:auto; margin-top: 5%; width:85%" class="table">
       <thead>
@@ -9,7 +9,7 @@
           <th style="text-align: center;">ID</th>
           <th style="text-align: center;">跑團日期</th>
           <th style="text-align: center;">報名模組</th>
-          <th style="text-align: center;">負責 GM</th>
+          <th style="text-align: center;"> PL </th>
           <!-- <th style="text-align: center;">遊玩日期</th> -->
         </tr>
       </thead>
@@ -20,7 +20,7 @@
             {{ order._id }}
           </td>
 
-          <td>{{ new Date(order.date).toLocaleDateString() }}</td>
+          <td style="width: 20%;">{{ new Date(order.date).toLocaleDateString() }}</td>
 
           <td style="width: 30%;font-size: 20px;">
             <!-- {{ module.m_id.name }} -->
@@ -29,7 +29,9 @@
             </router-link>
           </td>
 
-          <td>{{ order.gm }}</td>
+          <td style="width: 20%;">
+            {{ order.pl_nickname }}
+          </td>
 
         </tr>
 
@@ -52,7 +54,7 @@ const orders = reactive([]);
 
 (async () => {
   try {
-    const { data } = await apiAuth.get('/orders')
+    const { data } = await apiAuth.get('/orders/all')
 
     orders.push(...data.result.map(order => {
       // order.totalPrice = order.products.reduce((total, current) => total + current.p_id.price * current.quantity, 0)
@@ -69,16 +71,15 @@ const orders = reactive([]);
 </script>
 
 <style lang="scss">
-  #orders_bg {
+  #gm_orders_bg {
     width: 100vw;
 height: 200vh;
 margin-top: 10vh;
-background: #2F4F40;
+// background: #2F4F40;
 
 h1 {
     text-align: center;
-    color: antiquewhite;
-    padding-top: 5vh;
+    color: #2F4F40;
   }
 
   }

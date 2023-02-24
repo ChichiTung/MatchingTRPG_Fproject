@@ -2,24 +2,24 @@
   <n-popover
     width="trigger" placement="top" :show-arrow="false"
     style="position: absolute; top:0px; color: #2F4F40; background: #F9B02DEE;
-    width: 100%; height: 355px;"
+    width: 100%; height: 40vh;"
   >
     <template #trigger>
       <n-card
         title=""
-        :bordered="true" :hoverable="true" style="background-color:#2F4F40; height: 50vh;
+        :bordered="true" :hoverable="true" style="background-color:#2F4F40; height: 40vh;
     box-shadow: 18px 18px 0px 5px  #F9B02DCC; border-color: bisque;font-weight: 800;"
       >
         <!-- 主圖 -->
         <template #cover>
-          <img :src="image" style=" height: 180px; object-fit: cover;">
+          <img :src="image">
         </template>
 
         <!-- 模組名 -->
         <router-link
           :to="'/modules/' + _id"
           style="width: 90%; height: 20%; text-decoration: none; font-weight: 800; color: #F9B02DEE;
-      font-size: 1.5vw; position: absolute; top: 55%; left: 5%;text-overflow: ellipsis; white-space: nowrap; overflow:hidden;"
+      font-size:1.5rem; position: absolute; top: 63%; left: 5%;text-overflow: ellipsis; white-space: nowrap; overflow:hidden;"
         >
           ▋  {{ name }}
         </router-link>
@@ -33,7 +33,7 @@
           </template>
         </n-button>
         <!-- 模組介紹 -->
-        <p style="text-overflow: ellipsis; overflow:hidden; width: 110%;height: 28%; position: relative; top: 35%; left: -5%;">
+        <p style="text-overflow: ellipsis; overflow:hidden; width: 90%;height: 12%; position: absolute; top: 72%; left: 5%; font-size: small;" class="card_info">
           {{ info }}
         </p>
         <!-- hashtag -->
@@ -45,13 +45,11 @@
           <n-tag v-if="hashtag.length > 1" :bordered="false" :color="{ color: '#FFD1A4', textColor: '#555', borderColor: '#555' }" round style="margin-left: 6px; font-weight: 800; font-size: 10px;">
             #{{ hashtag[1] }}
           </n-tag>
-          <n-tag v-if="hashtag.length > 2" :bordered="false" :color="{ color: '#FFD306', textColor: '#555', borderColor: '#555' }" round style="margin-left: 6px; font-weight: 800; font-size: 10px;">
+          <n-tag v-if="hashtag.length > 2" :bordered="false" :color="{ color: '#c3c5e1', textColor: '#555', borderColor: '#555' }" round style="margin-left: 6px; font-weight: 800; font-size: 10px;">
             #{{ hashtag[2] }}
           </n-tag>
 
         </div>
-        <!-- {{ image }} -->
-
         <!-- p.pre {{ info }} -->
         <!-- <template #action> -->
         <div class="cardBtn" style="position: relative; top: 0; left: 0;">
@@ -79,16 +77,26 @@
       </p>
     </div>
 
-    <div class="hover_row" style="display: flex; justify-content: space-around;">
+    <!-- More -->
+    <div class="hover_row" style="display: flex; position: absolute; top: 85%;left: 12%; justify-content: space-between; width: 70%;">
+      <n-button
+        size="large" type="primary" text
+        style="text-decoration: none; font-weight: 800;font-size: 1.2vw; color: #2F4F40;" @click="editFavorite({_id, status : 1})"
+      >
+        <template #icon> <Heart48Regular /> </template>收藏
+      </n-button>
+
+      <span style="position: absolute; top: 30%; left: 55%; color: pink;"> ▍</span>
+
       <router-link
         :to="'/modules/' + _id"
-        style=" position: absolute; top: 88%; right: 5%;text-decoration: none;"
+        style="text-decoration: none;"
       >
         <n-button
-          size="large" circle
-          color="#FFDCB9" style="color: #2F4F40;"
+          size="large" text
+          style="color: #2F4F40; width: 3vw;height: 3vw;font-weight: 800;font-size: 1.2vw; "
         >
-          看更多
+          <template #icon> <NextOutline /></template> <span> 更多</span>
         </n-button>
       </router-link>
     </div>
@@ -108,6 +116,7 @@
 <script setup>
 import { useUserStore } from '@/stores/user'
 import { Heart48Regular } from '@vicons/fluent'
+import { NextOutline } from '@vicons/carbon'
 import { PeopleAltRound, AccessTimeFilledRound } from '@vicons/material'
 
 defineProps({

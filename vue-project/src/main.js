@@ -19,6 +19,8 @@ import { registerPlugins } from '@/plugins'
 
 (async () => {
   const app = createApp(App)
+  //  可以在 <template> 使用 window 的屬性~~
+  app.config.globalProperties.window = window
 
   await registerPlugins(app)
 

@@ -1,61 +1,247 @@
 <template>
   <div id="moduleView_bg">
-    <n-image
-      :src="module.image" object-fit="scale-down" style=" margin-left: -5vw;margin-top: 10vh; width: 100%; height: 100%;"
-    />
-    <h1 style="text-align: left; font-size: 3vw; color: #F9B02D;">
-      {{ module.name }}
-    </h1>
-    <!-- <p> ${{ product.price }}</p>
-     <p>{{ product.description }}</p> -->
 
+    <div class="head">
+
+      <h1 class="head_title">
+        {{ module.name }}
+        <p style="color:#F8E9DD; letter-spacing: 0.5rem;" class="gm"> GM: {{ module.gm }}</p>
+      </h1>
+
+      <div class="info_bar">
+        <div class="column hexagon_1">
+          <div class="column_title">難度</div>
+          <div class="column_text">  {{ module.difficulty }}</div>
+
+        </div>
+        <div class="column hexagon_2">
+          <div class="column_title">時長</div>
+          <div class="column_text">  {{ module.minTime }}
+            <span style="font-size: 0.5vw;">小時</span></div>
+
+        </div>
+        <div class="column hexagon_3">
+          <div class="column_title">人數</div>
+          <div class="column_text">   {{ module.pl }}</div>
+
+        </div>
+
+        <div id="attend" @click="showModal = true">
+          <span style="position: absolute; top: 15%;right:20%;">報名</span>
+        </div>
+
+        <n-modal v-model:show="showModal" :trap-focus="false" :mask-closable="false">
+          <!-- rules 要再修 -->
+          <n-form
+            :model="form"
+            label-placement="top"
+            style="background-color: #F8E9DD; border-radius: 15px; padding: 2%;"
+            @submit.prevent="onApplyBtnClick"
+          >
+            <n-grid cols="6 l:12" item-responsive responsive="screen" x-gap="30">
+
+              <n-form-item-gi span="12">
+                <n-divider
+                  title-placement="left"
+                  style="--n-color: #5d8585; --n-text-color: #5d8585; margin: -8vh 0 -10vh 0;"
+                >
+                  <h2 v-if="form._id.length <= 0" style="text-align: center;  width: 100%;"> {{ module.name }} &nbsp; 報名中</h2>
+                </n-divider>
+              </n-form-item-gi>
+
+              <!-- 劇本名字 -->
+              <n-form-item-gi span="xs:9 m:6 l:6" label="模組名稱" path="m_name">
+                <n-input v-model:value="module.name" :default-value="module.name" type="text" />
+              </n-form-item-gi>
+
+              <!-- 建議人數 -->
+              <n-form-item-gi span="xs:6 m:3 l:3" label="PL 人數" path="pl">
+                <n-input-number v-model:value="form.pl" :disabled="disabled" :default-value="module.pl" clearable>
+                  <template #suffix>
+                    <div style="margin-left:-50px; padding-right: 60px;">
+                      人
+                    </div>
+                  </template>
+                </n-input-number>
+              </n-form-item-gi>
+
+              <!-- 玩家資料 -->
+              <n-form-item-gi span="xs:9 m:6 l:6" label="PL 暱稱" path="pl_nickname">
+                <n-input v-model:value="user.nickname" placeholder="req.user.nickname" type="text" />
+              </n-form-item-gi>
+
+              <!-- 玩家資料-DC -->
+              <n-form-item-gi span="xs:9 m:6 l:6" label="PL DC帳號" path="pl_dc_account">
+                <n-input v-model:value="user.dc_account" placeholder="req.user.dc_account" type="text" />
+              </n-form-item-gi>
+
+              <!-- 玩家資料-DC -->
+              <n-form-item-gi span="xs:9 m:6 l:6" label="PL資料 DC_id" path="pl_dc_id">
+                <n-input v-model:value="user.dc_id" placeholder="req.user.dc_id" type="text" />
+              </n-form-item-gi>
+
+              <!-- dateTime -->
+              <!-- <n-form-item-gi span="xs:6 m:3 l:3" label="date" path="datetimeValue">
+                <n-date-picker v-model:value="order.date" type="datetime" />
+              </n-form-item-gi> -->
+
+              <!-- 取消 -->
+              <n-gi span="2">
+                <div style="display: flex; justify-content: flex">
+                  <n-button
+                    type="error" ghost
+                    :disabled="form.loading"
+                    round size="large" style="width: 12vw; height: 3vw; font-size: 1.5vw;"
+                    @click="showModal = false"
+                  >
+                    <!-- @click="order.showModal = false" -->
+                    取 &nbsp;&nbsp; 消
+                  </n-button>
+
+                </div>
+              </n-gi>
+
+              <!-- 送出紐 -->
+              <n-gi span="2">
+                <div style="display: flex; justify-content: flex">
+                  <n-button
+                    :disabled="form.loading"
+                    round type="warning" size="large" style="width: 12vw; height: 3vw; font-size: 1.5vw;"
+                    @keydown.enter.prevent
+                    @click="onApplyBtnClick"
+                  >
+                    送 &nbsp;&nbsp; 出
+                  </n-button>
+
+                </div>
+              </n-gi>
+
+            </n-grid>
+          </n-form>
+
+        </n-modal>
+
+      </div>
+
+    </div>
+    <div id="head_img">
+      <img :src="module.image" class="head_img_wrapper">
+    </div>
+
+    <div id="content_info">
+      <n-h1 prefix="bar" align-text type="warning">
+        <n-text type="warning" strong>
+          模組簡介
+        </n-text>
+      </n-h1>
+      <!-- <p>{{ module.info }}</p> -->
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas pariatur sint quisquam unde eveniet ut illum neque alias aliquam porro expedita aperiam facere, ex id eum nesciunt ipsa eius optio consequuntur. Nemo labore eaque atque debitis, aut ut corporis, delectus impedit praesentium id dicta sed aperiam minus qui a ab necessitatibus, molestiae at consequatur recusandae consequuntur maxime! Cumque perspiciatis a ad obcaecati velit commodi quibusdam recusandae, atque quis nulla, earum nostrum nesciunt, cupiditate excepturi sequi praesentium tempore at minus aliquam aliquid. Tempora fugit numquam iste ex dolore hic officiis unde quis temporibus, reprehenderit soluta aliquam id dolorum omnis laborum expedita facere sint repellendus, saepe ipsum aliquid cupiditate corporis veritatis repellat! Id rem saepe sint mollitia assumenda deserunt delectus alias, recusandae exercitationem velit, ipsam nostrum maxime sed voluptatem explicabo laudantium maiores voluptate! Ut natus suscipit earum placeat neque! Impedit, iure autem! Ab at vitae id asperiores illo dolorum ex ipsa sunt?
+
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, numquam? Distinctio nisi iusto eos, tempora sit optio dolorem quasi animi? Doloremque commodi beatae voluptates, accusantium perferendis deleniti veritatis consequuntur qui, dolorum quos porro, libero facere. Nobis, exercitationem. Sed odio, eligendi eius nulla quidem voluptatem earum, magni beatae eaque autem laboriosam dicta ab molestias facere facilis obcaecati illo nemo architecto necessitatibus. Nobis culpa deleniti possimus quod repudiandae alias illum perspiciatis ex nostrum. Tempore consectetur sunt minus sequi perspiciatis alias asperiores accusamus repellat nisi maiores repellendus neque consequatur veniam saepe dicta, optio cumque cupiditate iusto debitis cum nam beatae. Perferendis quo tenetur in blanditiis, rerum dolorum libero accusantium, repellendus labore atque veritatis dicta asperiores omnis sint totam nemo? Neque dolore, incidunt architecto doloribus quibusdam nulla enim illo cum culpa sapiente nobis quia ut sit maiores odio repellat sed exercitationem, impedit accusamus distinctio ea vero blanditiis earum dolores. Praesentium neque nobis voluptas sed ad deserunt sunt temporibus fuga, magni cum culpa. Placeat sunt distinctio nostrum maiores quaerat ad deleniti commodi officiis tempore mollitia vero asperiores fugiat recusandae itaque adipisci quam animi id maxime, aut tempora numquam facilis perspiciatis! Nihil quisquam a aut illum facilis eaque ad, esse quia, voluptates consequuntur doloremque amet eos? Recusandae aut minus, tempora enim eos quas quasi accusantium vitae eligendi debitis dolorem tempore expedita itaque temporibus placeat exercitationem, commodi nesciunt ducimus praesentium doloribus qui repellendus ea ex. Quasi illo fugit iste harum, debitis dolor? Quas pariatur esse tenetur iure fugit animi repellat illum quod nihil, aliquam aperiam at quisquam, ipsum porro? Praesentium qui obcaecati eaque doloribus voluptas asperiores quaerat dolorum dolore? Velit possimus obcaecati pariatur molestiae iste asperiores veritatis unde. Aliquam et, ex in unde temporibus architecto nihil asperiores modi, dolore vero vitae molestias. Pariatur veniam et soluta non eos inventore suscipit doloribus sed tempore eum consequuntur quae quisquam eaque ipsam, delectus repellat tempora aperiam quia quasi aut numquam tenetur enim. Laborum, maxime! Necessitatibus neque quas ad omnis accusamus fugit, fuga eum voluptatibus, porro suscipit tenetur natus placeat cum minima dicta? Aspernatur sequi corporis obcaecati eveniet necessitatibus accusantium et earum nobis molestiae veritatis aliquam voluptate, beatae ratione praesentium saepe consequatur sed iste perferendis iusto? At veritatis, dolorum aliquid possimus fugit nemo ullam, necessitatibus eligendi ad dolore ratione facere quo minima soluta rem, ipsam ab unde blanditiis corrupti fuga quasi incidunt nihil sed? Error in nisi repellendus numquam soluta similique dolores incidunt magnam consectetur voluptatibus eius odio esse deserunt, quis sequi, laudantium officiis animi labore adipisci. Delectus nesciunt reiciendis odit minima. Soluta vel placeat exercitationem ab enim vitae tempore iusto facere pariatur amet atque, ipsam fugiat veniam aliquam provident? Labore amet tenetur dolorem sint modi sunt illum optio a recusandae harum adipisci reiciendis nostrum, consectetur, possimus perferendis doloribus nesciunt at? Perspiciatis quisquam amet recusandae natus perferendis maiores necessitatibus pariatur rem esse possimus neque excepturi fugiat itaque id quod tempore cupiditate enim, atque delectus. Doloremque velit rerum perspiciatis laudantium at minima. At repellendus repudiandae error officia cumque, animi dignissimos pariatur numquam commodi mollitia quibusdam delectus quas architecto. Dolorem unde quam ullam!
+      </p>
+    </div>
   </div>
 </template>
 <script setup>
+import { apiAuth, api } from '@/plugins/axios'
 import { reactive, ref } from 'vue'
-import { api } from '@/plugins/axios'
+import { useMessage } from 'naive-ui'
+
+// import { api } from '@/plugins/axios'
 import { useRoute, useRouter } from 'vue-router'
 // import { Swal } from 'sweetalert2'
 import { useUserStore } from '@/stores/user'
 
 const route = useRoute()
 const router = useRouter()
+const message = useMessage()
 
 const user = useUserStore()
-const { editFavorite } = user
 
-const valid = ref(false)
-const quantity = ref(0)
+// const { editFavorite } = user
 
-const rules = {
-  required (value) {
-    return !!value || '欄位必填'
-  },
-  number (value) {
-    return value > 0 || '數量錯誤'
-  }
-}
+// const valid = ref(false)
+// const quantity = ref(0)
+
+// const rules = {
+//   required (value) {
+//     return !!value || '欄位必填'
+//   },
+//   number (value) {
+//     returnm_id value > 0 || '數量錯誤'
+//   }
+// }
+
+const orders = reactive([])
+
+const form = reactive({
+  // _id 有東西代表正在編輯，空的代表新增中
+  // module:[],
+  _id: '',
+  m_name: '',
+  gm: '',
+
+  //  pls: [],
+  pl_id: '',
+  pl_nickname: '',
+  pl_dc_account: '',
+  pl_dc_id: 0,
+
+  // schema
+  pl: 0,
+  // date: '',
+
+  loading: false,
+  showModal: false
+  // idx: -1
+})
 
 const module = reactive({
-  // _id 有東西代表正在編輯，空的代表新增中
   _id: '',
-  name: '',
   living: true,
-  image: '',
+  name: '',
+  gm: '',
   minTime: 0.5,
-  pl: 1,
   difficulty: 0.5,
+  image: [],
+  pl: 1,
   hashtag: [],
   info: '',
   notice: '',
   ccfoliaLink: '',
   discordLink: ''
-});
+})
 
-// const submitCart = () => {
-//   if (!valid.value) return
-//   editCart({ _id: product._id, quantity: quantity.value })
-// }
+const showModal = ref(false)
+
+const onApplyBtnClick = async () => {
+  // if (!form.valid) return
+  form.loading = true
+
+  const data = {
+    m_id: module._id,
+    m_name: module.name,
+    gm: module.gm,
+    pl: form.pl
+  }
+
+  try {
+    if (form._id.length === 0) {
+      const { data2 } = await apiAuth.post('/orders', data)
+
+      message.success('訂單新增成功')
+
+      console.log(data2.result)
+      orders.push(data2.result)
+      form.showModal = false
+    }
+  } catch (error) {
+    // message.error('訂單新增失敗QWQQQQQ')
+  }
+
+  form.loading = false
+}
 
 (async () => {
   try {
@@ -63,15 +249,19 @@ const module = reactive({
     module._id = data.result._id
     module.living = data.result.living
     module.name = data.result.name
-    module.image = data.result.image
+    module.gm = data.result.gm
+    module.minTime = data.result.minTime
+    module.difficulty = data.result.difficulty
+    module.image = data.result.image[0]
     module.pl = data.result.pl
     module.hashtag = data.result.hashtag
     module.info = data.result.info
     module.notice = data.result.notice
     module.ccfoliaLink = data.result.ccfoliaLink
     module.discordLink = data.result.discordLink
-
     document.title = module.name + ' | Matching TRPG'
+
+    console.log(data.result)
   } catch (error) {
     console.log('模組取得失敗')
     router.go(-1)
@@ -80,11 +270,273 @@ const module = reactive({
 
 </script>
 
-<style>
+<style lang="scss">
+body{
+  width: 100%;
+  height: 100%;
+  background: #2F4F40;
+
+  overflow-x: hidden;
+
 #moduleView_bg{
-  width: 100vw;
-  height: 110vh;
+  width: 100%;
+  height: 200%;
   margin-top: 10vh;
   background: #2F4F40;
+  display: flex;
+  flex-wrap: wrap;
+  // flex-direction: ;
+
+  .head {
+    width: 50%;
+    height: 70vh;
+    margin-top: 10%;
+    position: relative;
+
+  .head_title {
+    width: 100%;
+    margin: auto;
+    font-size: 50px;
+    padding-bottom: 8%;
+    text-align: center;
+    color: #F9B02D;
+    // color: #F8E9D6;
+    position:absolute;
+    top: 3rem;
+    left:50%;
+    letter-spacing: 1rem;
+    text-shadow: 0.1em 0.1em 0.2em black;
+    transform:translateX(-50%);
+
+    .gm {
+      font-size: 25px;
+    }
+  }
+  .info_bar {
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+    padding-bottom: 3%;
+    z-index:100;
+    position: absolute;
+    top: 80%;
+
+    .column{
+      display: flex;
+      flex-direction: column;
+      width: 20%;
+      height: 100%;
+      text-align: center;
+      position:relative;
+
+      &:before {
+      content: '';
+      width: 7vw;
+      height: 6vw;
+      // transform: rotate(90deg);
+      background: #f8E9D6;
+      clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+    //  transform: rotate(120deg);
+      position:absolute;
+      bottom: -15%;
+      right: 15%;
+      z-index: -1;
+
+      // 動畫
+       animation: fade_rotate .8s linear  ;
+       @keyframes fade_rotate {
+    from {
+        transform: rotate(90deg);
+        opacity: 0.5;
+    }
+    to {
+       transform: rotate(0deg);
+       opacity:1;
+    }
 }
+    }
+
+      .column_title {
+        color:#2F4F40;
+        font-size: 1rem;
+        font-weight: 800;
+        text-shadow: 0em 0em 0.2em #29353188;
+        margin-top: 1.5rem;
+
+      }
+      .column_text {
+        color: #2F4F40;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-left: 0%;
+      }
+    }
+
+    #attend {
+  position: fixed;
+  top: 95%;
+  right: 6%;
+  border-radius: 100%;
+  transform: translateY(-98%);
+  opacity: 1;
+  visibility: visible;
+  cursor: pointer;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  line-height: 40px;
+  text-align: center;
+  color: #2F4F40;
+  font-weight:800;
+  /* top: 3px; */
+  z-index: 1;
+  background: #F9B02D;
+
+  &:before {
+  content: "";
+  border: 3px solid #F9B02D;
+  position: fixed;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: block;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  animation: zoomBig 3.25s linear infinite;
+  -webkit-animation-delay: .75s;
+  animation-delay: .75s;
+}
+
+&::after {
+  content: "";
+  border: 3px solid #F9B02D;
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: block;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  animation: zoomBig 3.25s linear infinite;
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+}
+
+@keyframes zoomBig {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 1;
+    border-width: 3px;
+  }
+
+  40% {
+    opacity: .5;
+    border-width: 2px;
+  }
+
+  65% {
+    border-width: 1px;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+  }
+
+}
+#head_img {
+  width: 40vw;
+  height: 40vw;
+  display: flex;
+  position: absolute;
+  top: 10%;
+  right: 10%;
+
+  &::before {
+      content: '';
+      width: 40vw;
+      height: 40vw;
+      background: #F8E9D6;
+      clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+    //  transform: rotate(120deg);
+      position:absolute;
+      bottom: 0%;
+      right: -10%;
+      z-index: 0;
+      animation: to-right .5s linear;
+      @keyframes to-right {
+      from {
+        right: 10%;
+        opacity:0.5;
+      }
+      to {
+        right: -10%;
+        opacity:1;
+
+      }
+}
+    }
+
+  .head_img_wrapper{
+    position: relative;
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 0.8;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  // transform: translate(var(--_x, 0), var(--_y, 0)) scale(var(--_t, 1));
+    transition: 0.2s all;
+    // border: #F9B02D 10px solid;
+
+  }
+ }
+ #content_info {
+  width: 90%;
+  margin: auto;
+  margin-top: 10%;
+  // background: #000;
+  p {
+    width: 50%;
+  }
+ }
+
+}
+
+}
+
+@media screen and (max-width:1280px) {
+  body{
+     #moduleView_bg{
+       .head_title{
+        width: 80%;
+        position: absolute;
+        top:20rem;
+         font-size: 4rem !important;
+        }
+      }
+  }
+}
+@media screen and (max-width:768px) {
+  body{
+     #moduleView_bg{
+       .head_title{
+        width: 80%;
+        font-size: 30px !important;
+       position:absolute;
+        top: 50rem;
+        }
+      }
+  }
+}
+
 </style>

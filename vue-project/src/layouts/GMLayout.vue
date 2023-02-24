@@ -122,50 +122,37 @@ const menuOptions: MenuOption[] = [
             name: 'gm-home'
           }
         },
-        { default: () => 'GM 專區首頁' }
+        { default: () => 'GM 儀表板' }
       ),
     key: 'hear-the-wind-sing',
     icon: renderIcon(HomePerson20Regular)
   },
   {
-    label: '模組管理',
-    key: 'modules_management',
-    icon: renderIcon(BookIcon),
-    // disabled: true,
-    children: [
-      {
-        label: () =>
+    label: () =>
       h(
         RouterLink,
-        {
-         to: {
-            name:'modules',
-            target: '_blank'
+       {
+          to: {
+            name: 'modules'
           }
         },
-         { default: () => '模組上架' }
-      ),
-    // key: 'hear-the-wind-sing',
-      },
-      {
-        label: () =>
-      h(
-        RouterLink,
-        {
-         to: {
-            name:'modules',
-            target: '_blank'
-          }
-        },
-         { default: () => '模組庫' }
+        { default: () => '模組管理' }
       ),
     key: 'hear-the-wind-sing',
-      }
-    ]
+    icon: renderIcon(BookIcon)
   },
   {
-    label: '預約管理',
-    key: 'a-wild-sheep-chase',
+    label: () =>
+      h(
+        RouterLink,
+       {
+          to: {
+            name: 'gm-orders'
+          }
+        },
+        { default: () => '預約管理' }
+      ),
+    key: 'GM-orders',
     icon: renderIcon(DocumentBulletListClock24Regular),
     // disabled: true
   },

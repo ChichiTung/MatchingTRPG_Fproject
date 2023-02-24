@@ -2,7 +2,7 @@
   <div id="ModulesView">
     <div class="h1" textcenter>
       <n-divider dashed style="font-size: 3vw; color: rgb(240,162,23);">
-        模組庫
+        模組管理
       </n-divider>
     </div>
     <!-- <n-grid cols="12" responsive="screen"> -->
@@ -21,6 +21,7 @@
           <th style="text-align: center;">名稱</th>
           <th style="text-align: center;">公開狀態</th>
           <th style="text-align: center;">管理</th>
+
         </tr>
       </thead>
       <tbody>
@@ -41,6 +42,9 @@
               </template>
             </n-button>
           </td>
+          <!-- <td>
+            {{ module.gm }}
+          </td> -->
         </tr>
       </tbody>
     </n-table>
@@ -177,7 +181,7 @@
             <n-date-picker v-model:value="form.datetimeValue" type="datetime" />
           </n-form-item-gi> -->
 
-          <!-- 存檔鈕 -->
+          <!-- 取消 -->
           <n-gi span="2">
             <div style="display: flex; justify-content: flex">
               <n-button
@@ -192,6 +196,7 @@
             </div>
           </n-gi>
 
+          <!-- 存檔紐 -->
           <n-gi span="2">
             <div style="display: flex; justify-content: flex">
               <n-button
@@ -247,7 +252,7 @@ const form = reactive({
   // _id 有東西代表正在編輯，空的代表新增中
   _id: '',
   name: '',
-  // gm: '',
+  gm: '',
   living: false,
   image: [],
   minTime: 0.5,
@@ -320,7 +325,7 @@ const showModal = (idx) => {
 
     form._id = modules[idx]._id
     form.name = modules[idx].name
-    // form.gm = modules[idx].gm
+    form.gm = modules[idx].gm
     form.living = modules[idx].living
     form.image = modules[idx].image
     form.minTime = modules[idx].minTime
@@ -360,7 +365,7 @@ const submit = async () => {
   // fd.append(key, value)
   const fd = new FormData()
   fd.append('name', form.name)
-  // fd.append('gm', form.gm)
+  fd.append('gm', form.gm)
   fd.append('living', form.living)
   // image
   if (form.image.length >= 1) {
@@ -371,6 +376,7 @@ const submit = async () => {
   fd.append('minTime', form.minTime)
   fd.append('pl', form.pl)
   fd.append('difficulty', form.difficulty)
+
   for (const i of form.hashtag) {
     fd.append('hashtag', i)
   }
@@ -412,7 +418,7 @@ const submit = async () => {
 
 (async () => {
   try {
-    const { data } = await apiAuth.get('/modules/all')
+    const { data } = await apiAuth.get('/modules/gm')
     modules.push(...data.result)
   } catch (error) {
     message.error(error?.response?.data?.message || '發生錯誤')

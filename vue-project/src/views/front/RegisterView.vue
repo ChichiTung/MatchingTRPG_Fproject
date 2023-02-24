@@ -3,6 +3,7 @@
 
     <div class="box">
       <div class="box_img">
+        <img src="../../../image/5b030a40b198ffb7fbd039c36c941459.jpg">
       </div>
       <div class="box_form">
         <n-form
@@ -27,7 +28,7 @@
               <n-input v-model:value="model.confirmPassword" placeholder=" " type="password" clearable />
             </n-form-item-gi>
             <!-- discord account -->
-            <n-form-item-gi :span="2" label="Discord 帳號" path="dc_account" style="--n-label-text-color: #3b3ace !important;">
+            <n-form-item-gi :span="2" label="Discord 帳號  &nbsp;(GM 聯絡用 )" path="dc_account" style="--n-label-text-color: #3b3ace !important;">
 
               <n-input v-model:value="model.dc_account" placeholder="使用者名稱" style="--n-color: #5865F248;  --n-placeholder-color: #3b3ace88; margin-right: -2%;" clearable />
             </n-form-item-gi>
@@ -36,30 +37,30 @@
               <span style="color:#5865F2"> # </span>
               <n-input v-model:value="model.dc_id" placeholder="OOOO" style="--n-color: #5865F248; --n-placeholder-color: #3b3ace88; margin-left: 5%; width: 20vw;" clearable />
 
-              <div id="dc_info" style=" position: relative; margin-top: 50%; margin-left: 50%; --n-color: #2d3bf947; --n-padding: 0 0px;">
-                <n-tooltip placement="top-start" trigger="hover" style="font-size: 15px; font-weight: 600; left: -45vw; background: #3b3ace99;">
-                  <!-- <n-popconfirm positive-text="ok" :negative-text="null" :show-icon="false" style="font-size: 24px; color: #3b3aceaa; font-weight: 600;"> -->
-                  <template #trigger>
-                    <n-button text style="font-size: 12px; color: #3b3aceaa;">
+              <!-- <div id="dc_info" style=" position: relative;  --n-color: #2d3bf947; --n-padding: 0 0px;">
+                <n-tooltip placement="top-start" trigger="hover" style="font-size: 15px; font-weight: 600;  position: absolute; top: 0; left: 0; background: #3b3ace99;"> -->
+              <!-- <n-popconfirm positive-text="ok" :negative-text="null" :show-icon="false" style="font-size: 24px; color: #3b3aceaa; font-weight: 600;"> -->
+              <!-- <template #trigger>
+                    <n-button text style="font-size: 12px; color: #3b3aceaa; position: absolute; top: 0; left: 0;">
                       <template #icon> <InfoCircle /> </template>
                     </n-button>
                   </template>
-                  點開 DC 個人資料，ex: 小明#0857
-                <!-- </n-popconfirm> -->
-                </n-tooltip>
-              </div>
+                  點開 DC 個人資料，ex: 小明#0857 -->
+              <!-- </n-popconfirm> -->
+              <!-- </n-tooltip>
+              </div> -->
             </n-form-item-gi>
 
             <!-- email -->
-            <n-form-item-gi :span="3" label="E-mail" path="email">
+            <n-form-item-gi :span="3" label="E-mail" path="email" style="padding-bottom: 15%;">
               <n-input v-model:value="model.email" placeholder=" " clearable />
             </n-form-item-gi>
 
             <!-- 註冊紐 -->
             <n-gi :span="15">
               <div :span="5">
-                <n-button round type="primary" :loading="loading" color="#F9B02D" style="position: relative; top: 0%; left:85%;" @click="ButtonClickR">
-                  &nbsp;註&nbsp;冊&nbsp;
+                <n-button round type="primary" :loading="loading" color="#F9B02D" style="width:20%; position: relative; top: 30%; left:35%; color: #FFF; " @click="ButtonClickR">
+                  &nbsp;註&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;冊&nbsp;
                 </n-button>
               </div>
             </n-gi>
@@ -67,19 +68,19 @@
           </n-grid>
         </n-form>
 
+        <div id="login">
+          <n-menu :options="menuOptions" />
+        </div>
+
       </div>
+
     </div>
-    <!-- 連結到 登入頁 -->
-    <div id="login">
-      <n-menu :options="menuOptions" />
-    </div>
-  <!-- <pre>{{ JSON.stringify(model, null, 2) }}
-  </pre> -->
+
   </div>
 </template>
 
 <script setup>
-import { defineComponent, ref, reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import { useMessage, NIcon } from 'naive-ui'
 
 /**
@@ -243,47 +244,116 @@ function ButtonClickR (e) {
 <style lang="scss" scoped>
   .bg_g
     {
-      margin-top: 22vh;
       width: 100vw;
-      height: 80vh;
-      background: #2F4F4f;
+      height: 110vh;
+      background-color: #2F4F40;
+      padding-top: 5vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     .box
       {
         border-radius: 20px;
-        width: 60%;
-        height: 80%;
-        margin: auto;
-        margin-top: 3%;
+        width: 60vw;
+        height: 50%;
+        // margin: auto;
         background-color: #f8e9d6;
-        display: flex;
         box-shadow: 2px 4px 15px 5px rgba(14, 14, 14, 0.3);
         position: relative;
+        // display: flex;
+        // justify-content: space-between;
 
-        &:before{
+        &::before{
           content: "初次見面，探索者！";
+          padding-left: 1rem;
+          width: 8.5rem;
+          height: 3.5rem;
+          line-height: 3.5rem;
+          background: bisque;
+          border-radius: 20px;
+          color: #2F4F40;
           position: absolute;
           top: -8%;
           left: -7%;
-          color: bisque;
-          font-weight: 600;
-          rotate: 340deg;
+          font-weight: 800;
+          box-shadow: 0 0 5rem rgb(56, 67, 58);
+          animation: bounce-in-top 1s;
+
+          @keyframes bounce-in-top {
+            0% {
+              transform: translateY(-500px);
+              animation-timing-function: ease-in;
+              opacity: 0;
+            }
+            38% {
+              transform: translateY(0);
+              animation-timing-function: ease-out;
+              opacity: 1;
+            }
+            55% {
+              transform: translateY(-65px);
+              animation-timing-function: ease-in;
+            }
+            72% {
+              transform: translateY(0);
+              animation-timing-function: ease-out;
+            }
+            81% {
+              transform: translateY(-28px);
+              animation-timing-function: ease-in;
+            }
+            90% {
+              transform: translateY(0);
+              animation-timing-function: ease-out;
+            }
+            95% {
+              transform: translateY(-8px);
+              animation-timing-function: ease-in;
+            }
+            100% {
+              transform: translateY(0);
+              animation-timing-function: ease-out;
+            }
+}
+
+        }
+        &::after{
+          content: '';
+          position: absolute;
+          top: 1px;
+          left: 9px;
+          width: 0;
+          height: 0;
+          transform: rotate(-19deg);
+          border: 27px solid;
+          border-color: #ffe4c4 transparent transparent transparent;
+
+          animation: bounce-in-top 1s;
         }
 
         .box_img {
-          width: 15%;
+          width: 20vw;
           height: 100%;
-          // overflow: hidden;
-          background-image: url('../../../image/5b030a40b198ffb7fbd039c36c941459.jpg');
-          background-position: 50% 1%;
-          background-repeat: no-repeat;
-          border-radius: 20px 0 0 20px;
+          object-fit: cover;
+          // min-height: 10%;
+
+          img {
+            width: 100%;
+            height:100%;
+            object-fit: cover;
+            // object-position: -160px 0;
+            border-radius: 20px 0 0 20px;
+          }
         }
         .box_form {
-          width: 75%;
-          height: 98%;
-          margin: auto;
-          // margin-right: 3%;
-          padding-top: 4%;
+          width: 60%;
+          height: 80%;
+          // padding-top: 4%;
+          // padding-left: 10%;
+          position:absolute;
+          top: 10%;
+          right: 3%;
+          // background: #2F4F40;
 
         }
       }
@@ -291,6 +361,7 @@ function ButtonClickR (e) {
 </style>
 
 <style>
+
   #dc_info button {
   position: fixed;
   top: 55%;
@@ -298,9 +369,10 @@ function ButtonClickR (e) {
 
   }
   #login {
-  width: 20vw;
+  width: 30%;
   position: relative;
-  left: 70%;
+  text-align: center;
+  left: 32%;
   }
   #login .n-menu .n-menu-item-content .n-menu-item-content-header {
       font-size: 20px;

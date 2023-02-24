@@ -4,7 +4,9 @@ export const createModule = async (req, res) => {
   try {
     const result = await modules.create({
       name: req.body.name,
-      gm: req.body.gm,
+      // 777
+      gm: req.user.nickname,
+
       living: req.body.living,
       image: req.file?.path || '',
       minTime: req.body.minTime,
@@ -45,6 +47,14 @@ export const getAllModules = async (req, res) => {
     res.status(500).json({ success: false, message: '未知錯誤' })
   }
 }
+export const getAllModulesGM = async (req, res) => {
+  try {
+    const result = await modules.find({ gm: req.user._id }).populate('_id')
+    res.status(200).json({ success: true, message: '', result })
+  } catch (error) {
+    res.status(500).json({ success: false, message: '未知錯誤' })
+  }
+}
 
 export const getModule = async (req, res) => {
   try {
@@ -67,7 +77,9 @@ export const editModule = async (req, res) => {
   try {
     const result = await modules.findByIdAndUpdate(req.params.id, {
       name: req.body.name,
-      gm: req.body.gm,
+
+      gm: req.user.nickname,
+
       living: req.body.living,
       image: req.file?.path || '',
       minTime: req.body.minTime,

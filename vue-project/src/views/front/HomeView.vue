@@ -37,7 +37,7 @@
       height: 100%;
       // z-index: 2;
 
-      background-color: #2F4F4F99;
+      // background-color: #2F4F4F99;
     }
 
 }

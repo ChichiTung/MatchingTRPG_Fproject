@@ -53,8 +53,8 @@ const schema = new Schema({
   },
   dc_id: {
     type: Number,
-    required: [true, '缺少 DC 使用者名稱 # 後 4 碼數字'],
-    unique: true
+    required: [true, '缺少 DC 使用者名稱 # 後 4 碼數字']
+    // unique: true
     // validate: {
     //   validator: function (dcId) {
     //     if (dcId.length === 4) {
@@ -80,11 +80,11 @@ const schema = new Schema({
     type: Number,
     // 0:使用者, 1:管理者
     default: 0
+  },
+  freeTime: {
+    type: [Date],
+    default: []
   }
-  // freeTime: {
-  //   type: [Date],
-  //   default: []
-  // }
 
 }, { versionKey: false })
 

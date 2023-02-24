@@ -1,4 +1,4 @@
-import { Schema, model, ObjectId } from 'mongoose'
+import { Schema, model } from 'mongoose'
 // import validator from 'validator'
 // import bcrypt from 'bcrypt'
 
@@ -9,8 +9,9 @@ const schema = new Schema({
   },
 
   gm: {
-    type: ObjectId,
-    ref: 'users'
+    type: String,
+    ref: 'users',
+    default: 'unknown'
     // required: [true, '缺少GM']
   },
 

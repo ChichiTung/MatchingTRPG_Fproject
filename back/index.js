@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import userRoute from './routes/users.js'
 import moduleRoute from './routes/modules.js'
-// import orderRoute from './routes/orders.js'
+import orderRoute from './routes/orders.js'
 // import orderRoute from './routes/articles.js'
 import './passport/passport.js'
 
@@ -38,7 +38,7 @@ app.use((_, req, res, next) => {
 
 app.use('/users', userRoute)
 app.use('/modules', moduleRoute)
-// app.use('/orders', orderRoute)
+app.use('/orders', orderRoute)
 
 app.get('/', (req, res) => {
   res.status(200).json({ success: true, message: '' })

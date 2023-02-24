@@ -95,13 +95,14 @@ const updateFavorite = async (idx, status) => {
 <style lang="scss">
 #favorite_bg {
 width: 100vw;
-height: 110vh;
+height: 200vh;
 margin-top: 10vh;
 background: #2F4F40;
 
   .title {
     text-align: center;
     color: antiquewhite;
+    padding-top: 5vh;
   }
 
   .table {

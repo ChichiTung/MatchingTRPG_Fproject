@@ -72,6 +72,13 @@ const router = createRouter({
           meta: {
             title: '關於邁欽 | Matching TRPG'
           }
+        }, {
+          path: 'orders',
+          name: 'orders',
+          component: () => import('@/views/user/OrdersView.vue'),
+          meta: {
+            title: '預約列表 | Matching TRPG'
+          }
         }
       ]
     },
@@ -99,7 +106,14 @@ const router = createRouter({
           name: 'modules',
           component: () => import('@/views/gm/ModulesView.vue'),
           meta: {
-            title: '模組庫 | MatchingTRPG'
+            title: '模組管理 | MatchingTRPG'
+          }
+        }, {
+          path: 'gm-orders',
+          name: 'gm-orders',
+          component: () => import('@/views/gm/OrdersView.vue'),
+          meta: {
+            title: '預約管理 | MatchingTRPG'
           }
         }
       ]

@@ -1,10 +1,12 @@
 <template>
-  <div class="bg_g">
+  <div id="bg_g">
     <!-- <h3 style="color:bisque; position: relative; top: 10px; left: 100px;"> 初次見面，探索者！ </h3> -->
 
     <div class="box">
       <div class="box_img">
+        <img src="../../../image/5b030a40b198ffb7fbd039c36c941459.jpg">
       </div>
+
       <div class="box_form">
 
         <n-form ref="valid" :model="model" :rules="rules" label-placement="top">
@@ -29,12 +31,15 @@
           </n-grid>
         </n-form>
 
+        <div id="register">
+          <n-menu :options="menuOptions" />
+        </div>
+
       </div>
+
     </div>
     <!-- 連結到 登入頁 -->
-    <div id="login">
-      <n-menu :options="menuOptions" />
-    </div>
+
   <!-- <pre>{{ JSON.stringify(model, null, 2) }}
   </pre> -->
   </div>
@@ -117,7 +122,7 @@ const menuOptions = [
             name: 'register'
           }
         },
-        { default: () => '我還不是探索者 !!' }
+        { default: () => '我還沒註冊為探索者 !!' }
       ),
     key: 'go-register'
   }]
@@ -139,32 +144,44 @@ function ButtonClickR (e) {
 </script>
 
 <style lang="scss" scoped>
-  .bg_g
+  #bg_g
     {
-      margin-top: 22vh;
       width: 100vw;
-      height: 80vh;
-      background: #2F4F4f;
+      height: 110vh;
+      background-color: #2F4F40;
+      display: flex;
+      // justify-content: center;
+      // align-items: center;
+
     .box
       {
+        margin: auto;
+        margin-top: 5vw;
         border-radius: 20px;
         width: 60%;
-        height: 80%;
-        margin: auto;
-        margin-top: 3%;
+        height: 45%;
+        margin-top: 60vh;
+        transform: translateY(-50%);
         background-color: #f8e9d6;
         display: flex;
         box-shadow: 2px 4px 15px 5px rgba(14, 14, 14, 0.3);
         position: relative;
 
         .box_img {
-          width: 40%;
+          width: 20vw;
           height: 100%;
-          overflow: hidden;
-          background-image: url('../../../image/5b030a40b198ffb7fbd039c36c941459.jpg');
-          background-position: 50% 1%;
-          background-repeat: no-repeat;
-          border-radius: 20px 0 0 20px;
+          display: block;
+          // object-fit: cover;
+          // min-height: 10%;
+
+          img {
+            width: 100%;
+            height:100%;
+            object-fit: cover;
+            overflow: hidden;
+            // object-position: -160px 0;
+            border-radius: 20px 0 0 20px;
+          }
         }
         .box_form {
           width: 50%;
@@ -190,19 +207,30 @@ function ButtonClickR (e) {
 
 </style>
 <style>
- #login {
+ #register {
   width: 20vw;
-  position: relative;
-  left: 70%;
+  position: absolute;
+
   }
-  #login .n-menu .n-menu-item-content .n-menu-item-content-header {
-      font-size: 20px;
+  #register .n-menu-item {
+  top: 0%;
+  left: 35%;
+z-index: 100;
+  }
+
+  #register .n-menu .n-menu-item-content .n-menu-item-content-header {
+      font-size: 1rem;
       font-weight: 600;
       position: absolute;
-      right: 15%;
+      /* right: 20%; */
     }
-  #login .n-menu .n-menu-item-content-header  a {
+  #register .n-menu .n-menu-item-content-header  a {
       color: #F9B02D !important;
       text-decoration: underline !important;
+    text-align: center;
+
+}
+#register .n-menu {
+  --n-color: #2F4F4F00 !important;
 }
 </style>

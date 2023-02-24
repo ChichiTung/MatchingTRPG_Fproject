@@ -1,303 +1,85 @@
-<template>
-  <div class="contain">
-    <div class="topBtn">
-      <n-button round color="#CA9E" @click="showModal(-1)">商品上架</n-button>
-    </div>
-    <div class="content">
-      <n-table>
-        <thead>
-          <tr>
-            <th>分類</th>
-            <th>商品圖片</th>
-            <th>名稱</th>
-            <th>價錢</th>
-            <th>商品</th>
-            <th></th>
-            <th>庫存</th>
-            <th>內容</th>
-            <!-- <th>刪除</th> -->
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(product, idx) in products" :key="product._id">
-            <td>{{ product.category[0] }}</td>
-            <td :aspect-ratio="1" :width="150">
-              <n-image :src="product.image[0]" :width="100" :height="100" object-fit="cover"></n-image>
-            </td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.price }}</td>
-            <td>{{ product.sell === true ? '上架' : '下架' }}</td>
-            <td><n-switch v-model:value="product.sell" /></td>
-            <td>{{ product.quantity }}</td>
-            <td>
-              <n-button text @click="showModal(idx)">
-                <n-icon size="24"><CreateIcon /></n-icon>
-              </n-button>
-            </td>
-            <!-- <td>
-              <n-button text>
-                <n-icon size="22"><TrashIcon /></n-icon>
-              </n-button>
-            </td> -->
-          </tr>
-        </tbody>
-      </n-table>
-      <n-button text></n-button>
-    </div>
-  </div>
+  <!-- rules 要再修 -->
+  <n-form
+    :model="order"
+    label-placement="top"
+    style="background-color: #F8E9DD; border-radius: 15px; padding: 2%;"
+    @submit.prevent="submitClick"
+  >
+    <n-grid cols="6 l:12" item-responsive responsive="screen" x-gap="30">
 
-  <n-modal v-model:show="form.showModal" class="custom-card" preset="card" title=" " size="small" :bordered="false">
-    <h2>{{ form._id.length > 0 ? '商品編輯' : '商品上架' }}</h2>
-    <template #header-extra></template>
-    <!-- v-model:value="form.valid" -->
-    <n-form ref="valid" :model="form" label-placement="top" :rules="rules" @submit.prevent="submit">
-      <n-form-item label="商品名稱" path="name">
-        <n-input v-model:value="form.name" placeholder=" " maxlength="20" show-count clearable />
-      </n-form-item>
-      <n-form-item label="說明" path="description">
-        <n-input
-          v-model:value="form.description"
-          placeholder=" "
-          type="textarea"
-          :autosize="{
-            minRows: 3,
-            maxRows: 10
-          }"
-        />
-      </n-form-item>
+      <n-form-item-gi span="12">
+        <n-divider
+          title-placement="left"
+          style="--n-color: #5d8585; --n-text-color: #5d8585; margin: -8vh 0 -10vh 0;"
+        >
+          <h2 v-if="order._id.length <= 0" style="text-align: center;  width: 100%;">模組報名中</h2>
+        </n-divider>
+      </n-form-item-gi>
 
-      <n-form-item label="商品分類" path="category">
-        <n-select v-model:value="form.category" placeholder=" " :options="categories" />
-      </n-form-item>
+      <!-- 劇本名字 -->
+      <n-form-item-gi span="xs:9 m:6 l:6" label="模組名稱" path="m_name">
+        <n-input v-model:value="order.m_name" placeholder="" type="text" />
+      </n-form-item-gi>
 
-      <n-form-item label="價格 (NT)" path="price">
-        <n-input v-model:value="form.price" placeholder=" " type="number">
-          <template #suffix>元</template>
-        </n-input>
-      </n-form-item>
+      <!-- 建議人數 -->
+      <n-form-item-gi span="xs:6 m:3 l:3" label="PL 人數" path="pl">
+        <n-input-number v-model:value="order.pl" :disabled="disabled" :default-value="module.pl" clearable>
+          <template #suffix>
+            <div style="margin-left:-50px; padding-right: 60px;">
+              人
+            </div>
+          </template>
+        </n-input-number>
+      </n-form-item-gi>
 
-      <n-form-item label="庫存" path="quantity">
-        <n-input-number
-          v-model:value="form.quantity"
-          :style="{
-            width: '100%'
-          }"
-          placeholder=" "
-          button-placement="both"
-        ></n-input-number>
-      </n-form-item>
+      <!-- 玩家資料 -->
+      <n-form-item-gi span="xs:9 m:6 l:6" label="PL資料" path="pl_nickname">
+        <n-input v-model:value="order.pl_nickname" placeholder="req.user.nickname" type="text" />
+      </n-form-item-gi>
 
-      <n-form-item path="image">
-        <n-upload v-model="form.image" list-type="image-card" accept=".jpg,.jpeg,.png,.gif,.tiff,.svg" multiple :default-file-list="originalImg" @change="handleChange">
-          ＋
-        </n-upload>
-      </n-form-item>
+      <!-- 玩家資料-DC -->
+      <n-form-item-gi span="xs:9 m:6 l:6" label="PL資料 DC帳號" path="pl_dc_account">
+        <n-input v-model:value="order.pl_dc_account" placeholder="req.user.dc_account" type="text" />
+      </n-form-item-gi>
 
-      <n-form-item label="商品狀態" path="sell">
-        <!-- <n-checkbox-group v-model:value="form.sell"> -->
-        <n-space>
-          <n-switch v-model:value="form.sell" />
-          <!-- <n-checkbox :value="true">上架</n-checkbox>
-            <n-checkbox :value="false">下架</n-checkbox> -->
-        </n-space>
-        <!-- </n-checkbox-group> -->
-      </n-form-item>
-    </n-form>
+      <!-- 玩家資料-DC -->
+      <n-form-item-gi span="xs:9 m:6 l:6" label="PL資料 DC_id" path="pl_dc_id">
+        <n-input v-model:value="order.pl_dc_account" placeholder="req.user.dc_id" type="text" />
+      </n-form-item-gi>
 
-    <template #footer>
-      <n-space>
-        <n-button round :disabled="form.loading" attr-type="submit" @click="submit">送出</n-button>
-        <n-button round :disabled="form.loading" @click="form.showModal = false">取消</n-button>
-      </n-space>
-    </template>
-  </n-modal>
-</template>
+      <!-- dateTime -->
+      <n-form-item-gi span="xs:6 m:3 l:3" label="date" path="datetimeValue">
+        <n-date-picker v-model:value="order.date" type="datetime" />
+      </n-form-item-gi>
 
-<script setup>
-import { reactive } from 'vue'
-import { apiAuth } from '@/plugins/axios'
-import { useRouter } from 'vue-router'
-import validator from 'validator'
-import { TrashOutline as TrashIcon, CreateOutline as CreateIcon, CaretUpCircleOutline as upIcon } from '@vicons/ionicons5'
-const message = useMessage()
-const valid = ref(null)
-const originalImg = ref([])
-const products = reactive([])
-const category = ref([])
-// 新增/編輯使用同一個 form 物件
-const form = reactive({
-  // 紀錄商品表單的 ID
-  // ID 為空 => 新增
-  // ID 為有 => 編輯
-  _id: '',
-  name: '',
-  description: '',
-  image: [],
-  price: 0,
-  quantity: 0,
-  sell: false,
-  category: [],
-  // 判斷表單是否為送出狀態
-  loading: true,
-  showModal: false,
-  idx: -1
-})
-const handleChange = options => {
-  console.log(options.fileList)
-  let i = []
-  let j = []
-  i = options.fileList.map(image => image.url).filter(url => url !== null)
-  j = options.fileList.map(image => image.file).filter(url => url !== null)
-  form.image = [...i, ...j]
-}
-const rules = {
-  name: {
-    validator: validateName,
-    message: '請輸入商品名稱',
-    trigger: ['blur', 'input']
-  },
-  description: {
-    required: true,
-    trigger: ['blur', 'input'],
-    message: '請輸入商品說明'
-  },
-  price: {
-    required: true,
-    validator: validatePrice,
-    trigger: ['blur', 'input'],
-    message: '請輸入價錢'
-  },
-  quantity: {
-    required: true,
-    type: 'number',
-    validator: validateQuantity,
-    trigger: ['blur', 'input'],
-    message: '請輸入目前庫存'
-  },
-  sell: {
-    required: true,
-    message: '請選擇商品狀態'
-  },
-  category: [
-    {
-      required: true,
-      message: '請選擇分類'
-    }
-  ]
-}
-const categories = [
-  {
-    label: '耳針系列 Earrings',
-    value: '耳針系列'
-  },
-  {
-    label: '耳夾系列 ClipEarrings',
-    value: '耳夾系列'
-  },
-  {
-    label: '口罩鍊系列 Necklace',
-    value: '口罩鍊系列'
-  },
-  {
-    label: '客製禮物 CustomizedGift',
-    value: '客製禮物'
-  }
-]
-function validateName (rule, value) {
-  return value.length > 0 && value.length <= 20
-}
-function validatePrice (rule, value) {
-  return value > 0
-}
-function validateQuantity (rule, value) {
-  return value >= 0
-}
-const showModal = idx => {
-  if (idx === -1) {
-    form._id = ''
-    form.name = ''
-    form.description = ''
-    form.price = 0
-    form.quantity = ''
-    form.image = []
-    form.sell = false
-    form.category = ''
-    // form.category = ''
-    // form.valid = false
-    form.loading = false
-    form.idx = -1
-    originalImg.value.length = 0
-  } else {
-    originalImg.value.length = 0
-    form._id = products[idx]._id
-    form.name = products[idx].name
-    form.description = products[idx].description
-    form.price = products[idx].price
-    form.quantity = products[idx].quantity
-    form.image = products[idx].image
-    form.sell = products[idx].sell
-    form.category = products[idx].category
-    // form.category = products[idx].category
-    // form.valid = false
-    originalImg.value.push(
-      ...form.image.map((image, idx) => {
-        return {
-          id: idx.toString(),
-          name: idx.toString(),
-          status: 'finished',
-          url: image
-        }
-      })
-    )
-    form.loading = false
-    form.idx = idx
-  }
-  form.showModal = true
-}
-const submit = async () => {
-  form.loading = true
-  valid.value?.validate(errors => {
-    if (!errors) {
-      form.loading = true
-    } else {
-      message.error('請填寫完整商品內容')
-    }
-  })
-  // fd.append(key, value)
-  const fd = new FormData()
-  fd.append('name', form.name)
-  fd.append('description', form.description)
-  fd.append('price', form.price)
-  fd.append('quantity', form.quantity)
-  fd.append('sell', form.sell)
-  fd.append('category', form.category)
-  if (form.image.length >= 1) {
-    form.image.forEach(item => {
-      fd.append('image', item)
-    })
-  }
-  try {
-    if (form._id.length === 0) {
-      const { data } = await apiAuth.post('/products', fd)
-      products.push(data.result)
-      message.success('新增成功')
-    } else {
-      const { data } = await apiAuth.patch('/products/' + form._id, fd)
-      products[form.idx] = data.result
-      message.success('編輯成功')
-    }
-    form.showModal = false
-  } catch (error) {
-    message.error(error?.response?.data?.message || '發生錯誤')
-  }
-  form.loading = false
-}
-;(async () => {
-  try {
-    const { data } = await apiAuth.get('/products/all')
-    products.push(...data.result)
-  } catch (error) {
-    message.error(error?.response?.data?.message || '發生錯誤')
-  }
-})()
-</script>
+      <!-- 取消 -->
+      <n-gi span="2">
+        <div style="display: flex; justify-content: flex">
+          <n-button
+            type="error" ghost
+            :disabled="form.loading"
+            round size="large" style="width: 12vw; height: 3vw; font-size: 1.5vw;"
+          >
+            <!-- @click="order.showModal = false" -->
+            取 &nbsp;&nbsp; 消
+          </n-button>
+
+        </div>
+      </n-gi>
+
+      <!-- 存檔紐 -->
+      <n-gi span="2">
+        <div style="display: flex; justify-content: flex">
+          <n-button
+            :disabled="order.loading"
+            round type="primary" size="large" style="width: 12vw; height: 3vw; font-size: 1.5vw;"
+            attr-type="submit" @keydown.enter.prevent
+          >
+            存 &nbsp;&nbsp; 檔
+          </n-button>
+
+        </div>
+      </n-gi>
+
+    </n-grid>
+  </n-form>

@@ -61,7 +61,7 @@ const themeOverrides: GlobalThemeOverrides = {
       fontWeight: '800'
     },
     Menu: {
-      color: "#2F4F4FFF",
+      color: "#2F4F4",
       itemColorActive: '#FFAC4D44',
       itemColorHover: '#F9B02D88',
       itemTextColor: '#F8E9D6',
@@ -251,17 +251,23 @@ const active = ref(false)
 } */
 
 .logo {
-  width: 20%;
+  width: 15%;
 }
 .n-menu-item {
   text-align: center;
 }
+.n-base-close{
+  color: #F9B02D;
+  font-size: 1.5rem;
+}
+
+
 </style>
 
 <template>
-  <div class="container" style="background-color: #2f4f40 ; position: fixed;">
+  <div class="container" style="background-color: #2f4f40 ; position:relative; top:-10vh; width: 100vw; height: 100vh;">
     <n-config-provider :theme-overrides="themeOverrides" :breakpoints="{ xs: 0, s: 576, m: 768, l: 992, xl: 1200, xxl: 1400 }">
-        <div id="navbar" >
+        <div id="navbar" style="background-color: #2F4F40;">
           <img src="url('../../image/TRPG_LOGO.png" alt="logo" class="logo">
 
           <!-- 登出 -->

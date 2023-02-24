@@ -14,7 +14,8 @@
 <style lang="scss">
 body
   {
-  overflow-x: hiddden !important;
+  // : hiddden !important;
   overflow-y: scroll !important;
+  overflow-x: hidden;
   }
 </style>
