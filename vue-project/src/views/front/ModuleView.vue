@@ -22,7 +22,7 @@
         </div>
         <div class="column hexagon_3">
           <div class="column_title">人數</div>
-          <div class="column_text">   {{ module.pl }}</div>
+          <div class="column_text">  {{ module.pl }}</div>
 
         </div>
 
@@ -77,7 +77,7 @@
 
         <!-- 建議人數 -->
         <n-form-item-gi span="xs:6 m:3 l:3" label="想要的 HO" path="pl">
-          <n-input-number v-model:value="form.pl" :disabled="disabled" :default-value="1" clearable>
+          <n-input-number v-model:value="form.ho" :disabled="disabled" :default-value="1" clearable>
             <template #prefix>
               <div style="margin-right:-50px; padding-right: 60px; color: #2F4F4088">
                 HO ：
@@ -88,17 +88,17 @@
 
         <!-- 玩家資料 -->
         <n-form-item-gi span="xs:9 m:6 l:6" label="PL 暱稱" path="pl_nickname">
-          <n-input v-model:value="user.nickname" placeholder="req.user.nickname" type="text" />
+          <n-input v-model:value="user.nickname" type="text" />
         </n-form-item-gi>
 
         <!-- 玩家資料-DC -->
         <n-form-item-gi span="xs:9 m:6 l:6" label="PL DC帳號" path="pl_dc_account">
-          <n-input v-model:value="user.dc_account" placeholder="req.user.dc_account" type="text" />
+          <n-input v-model:value="user.dc_account" type="text" />
         </n-form-item-gi>
 
         <!-- 玩家資料-DC -->
         <n-form-item-gi span="xs:9 m:6 l:6" label="PL資料 DC_id" path="pl_dc_id">
-          <n-input v-model:value="user.dc_id" placeholder="req.user.dc_id" type="text" />
+          <n-input v-model:value="user.dc_id" type="text" />
         </n-form-item-gi>
 
         <!-- dateTime -->
@@ -173,8 +173,7 @@ const form = reactive({
   pl_dc_account: '',
   pl_dc_id: 0,
 
-  // schema
-  ho: 0,
+  ho: 1,
   // date: '',
 
   loading: false,
@@ -198,7 +197,7 @@ const module = reactive({
   discordLink: ''
 })
 
-const
+// const
 
 const showModal = ref(false)
 
@@ -249,8 +248,7 @@ const onApplyBtnClick = async () => {
     document.title = module.name + ' | Matching TRPG'
     console.log(data.result)
 
-
-    const { data_order } = await api.get('/order') 
+    const { data_order } = await api.get('/order')
   } catch (error) {
     console.log('模組取得失敗')
     router.go(-1)

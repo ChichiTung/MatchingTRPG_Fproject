@@ -76,17 +76,51 @@ export const getUser = (req, res) => {
       success: true,
       message: '',
       result: {
+        _id: req.user._id,
         account: req.user.account,
         email: req.user.email,
+        image: req.file?.path || '',
         nickname: req.user.nickname,
         dc_account: req.user.dc_account,
         dc_id: req.user.dc_id,
         favorite: req.user.favorite,
-        role: req.user.role
+        role: req.user.role,
+        freeTime: req.body.freeTime,
+        intro: req.body.intro
       }
     })
   } catch (error) {
     res.status(500).json({ success: false, message: '未知錯誤' })
+  }
+}
+
+export const editUser = async (req, res) => {
+  try {
+    const result = await users.findByIdAndUpdate(req.params.id, {
+      email: req.body.email,
+      nickname: req.body.nickname,
+      dc_account: req.body.dc_account,
+      dc_id: req.body.dc_id,
+
+      image: req.file?.path || '',
+      freeTime: req.body.freeTime,
+      intro: req.body.intro
+
+    }, { new: true })
+    if (!result) {
+      res.status(404).json({ success: false, message: '找不到 user' })
+    } else {
+      res.status(200).json({ success: true, message: '', result })
+    }
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      console.log(error)
+      res.status(400).json({ success: false, message: error.errors[Object.keys(error.errors)[0]].message })
+    } else if (error.name === 'CastError') {
+      res.status(404).json({ success: false, message: '找不到 user' })
+    } else {
+      res.status(500).json({ success: false, message: '未知錯誤' })
+    }
   }
 }
 

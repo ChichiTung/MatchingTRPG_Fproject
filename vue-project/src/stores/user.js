@@ -16,6 +16,10 @@ export const useUserStore = defineStore('user', () => {
   const role = ref(0)
   const favorite = ref(0)
 
+  const image = ref('')
+  const info = ref('')
+  const freeTime = ref('')
+
   const isLogin = computed(() => {
     return token.value.length > 0
   })
@@ -40,6 +44,10 @@ export const useUserStore = defineStore('user', () => {
       /* eslint-enable */
       favorite.value = data.result.favorite
       role.value = data.result.role
+
+      image.value = data.result.image
+      info.value = data.result.info
+      freeTime.value = data.result.freeTime
 
       Swal.fire({
         icon: 'success',

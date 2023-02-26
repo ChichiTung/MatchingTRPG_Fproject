@@ -81,9 +81,19 @@ const schema = new Schema({
     // 0:使用者, 1:管理者
     default: 0
   },
+
+  // 探索者檔案 add
+
   freeTime: {
-    type: [Date],
+    type: [String],
     default: []
+  },
+  image: {
+    type: [String],
+    default: ['https://source.boringavatars.com/beam/256/${account.value}?colors=ffffff,eed7c5,9ec4bb,abe4ff,d9abff']
+  },
+  intro: {
+    type: String
   }
 
 }, { versionKey: false })

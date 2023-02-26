@@ -10,7 +10,7 @@ export const createModule = async (req, res) => {
       living: req.body.living,
       image: req.file?.path || '',
       minTime: req.body.minTime,
-      pl: req.body.pl,
+      ho: req.body.ho,
       hashtag: req.body.hashtag,
       difficulty: req.body.difficulty,
       info: req.body.info,
