@@ -11,8 +11,9 @@ import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [
-    vue(),AutoImport({
+    vue(), AutoImport({
       imports: [
         'vue',
         {
@@ -29,7 +30,7 @@ export default defineConfig({
       resolvers: [NaiveUiResolver()]
     })
   ],
-      define: { 'process.env': {} },
+  define: { 'process.env': {} },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
@@ -41,10 +42,10 @@ export default defineConfig({
       '.mjs',
       '.ts',
       '.tsx',
-      '.vue',
-    ],
+      '.vue'
+    ]
   },
   server: {
-    port: 3000,
+    port: 3000
   }
 })
