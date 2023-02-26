@@ -2,7 +2,8 @@
   <n-config-provider :theme-overrides="themeOverrides_admin" :breakpoints="{ xs: 0, s: 576, m: 768, l: 992, xl: 1200, xxl: 1400 }">
     <div class="bg_admin" style="background-color: #F8E9D6;top: 0; position: absolute;">
       <div id="navbar_admin" >
-        <img src="url('../../image/TRPG_LOGO_2.jpg" alt="logo" class="logo">
+        
+        <img src="url('../../../../image/TRPG_LOGO_2.jpg')" alt="logo" class="logo">
         <div id="menu_admin">
           <n-menu v-model:value="activeKey" mode="horizontal" :options="menuOptions" />
         </div>
