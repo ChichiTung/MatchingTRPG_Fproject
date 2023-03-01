@@ -2,12 +2,11 @@
   <n-popover
     width="trigger" placement="top" :show-arrow="false"
     style="position: absolute; top:0px; color: #2F4F40; background: #F9B02DEE;
-    width: 100%; height: 40vh;"
+    width: 95%; height: 40vh;"
   >
     <template #trigger>
       <n-card
-        title=""
-        :bordered="true" :hoverable="true"
+        title="" :bordered="true" :hoverable="true"
       >
         <!-- 主圖 -->
         <template #cover>
@@ -17,8 +16,7 @@
         <!-- 模組名 -->
         <router-link
           :to="'/modules/' + _id"
-          style="text-decoration: none; font-weight: 800; color: #2F4F40;
-     "
+          style="text-decoration: none; font-weight: 800; color: #2F4F40;"
         >
           <p class="module_title" style="height: 30%;"> ▋{{ name }}</p>
         </router-link>
@@ -32,6 +30,7 @@
           </template>
         </n-button>
         <!-- 模組介紹 -->
+        <p id="module_front_info"> {{ info }}</p>
 
         <!-- hashtag -->
         <div class="tag_row" style="text-decoration: none; font-weight: 800; color: #F9B02DEE; position: absolute; top: 85%; left: 5%;">

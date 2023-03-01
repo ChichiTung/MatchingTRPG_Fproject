@@ -4,37 +4,49 @@
     <div id="bg_1">
     </div>
     <div class="boss_img">
-      <img id="boss" src="../../../image/matching_半身-01.png">
-
+      <img id="boss" src="../../assets/matching_半身-01.png">
     </div>
     <div id="bg_2">
 
     </div>
 
   </div>
+  <Loaded :loaded="isLoad" />
+
 </template>
 
 <script setup>
 import { gsap } from 'gsap'
+import { ref, onMounted, reactive } from 'vue'
+import { api } from '@/plugins/axios'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { onMounted } from 'vue'
+import { useMessage } from 'naive-ui'
+import Loaded from '@/components/TheLoaded.vue'
+
+const message = useMessage()
+const isLoad = ref(true)
+const modules = reactive([])
 
 gsap.registerPlugin(ScrollTrigger)
 
 // const ScrollTrigger = ScrollTrigger.getAll();
 onMounted(() => {
-  gsap.to('#bg_1', {
-    xPercent: -100,
-    yPercent: 200,
+  gsap.set('#boss', { opacity: 1 })
+  gsap.to('#boss', {
+    opacity: 1,
+    x: 100,
+    // xPercent: -100,
+    // yPercent: 200,
     // x: '-100vw',
     // y: '100vw',
     ease: 'none',
     scrollTrigger: {
-      trigger: '#bg_2',
-      scrub: true
+      trigger: '#bg_1',
+      scrub: true,
+      markers: true,
 
-      // start: 'top top-=100px'
-      // pin: true
+      start: 'top top-=100px',
+      pin: true
 
     }
   })
@@ -54,7 +66,19 @@ onMounted(() => {
   //     // pinSpacing: false
   //   }
   // })
-})
+});
+
+(async () => {
+  try {
+    const { data } = await api.get('/modules')
+    isLoad.value = false
+
+    modules.push(...data.result)
+  } catch (error) {
+    console.log(error)
+    message.error('模組取得失敗')
+  }
+})()
 
 </script>
 
@@ -68,7 +92,7 @@ onMounted(() => {
     // overflow-y: scroll;
 
   #bg_1 {
-    background-image: url('../../../../image/tavern_5.jpg');
+    background-image: url('../../assets/tavern_1.jpg');
     margin-top: -5vw;
     width: 105vw;
     height: 130vh;

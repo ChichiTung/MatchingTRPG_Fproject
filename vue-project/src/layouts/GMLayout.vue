@@ -3,7 +3,8 @@
     <div class="bg_admin" style="background-color: #F8E9D6;top: 0; position: absolute;">
       <div id="navbar_admin" >
         
-        <img src="url('../../../../image/TRPG_LOGO_2.jpg')" alt="logo" class="logo">
+        <!-- 修正 -->
+        <img src="https://ppt.cc/f4OK8x@.jpg" alt="logo" class="logo">
         <div id="menu_admin">
           <n-menu v-model:value="activeKey" mode="horizontal" :options="menuOptions" />
         </div>

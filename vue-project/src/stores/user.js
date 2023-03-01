@@ -5,6 +5,7 @@ import Swal from 'sweetalert2'
 import router from '@/plugins/router'
 
 export const useUserStore = defineStore('user', () => {
+  const _id = ref('')
   const token = ref('')
   const account = ref('')
   const nickname = ref('')
@@ -17,7 +18,8 @@ export const useUserStore = defineStore('user', () => {
   const favorite = ref(0)
 
   const image = ref('')
-  const info = ref('')
+
+  const intro = ref('')
   const freeTime = ref('')
 
   const isLogin = computed(() => {
@@ -35,6 +37,7 @@ export const useUserStore = defineStore('user', () => {
     try {
       const { data } = await api.post('/users/login', model)
       token.value = data.result.token
+      _id.value = data.result._id
       account.value = data.result.account
       email.value = data.result.email
       nickname.value = data.result.nickname
@@ -46,7 +49,7 @@ export const useUserStore = defineStore('user', () => {
       role.value = data.result.role
 
       image.value = data.result.image
-      info.value = data.result.info
+      intro.value = data.result.intro
       freeTime.value = data.result.freeTime
 
       Swal.fire({
@@ -70,6 +73,7 @@ export const useUserStore = defineStore('user', () => {
   const logout = async () => {
     try {
       await apiAuth.delete('/users/logout')
+      _id.value = ''
       token.value = ''
       account.value = ''
       role.value = 0
@@ -83,11 +87,7 @@ export const useUserStore = defineStore('user', () => {
       //   text: '登出成功'
       // })
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: '失敗',
-        text: error?.response?.data?.message || '發生錯誤'
-      })
+      console.log(error)
     }
   }
 
@@ -95,9 +95,11 @@ export const useUserStore = defineStore('user', () => {
     if (token.value.length === 0) return
     try {
       const { data } = await apiAuth.get('/users/me')
+      _id.value = data.result._id
       account.value = data.result.account
       nickname.value = data.result.nickname
       email.value = data.result.email
+      image.value = data.result.image[0]
       /* eslint-disable */
       dc_account.value = data.result.dc_account
       dc_id.value = data.result.dc_id
@@ -138,12 +140,16 @@ export const useUserStore = defineStore('user', () => {
 
   return {
     token,
+    _id,
     account,
     email,
     nickname,
     /* eslint-disable */
     dc_account,
     dc_id,
+    image,
+    intro,
+    freeTime,
     /* eslint-enable */
     favorite,
     role,

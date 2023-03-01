@@ -268,7 +268,7 @@ const active = ref(false)
   <div class="container" style="background-color: #2f4f40 ; position:relative; top:-10vh; width: 100vw; height: 100vh;">
     <n-config-provider :theme-overrides="themeOverrides" :breakpoints="{ xs: 0, s: 576, m: 768, l: 992, xl: 1200, xxl: 1400 }">
         <div id="navbar" style="background-color: #2F4F40;">
-          <img src="url('../../image/TRPG_LOGO.png" alt="logo" class="logo">
+          <img src="https://ppt.cc/fHuHPx@.png" alt="logo" class="logo">
 
           <!-- 登出 -->
            <n-tooltip placement="left-start" trigger="hover" :show-arrow="false" style="background-color: #F8E9D6; color: #2f4f40;" v-if="isLogin">

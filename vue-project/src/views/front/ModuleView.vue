@@ -37,16 +37,47 @@
       <img :src="module.image" class="head_img_wrapper">
     </div>
 
-    <div id="content_info">
-      <n-h1 prefix="bar" align-text type="warning">
-        <n-text type="warning" strong>
-          模組簡介
-        </n-text>
-      </n-h1>
-      <p>{{ module.info }}</p>
+    <div id="section2">
+
+      <div id="content_info">
+        <n-h1 align-text type="warning">
+          <n-text style="color:#2F4F40; font-weight: 800;" strong>
+            " 模組簡介 "
+          </n-text>
+        </n-h1>
+        <p class="content_info">{{ module.info }}</p>
+      </div>
+      <img
+        src="../../assets/matching_半身-01.png" class="cute_img"
+      >
+
+      <div id="content_notice">
+        <n-h1 prefix="bar" align-text type="warning" style="margin-left: 3%;">
+          <n-text style="color:#2F4F4055; font-weight: 800;" strong>
+            NOTICE
+          </n-text>
+        </n-h1>
+        <p class="content_notice">{{ module.notice }}</p>
+      </div>
+
+    </div>
+
+    <!-- <n-divider /> -->
+
+    <div id="gm_intro">
+      <h2 class="gm_intro_title"> - About GM
+        <span style="color: orange;">&nbsp; &nbsp;{{ module.gm }}</span> -</h2>
+      <p class="gm_intro">
+        iciendis possimus sunt blanditiis ea aliquam vel placeat, accusamus, corrupti molestiae eum! Fugit perspiciatis, consequatur ut eligendi porro voluptas aliquam provident labore veniam ex! Ex obcaecati pariatur a error est amet accusantium harum quia ut eligendi. Aspernatur veniam qui iste cum quisquam tempore, aut eaque eos non corrupti earum, laboriosam alias in error eum suscipit dolor dicta sapiente excepturi minus itaque unde? Praesentium maxime quam iusto facilis eligendi quis accusamus eaque, iste ducimus nemo ullam ut? Iure reprehenderit reiciendis quas, dolorem quis ex ipsam facere amet, totam ducimus distinctio voluptas, sit aliquam ullam sapiente quisquam accusantium iste cum impedit numquam id illum! Provident facilis neque in quae necessitatibus, cupiditate, quia ut qui expedita laudantium quos nisi.
+      </p>
+
     </div>
 
     <div id="pl_orders">
+      <h2 class="pl_orders_title">目前的預約</h2>
+      <p>
+        3/2
+      </p>
 
     </div>
   </div>
@@ -56,7 +87,7 @@
     <n-form
       :model="form"
       label-placement="top"
-      style="background-color: #F8E9DD; border-radius: 15px; padding: 2%;"
+      style="background-color: #F8E9DD; border-radius: 15px; padding: 2%; width: 60vw;"
       @submit.prevent="onApplyBtnClick"
     >
       <n-grid cols="6 l:12" item-responsive responsive="screen" x-gap="30">
@@ -72,12 +103,12 @@
 
         <!-- 劇本名字 -->
         <n-form-item-gi span="xs:9 m:6 l:6" label="模組名稱" path="m_name">
-          <n-input v-model:value="module.name" :default-value="module.name" type="text" />
+          <n-input v-model:value="module.name" :default-value="module.name" type="text" disabled />
         </n-form-item-gi>
 
         <!-- 建議人數 -->
         <n-form-item-gi span="xs:6 m:3 l:3" label="想要的 HO" path="pl">
-          <n-input-number v-model:value="form.ho" :disabled="disabled" :default-value="1" clearable>
+          <n-input-number v-model:value="form.ho" :default-value="1" clearable>
             <template #prefix>
               <div style="margin-right:-50px; padding-right: 60px; color: #2F4F4088">
                 HO ：
@@ -87,18 +118,23 @@
         </n-form-item-gi>
 
         <!-- 玩家資料 -->
+        <n-form-item-gi span="xs:9 m:6 l:6" label="PL 頭像" path="pl_img">
+          <n-image :src="user.image" width="120" />
+        </n-form-item-gi>
+
+        <!-- 玩家資料 -->
         <n-form-item-gi span="xs:9 m:6 l:6" label="PL 暱稱" path="pl_nickname">
-          <n-input v-model:value="user.nickname" type="text" />
+          <n-input v-model:value="user.nickname" type="text" disabled />
         </n-form-item-gi>
 
         <!-- 玩家資料-DC -->
         <n-form-item-gi span="xs:9 m:6 l:6" label="PL DC帳號" path="pl_dc_account">
-          <n-input v-model:value="user.dc_account" type="text" />
+          <n-input v-model:value="user.dc_account" type="text" disabled />
         </n-form-item-gi>
 
         <!-- 玩家資料-DC -->
         <n-form-item-gi span="xs:9 m:6 l:6" label="PL資料 DC_id" path="pl_dc_id">
-          <n-input v-model:value="user.dc_id" type="text" />
+          <n-input v-model:value="user.dc_id" type="text" disabled />
         </n-form-item-gi>
 
         <!-- dateTime -->
@@ -107,12 +143,13 @@
               </n-form-item-gi> -->
 
         <!-- 取消 -->
-        <n-gi span="2">
+        <n-gi span="2" offset="7">
           <div style="display: flex; justify-content: flex">
             <n-button
               type="error" ghost
               :disabled="form.loading"
-              round size="large" style="width: 12vw; height: 3vw; font-size: 1.5vw;"
+              round size="large"
+              style="width: 9vw; height: 2.2vw; font-size: 1rem;"
               @click="showModal = false"
             >
               <!-- @click="order.showModal = false" -->
@@ -127,7 +164,8 @@
           <div style="display: flex; justify-content: flex">
             <n-button
               :disabled="form.loading"
-              round type="warning" size="large" style="width: 12vw; height: 3vw; font-size: 1.5vw;"
+              round size="large"
+              style="width: 9vw; height: 2.2vw; font-size: 1rem;"
               @keydown.enter.prevent
               @click="onApplyBtnClick"
             >
@@ -144,13 +182,92 @@
 </template>
 <script setup>
 import { apiAuth, api } from '@/plugins/axios'
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { useMessage } from 'naive-ui'
 
 // import { api } from '@/plugins/axios'
 import { useRoute, useRouter } from 'vue-router'
 // import { Swal } from 'sweetalert2'
 import { useUserStore } from '@/stores/user'
+
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
+// const ScrollTrigger = ScrollTrigger.getAll();
+onMounted(() => {
+  gsap.to('#content_info', {
+    xPercent: 10,
+    // x: '-100vw',
+    // y: '100vw',
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#content_info',
+      scrub: true,
+      markers: true // 顯示標記
+      // start: 'top top-=100px'
+      // pin: true
+
+    }
+  })
+  gsap.set('#content_notice', { x: 500 })
+  gsap.to('#content_notice', {
+    xPercent: -15,
+    // x: innerWidth * 1,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#content_notice',
+      scrub: true,
+      markers: true // 顯示標記
+      // start: 'top top-=100px'
+      // pin: true
+
+    }
+  })
+  gsap.to('.head_img_wrapper', {
+    xPercent: -5,
+    // x: innerWidth * 1,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.head_img_wrapper',
+      scrub: true,
+      markers: true // 顯示標記
+      // start: 'top top-=100px'
+      // pin: true
+
+    }
+  })
+
+  gsap.to('#gm_intro', {
+    yPercent: -10,
+    // x: innerWidth * 1,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: 'gm_intro',
+      scrub: true,
+      markers: true, // 顯示標記
+      // start: 'top top-=100px'
+      pin: true
+
+    }
+  })
+  gsap.set('.cute_img', { x: -100 })
+
+  gsap.to('.cute_img', {
+    x: 55,
+    // x: innerWidth * 1,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.cute_img',
+      scrub: true,
+      markers: true // 顯示標記
+      // start: 'top top-=100px'
+      // pin: true
+
+    }
+  })
+})
 
 const route = useRoute()
 const router = useRouter()
@@ -197,7 +314,19 @@ const module = reactive({
   discordLink: ''
 })
 
-// const
+const order = reactive({
+  _id: '',
+
+  pl_id: '',
+  pl_nickname: '',
+  pl_dc_account: '',
+  pl_dc_id: '',
+  m_id: '',
+  m_name: '',
+  gm: 0.5,
+  ho: 1,
+  date: ''
+})
 
 const showModal = ref(false)
 
@@ -247,11 +376,28 @@ const onApplyBtnClick = async () => {
     module.discordLink = data.result.discordLink
     document.title = module.name + ' | Matching TRPG'
     console.log(data.result)
-
-    const { data_order } = await api.get('/order')
   } catch (error) {
     console.log('模組取得失敗')
     router.go(-1)
+  }
+
+  try {
+    const { dataOrder } = await api.get('/orders/module')
+    order._id = dataOrder.result._id
+    order.pl_id = dataOrder.result.pl_id
+    order.pl_nickname = dataOrder.result.pl_nickname
+    order.pl_dc_account = dataOrder.result.pl_dc_account
+    order.pl_dc_id = dataOrder.result.pl_dc_id
+    order.m_id = dataOrder.result.m_id
+    order.m_name = dataOrder.result.m_name
+    order.gm = dataOrder.result.gm
+    order.ho = dataOrder.result.ho
+    order.date = dataOrder.result.date
+    console.log(dataOrder.result)
+  } catch (error) {
+    // console.log(req.body.m_id)
+    console.log('訂單取得失敗')
+    // router.go(-1)
   }
 })()
 
@@ -284,6 +430,7 @@ body{
     width: 100%;
     margin: auto;
     font-size: 50px;
+    padding-left: 8%;
     padding-bottom: 8%;
     text-align: center;
     color: #F9B02D;
@@ -487,19 +634,106 @@ body{
 
   }
  }
- #content_info {
-  width: 90%;
-  margin: auto;
-  margin-top: 10%;
-  background: #000;
-  p {
-    width: 50%;
-    color: #F8E9D6;
-    font-weight: 600;
-    font-size: 20px;
+ #section2 {
+  width: 100%;
+  background-image: linear-gradient(to top, #3c6853 0%, #2F4F40 100%);
+  position: relative;
+
+  .cute_img {
+    width: 20%;
+    position:absolute;
+    top: 50%;
+    left: -5%;
+    rotate: 30deg;
 
   }
  }
+ #content_info {
+  width: 40%;
+  height: 200px;
+  margin: auto;
+  margin-top: 10%;
+  margin-left: 10%;
+  padding: 2%;
+  // margin-bottom: 20%;
+  background-color: #F9B02DDD;
+  border-radius: 15px;
+  box-shadow: 0.2rem 0.2rem 0.5rem #2b2b2b;
+
+  .content_info {
+    width: 80%;
+    color: #F8E9D6;
+    font-weight: 600;
+    font-size: 20px;
+    margin: auto;
+    position: relative;
+
+      &::before {
+      content:" ";
+      display:block;
+      width: 0%;
+      // width: 100%;
+      height: 3px;
+      top: 110%;
+      position: absolute;
+      background-color: #F9B02D;
+      transition: .4s .2s;
+
+    }
+     &:hover::before{
+      width: 80%;
+    }
+
+  }
+ }
+
+ #content_notice {
+  width: 40%;
+  // height: 200px;
+  margin: auto;
+  margin-top: 10%;
+  margin-left: 10%;
+  padding: 2%;
+  margin-bottom: 10%;
+  background-color: #ffb24cdd;
+  border-radius: 15px;
+  padding-bottom: 2%;
+  box-shadow: 0.2rem 0.2rem 0.5rem #2b2b2b;
+
+  .content_notice {
+    width: 80%;
+    color: #2F4F40cc;
+    font-weight: 600;
+    font-size: 20px;
+    margin: auto;
+    position: relative;
+
+      &::before {
+      content:" ";
+      display:block;
+      width: 0%;
+      // width: 100%;
+      height: 3px;
+      top: 102%;
+      position: absolute;
+      background-color: #F9B02D;
+      transition: .4s .2s;
+
+    }
+     &:hover::before{
+      width: 80%;
+    }
+
+  }
+
+ }
+
+ #gm_intro {
+    width: 100%;
+    padding: 2% 5%;
+    background: #F8E9D6;
+    box-shadow: 0 0 0.5rem #222 inset;
+  }
 
 }
 
