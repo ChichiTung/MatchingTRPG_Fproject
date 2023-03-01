@@ -76,7 +76,7 @@
     <div id="pl_orders">
       <h2 class="pl_orders_title">目前的預約</h2>
       <p>
-        3/2
+        {{ order.pl_nickname[i] }}
       </p>
 
     </div>
@@ -315,16 +315,16 @@ const module = reactive({
 })
 
 const order = reactive({
-  _id: '',
+  _id: [],
 
-  pl_id: '',
-  pl_nickname: '',
-  pl_dc_account: '',
-  pl_dc_id: '',
+  pl_id: [],
+  pl_nickname: [],
+  pl_dc_account: [],
+  pl_dc_id: [],
   m_id: '',
   m_name: '',
   gm: 0.5,
-  ho: 1,
+  ho: [],
   date: ''
 })
 
@@ -382,19 +382,29 @@ const onApplyBtnClick = async () => {
   }
 
   try {
-    const { dataOrder } = await api.get('/orders/module')
+    const { data: dataOrder } = await apiAuth.get(`/orders/module/${module._id}`)
+
+    // var i=0; i<fruits.length; ++i
+    for (let i = 0; i < dataOrder.result.length; i++) {
+      order.pl_nickname[i] = dataOrder.result[i].pl_nickname
+      order.pl_id[i] = dataOrder.result[i].pl_id
+      order.ho[i] = dataOrder.result[i].ho
+      // console.log('i:', i, dataOrder.result[i].pl_nickname)
+      // console.log('i:', i, order.pl_nickname[i])
+    }
     order._id = dataOrder.result._id
     order.pl_id = dataOrder.result.pl_id
-    order.pl_nickname = dataOrder.result.pl_nickname
+    // order.pl_nickname = dataOrder.result.pl_nickname
     order.pl_dc_account = dataOrder.result.pl_dc_account
     order.pl_dc_id = dataOrder.result.pl_dc_id
     order.m_id = dataOrder.result.m_id
     order.m_name = dataOrder.result.m_name
     order.gm = dataOrder.result.gm
-    order.ho = dataOrder.result.ho
     order.date = dataOrder.result.date
-    console.log(dataOrder.result)
+
+    console.log(dataOrder.result.length)
   } catch (error) {
+    console.log(error)
     // console.log(req.body.m_id)
     console.log('訂單取得失敗')
     // router.go(-1)

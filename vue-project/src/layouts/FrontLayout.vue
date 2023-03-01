@@ -235,6 +235,7 @@ const active = ref(false)
       placement.value = place
     }
 
+
 </script>
 
 <style>
@@ -268,8 +269,17 @@ const active = ref(false)
   <div class="container" style="background-color: #2f4f40 ; position:relative; top:-10vh; width: 100vw; height: 100vh;">
     <n-config-provider :theme-overrides="themeOverrides" :breakpoints="{ xs: 0, s: 576, m: 768, l: 992, xl: 1200, xxl: 1400 }">
         <div id="navbar" style="background-color: #2F4F40;">
-          <img src="https://ppt.cc/fHuHPx@.png" alt="logo" class="logo">
 
+           <router-link :to="'/'" style="text-decoration: none; font-weight: 800; color: #2F4F40;">
+              <img src="https://ppt.cc/fHuHPx@.png" alt="logo" class="logo">
+            </router-link>
+         
+
+          
+          
+
+          <!-- 使用者
+          <p style="z-index: 100; font-size: 50px;"> {{ user.nickname }}</p> -->
           <!-- 登出 -->
            <n-tooltip placement="left-start" trigger="hover" :show-arrow="false" style="background-color: #F8E9D6; color: #2f4f40;" v-if="isLogin">
             <template #trigger>
@@ -281,12 +291,12 @@ const active = ref(false)
             </template>
               登出
           </n-tooltip>
-          <!-- 77777777777777777777777777777777 -->
 
           <n-button @click="activate('right')" text style="position: fixed;
-  top: 6%;
-  right: 3%;
-  z-index: 100;">
+          top: 6%;
+          right: 3%;
+          z-index: 100;">
+          
       <!-- DataBarHorizontal20Filled -->
           <n-icon size="40" color="#F8E9D6">
             <DataBarHorizontal20Filled />
@@ -295,9 +305,9 @@ const active = ref(false)
 
           <n-drawer v-model:show="active" :width="350" :placement="placement" auto-focus block-scroll 
         style=" background: rgba(47,79,79, 0.9) ;position: fixed;
-  top: 6%;
-  right: 3%;
-  z-index: 100;" >
+          top: 0%;
+          right: 3%;
+          " >
           <n-drawer-content closable>
             <n-menu :options="menuOptions" accordian>
               <n-button quaternary round>

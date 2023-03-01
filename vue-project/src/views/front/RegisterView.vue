@@ -81,7 +81,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { useMessage, NIcon } from 'naive-ui'
+import { useMessage } from 'naive-ui'
 
 /**
    * js 文件下使用这个做类型提示
@@ -92,7 +92,7 @@ import validator from 'validator'
 import { api } from '@/plugins/axios'
 import { useRouter, RouterLink } from 'vue-router'
 
-import { InfoCircle } from '@vicons/fa'
+// import { InfoCircle } from '@vicons/fa'
 
 const router = useRouter()
 const message = useMessage()
