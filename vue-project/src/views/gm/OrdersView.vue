@@ -3,6 +3,12 @@
     <h1> 預約列表 </h1>
     <!-- <n-divider /> -->
 
+    <n-space vertical>
+      <n-select
+        v-model:value="value" :options="options"
+        style="width:20%;margin-left: 70%;"
+      />
+    </n-space>
     <n-table id="ordersTable" :single-line="false" striped style="margin:auto; margin-top: 5%; width:85%" class="table">
       <thead>
         <tr>
@@ -50,7 +56,23 @@ import { reactive } from 'vue'
 import { apiAuth } from '@/plugins/axios'
 import Swal from 'sweetalert2'
 
-const orders = reactive([]);
+const orders = reactive([])
+
+const options = [
+  {
+    label: '按跑團日期排',
+    value: 'song0',
+    disabled: true
+  },
+  {
+    label: '按模組名稱排',
+    value: 'song1'
+  },
+  {
+    label: '按 PL 姓名排',
+    value: 'song2'
+  }
+];
 
 (async () => {
   try {

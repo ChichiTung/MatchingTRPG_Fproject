@@ -14,7 +14,14 @@
       新增模組
     </n-button>
 
-    <n-table id="moduleTable" :single-line="false" striped style="margin-top: 5%;">
+    <n-space vertical>
+      <n-select
+        v-model:value="value" :options="options"
+        style="width:20%;margin-left: 70%;margin-top: 5%;"
+      />
+    </n-space>
+
+    <n-table id="moduleTable" :single-line="false" striped style="margin-top: 5%;margin-bottom: 10%;">
       <thead>
         <tr>
           <th style="text-align: center;">圖片</th>
@@ -234,6 +241,26 @@ const size = ref('medium')
 
 const originalImg = ref([])
 
+const options = [
+  {
+    label: '按公開狀態排',
+    value: 'song0',
+    disabled: true
+  },
+  {
+    label: '按難易度排序',
+    value: 'song1'
+  },
+  {
+    label: '備團中',
+    value: 'song2'
+  },
+  {
+    label: '翻譯中',
+    value: 'song2'
+  }
+]
+
 const handleChange = options => {
   console.log(options.fileList)
 
@@ -443,8 +470,8 @@ function submitClick (e) {
 
 <style lang="scss">
 #ModulesView {
-  /* background: #e6c5c5; */
-  height: 100vh;
+  background: #f8e9d6;
+  height: 150vh;
   #moduleTable {
     width: 80%;
     margin: auto;

@@ -5,7 +5,6 @@
 
       <n-form
         :model="form"
-        :rules="rules"
         :size="size"
         :disabled="form.updateDisabled"
         label-placement="top"
@@ -60,7 +59,6 @@
             >
               更改照片
             </n-upload>
-
           </n-form-item-gi>
 
           <!-- 探索者暱稱 -->
@@ -182,7 +180,7 @@
 
 </template>
 
-<script setup></script>
+<script setup>
 import { apiAuth } from '@/plugins/axios'
 import { ref, reactive } from 'vue'
 // import { useRoute, useRouter } from 'vue-router'
@@ -272,26 +270,25 @@ const rules = {
       },
       trigger: ['input', 'blur']
     }
-  ],
-  image: [
-    {
-      required: true,
-      validator (rule, value) {
-        if (!value) {
-          return new Error('探索者照片必放')
-        } else if (value.length >= 2) {
-          return new Error('照片只能放 1 張')
-        }
-      }
-    }
   ]
+  // image: [
+  //   {
+  //     required: true,
+  //     validator (rule, value) {
+  //       if (!value) {
+  //         return new Error('探索者照片必放')
+  //       } else if (value.length >= 2) {
+  //         return new Error('照片只能放 1 張')
+  //       }
+  //     }
+  //   }
+  // ]
 }
 
 const updateDisabled = (idx) => {
   console.log(idx)
 
   if (idx !== true) {
-    // originalImg.value.length = 0
     originalImg.value.length = 0
 
     form.account = myInfo.account
@@ -299,10 +296,9 @@ const updateDisabled = (idx) => {
     form.dc_account = myInfo.dc_account
     form.dc_id = myInfo.dc_id
     form.email = myInfo.email
-    form.image = myInfo.image[0]
+    form.image = myInfo.image
     form.intro = myInfo.intro
 
-    console.log('{form.image}')
     // originalImg.value.push(
     //   ...form.image.map((image, idx) => {
     //     return {

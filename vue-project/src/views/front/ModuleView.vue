@@ -68,16 +68,37 @@
       <h2 class="gm_intro_title"> - About GM
         <span style="color: orange;">&nbsp; &nbsp;{{ module.gm }}</span> -</h2>
       <p class="gm_intro">
-        iciendis possimus sunt blanditiis ea aliquam vel placeat, accusamus, corrupti molestiae eum! Fugit perspiciatis, consequatur ut eligendi porro voluptas aliquam provident labore veniam ex! Ex obcaecati pariatur a error est amet accusantium harum quia ut eligendi. Aspernatur veniam qui iste cum quisquam tempore, aut eaque eos non corrupti earum, laboriosam alias in error eum suscipit dolor dicta sapiente excepturi minus itaque unde? Praesentium maxime quam iusto facilis eligendi quis accusamus eaque, iste ducimus nemo ullam ut? Iure reprehenderit reiciendis quas, dolorem quis ex ipsam facere amet, totam ducimus distinctio voluptas, sit aliquam ullam sapiente quisquam accusantium iste cum impedit numquam id illum! Provident facilis neque in quae necessitatibus, cupiditate, quia ut qui expedita laudantium quos nisi.
+        重要的事先放在前面：
+        妳各位 請禮貌地對待 PL 與 GM ！還有一定要守時啊啊啊啊！
+
+        嗨，我是新手 GM 琪琪琪琪~ 目前帶過的本還沒有很多，請大家多多給我回饋，讓我能早日擺脫新手GM~
+        目前主要以歐美本為主，正劇向長劇本居多，形式採語音團~
+        歡迎各位新手、老手來報報~
       </p>
 
     </div>
 
     <div id="pl_orders">
       <h2 class="pl_orders_title">目前的預約</h2>
-      <p>
-        {{ order.pl_nickname[i] }}
-      </p>
+
+      <n-table id="favoriteTable" :single-line="false" striped style="margin-top: 5%; margin-bottom: 10%;" class="table">
+        <thead></thead>
+        <tr>
+          <th style="text-align: center; width: 30%;">日期</th>
+          <th style="text-align: center;">HO : PL</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="text-align: center;">2/28</td>
+            <td style="text-align: center;">HO:1 , {{ order.pl_nickname[0] }} </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;">2/28</td>
+            <td style="text-align: center;">HO:2 , 琪琪大人 </td>
+          </tr>
+        </tbody>
+      </n-table>
 
     </div>
   </div>
@@ -429,7 +450,12 @@ body{
   display: flex;
   flex-wrap: wrap;
   // flex-direction: ;
-
+  #pl_orders {
+    margin-top: 10%;
+    color: #F8E9D6;
+    width: 80%;
+    margin: auto;
+  }
   .head {
     width: 50%;
     height: 70vh;
@@ -743,6 +769,9 @@ body{
     padding: 2% 5%;
     background: #F8E9D6;
     box-shadow: 0 0 0.5rem #222 inset;
+  }
+  .gm_intro{
+    width: 60%;
   }
 
 }

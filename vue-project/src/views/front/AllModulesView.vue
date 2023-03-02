@@ -114,7 +114,7 @@ onUnmounted(() => {
 <style lang="scss">
 #front_module_bg {
   width: 100vw;
-  height: 200vh;
+  height: 300vh;
   margin-top: 10vh;
   background: #2F4F40;
 
