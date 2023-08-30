@@ -82,11 +82,11 @@
       <h2 class="pl_orders_title">目前的預約</h2>
 
       <n-table id="favoriteTable" :single-line="false" striped style="margin-top: 5%; margin-bottom: 10%;" class="table">
-        <thead></thead>
-        <tr>
-          <th style="text-align: center; width: 30%;">日期</th>
-          <th style="text-align: center;">HO : PL</th>
-        </tr>
+        <thead>
+          <tr>
+            <th style="text-align: center; width: 30%;">日期</th>
+            <th style="text-align: center;">HO : PL</th>
+          </tr>
         </thead>
         <tbody>
           <tr>
