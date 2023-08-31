@@ -238,48 +238,64 @@ const active = ref(false)
 
 </script>
 
-<style>
-#navbar .logo {
+<style lang="scss">
+#navbar {
+ .logo {
   position: fixed;
   top: 2%;
   z-index: 100;
-}
-/* #navbar button {
-  position: fixed;
-  top: 6%;
-  right: 3%;
-  z-index: 100;
-} */
+  height: 10%;
+ }
 
-.logo {
-  width: 15%;
-}
-.n-menu-item {
+ .n-menu-item {
   text-align: center;
 }
 .n-base-close{
   color: #F9B02D;
   font-size: 1.5rem;
 }
+}
+
+#navbar_phone {
+  display: none;
+  @media (max-width:576px) {
+    display:flex;
+    width: 110%;
+    height: 8%;
+    position:fixed;
+    top:92%;
+    z-index: 100;
+
+    background: #2F4F40;
+  }
+}
+
+
+
 
 
 </style>
 
 <template>
-  <div class="container" style="background-color: #2f4f40 ; position:relative; top:-10vh; width: 100vw; height: 100vh;">
+  <!-- 這邊拔掉了背景色 #2F4F40 -->
+  <div class="container" style="  position:relative; top:-10vh; width: 100vw; height: 100vh;">
     <n-config-provider :theme-overrides="themeOverrides" :breakpoints="{ xs: 0, s: 576, m: 768, l: 992, xl: 1200, xxl: 1400 }">
         <div id="navbar" style="background-color: #2F4F40;">
+          
 
            <router-link :to="'/'" style="text-decoration: none; font-weight: 800; color: #2F4F40;">
               <img src="https://ppt.cc/fHuHPx@.png" alt="logo" class="logo">
             </router-link>
-         
-
-          
-          
 
           <!-- 使用者
           <p style="z-index: 100; font-size: 50px;"> {{ user.nickname }}</p> -->
+            <n-tooltip placement="left-start" trigger="hover" :show-arrow="false" style="background-color: #F8E9D6; color: #2f4f40;" v-if="isLogin">
+               <template #trigger>
+               <n-avatar round :size="48"  v-if="isLogin" :src="user.image" style="position: fixed;  top: 5%; right: 13%; z-index: 100; box-shadow: 0 0 0.2rem #2F4F40;" />
+               </template>
+               {{ user.nickname }} 你好！       
+            </n-tooltip>
+           
           <!-- 登出 -->
            <n-tooltip placement="left-start" trigger="hover" :show-arrow="false" style="background-color: #F8E9D6; color: #2f4f40;" v-if="isLogin">
             <template #trigger>
@@ -291,13 +307,11 @@ const active = ref(false)
             </template>
               登出
           </n-tooltip>
-
+          <!-- menu -->
           <n-button @click="activate('right')" text style="position: fixed;
           top: 6%;
           right: 3%;
           z-index: 100;">
-          
-      <!-- DataBarHorizontal20Filled -->
           <n-icon size="40" color="#F8E9D6">
             <DataBarHorizontal20Filled />
           </n-icon>
@@ -317,8 +331,12 @@ const active = ref(false)
           </n-drawer-content>
           </n-drawer>
 
-          <!-- !!!!!!! -->
           <router-view></router-view>
+        </div>
+
+        <div id="navbar_phone">
+
+
         </div>
       </n-config-provider>
   </div>

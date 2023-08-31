@@ -2,7 +2,7 @@
   <n-popover
     width="trigger" placement="top" :show-arrow="false"
     style="position: absolute; top:0px; color: #2F4F40; background: #F9B02DEE;
-    width: 95%; height: 40vh;"
+    width: 95%; height: 55vh;"
   >
     <template #trigger>
       <n-card

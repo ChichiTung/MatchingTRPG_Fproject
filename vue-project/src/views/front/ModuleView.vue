@@ -225,8 +225,8 @@ onMounted(() => {
     ease: 'none',
     scrollTrigger: {
       trigger: '#content_info',
-      scrub: true,
-      markers: true // 顯示標記
+      scrub: true
+      // markers: true // 顯示標記
       // start: 'top top-=100px'
       // pin: true
 
@@ -239,8 +239,8 @@ onMounted(() => {
     ease: 'none',
     scrollTrigger: {
       trigger: '#content_notice',
-      scrub: true,
-      markers: true // 顯示標記
+      scrub: true
+      // markers: true // 顯示標記
       // start: 'top top-=100px'
       // pin: true
 
@@ -252,8 +252,8 @@ onMounted(() => {
     ease: 'none',
     scrollTrigger: {
       trigger: '.head_img_wrapper',
-      scrub: true,
-      markers: true // 顯示標記
+      scrub: true
+      // markers: true // 顯示標記
       // start: 'top top-=100px'
       // pin: true
 
@@ -267,7 +267,7 @@ onMounted(() => {
     scrollTrigger: {
       trigger: 'gm_intro',
       scrub: true,
-      markers: true, // 顯示標記
+      // markers: true, // 顯示標記
       // start: 'top top-=100px'
       pin: true
 
@@ -281,8 +281,8 @@ onMounted(() => {
     ease: 'none',
     scrollTrigger: {
       trigger: '.cute_img',
-      scrub: true,
-      markers: true // 顯示標記
+      scrub: true
+      // markers: true // 顯示標記
       // start: 'top top-=100px'
       // pin: true
 

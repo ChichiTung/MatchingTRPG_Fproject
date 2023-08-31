@@ -39,7 +39,7 @@
         </router-link>
 
         <a href="#bg_4" style="text-decoration: none; margin-left: 3%;">
-          <p class="answer">當然是找新任務啦，等不及冒險了 ！</p>
+          <!-- <p class="answer">當然是找新任務啦，等不及冒險了 ！</p> -->
         </a>
 
       </div>
